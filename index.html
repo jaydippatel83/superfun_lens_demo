@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <title>Work</title>
+</head>
+<style>
+    body{
+        overflow-x:hidden; 
+    }
+    .digital-products-text h5{
+                line-height: 2rem;
+                font-family: 'IBM Plex Serif';
+                color:black;
+                position: relative;
+                padding-left: 1rem;
+                margin-bottom: 2rem;
+                font-style: italic;
+            }
+            .digital-products-text h5:before{
+                content: '';
+                height: 85%;
+                width: 3px;
+                background-color: #004fff;
+                position: absolute;
+                left: 0;bottom: 5px;
+                overflow: hidden;  
+            }
+            .bg-image-discovry{
+                    background: url(image/services_2.jpg) center center no-repeat;
+                    background-size: cover;
+                    height:80vh;
+                    width: 100%;
+                    overflow: hidden;
+
+                } 
+            .top-bg-image{
+                background: url(image/projects_3.jpg) center center no-repeat;
+                    background-size: cover;
+                    height:80vh;
+                    width: 100%;
+                    overflow: hidden;
+                    
+            } 
+            .overlay{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                opacity: 1;
+                transition: .5s ease;
+                background: linear-gradient(#0000,#000000);
+                overflow:hidden;
+                
+     
+            }
+            .img-hover{
+                    transition: transform 2s;
+                    overflow: hidden;
+                    background-size: cover;
+                    cursor: pointer;
+                }
+                .img-hover img:hover{
+                    transform: scale(1.2); 
+                    overflow: hidden  !important;
+                    background-size: cover;
+                    transition:2s; 
+                }
+                .zoom-aero{
+                    transition: width 2s;
+                    width:40px;
+                    padding:1px;
+                    background:black;
+                    cursor: pointer;
+                    margin-bottom: 5px;
+                    }
+                    .zoom-aero-white{
+                    transition: width 2s;
+                    width:40px;
+                    padding:1px;
+                    background:white;
+                    cursor: pointer;
+                    margin-bottom: 5px;
+                    }
+                    .zoom-aero-white:hover{
+                        background: blue;
+                    width: 100px; 
+                    }
+
+                .zoom-aero:hover{
+                    background: blue;
+                    width: 100px;      
+                 } 
+                 .comment-img{
+                    margin-left: 1px;
+                    margin-top: -15px;
+                    top: 50%;
+                    left: -30px;
+                    content: '';
+                    height: 0;
+                    width: 0;
+                    position: absolute;
+                    pointer-events: none;
+                    -ms-transform: translateY(-50%) scale(1);
+                    transform: translateY(-50%) scale(1);
+                    border-style: solid;
+                    border-color: transparent;
+                    border-right-color: #ffffff;
+                    border-width: 15px;
+                 }
+                   
+                 @media screen and (max-width:768px){
+                    .overlay-sm{
+                        position: absolute;
+                        top: 0;
+                        bottom:50%; 
+                        left: 0;
+                        right: 0;
+                        opacity: 1;
+                        z-index: 100;
+                        transition: .5s ease;
+                        background: linear-gradient(#0000,#000000);
+                        overflow:hidden;
+                        color:white;
+                            }
+                    .overlay-bt{
+                        position: absolute;
+                        bottom:0;
+                        top:49.90%;
+                        left: 0;
+                        right: 0;
+                        opacity: 1;
+                        z-index: 100;
+                        transition: .5s ease;
+                        background-color: rgba(0,0,0,0.3);
+                        overflow:hidden;
+                        color:white;
+                     }
+                     .overlay-tp{
+                        position: absolute;
+                        bottom:-90%;
+                        top:110%;
+                        left: 0;
+                        right: 0;
+                        opacity: 1;
+                        z-index: 100;
+                        transition: .5s ease;
+                        background: linear-gradient(#0000,#000000);
+                        overflow:hidden;
+                        color:white;
+                     }
+                     .overlay{
+                        top: 0;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+                         
+                    }
+                    .zoom-aero{
+                       background:white;
+                    }
+                    .work-middel-font{
+                        font-size: 2.5rem;
+                        line-height:2.5rem;
+                        color:white;
+                        margin: 0px !important;
+                    }
+                 }
+                 .bg-case-img-b{
+                        
+                        background-size: cover !important;
+                         
+                    }
+                 .div-hover:hover .bg-case-img-b{
+                        transform: scale(1.2); 
+                        overflow: hidden;
+                        background-size: cover;
+                        transition:2s; 
+                    }
+    
+</style>
+<body>
+  <!-- header section -->
+  <nav class="navbar" id="nav-hide">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html"><img src="image/Yellow-logo-img.png" width="40" height="40">YELLOW MEDIA LABS</a>
+      <span class="menu-trigger trigger  icon-menu animated-icon3" rel="nav-overlay">
+            <span></span><span></span><span></span>
+            </span>
+      <div class="nav-menu" id="nav-overlay"  >
+        <ul class="col-md-8 m-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="index.html">Home
+                <span class="sr-only">(current)</span>
+            </a>
+         </li>
+           <li class="nav-item">
+              <a class="nav-link" href="work.html">Work</a>
+           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="service.html">Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link" href="career.html">Career</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+        
+<!-- Full Page Image Header with Vertically Centered Content -->
+<section class="pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-lg-10 m-auto" data-aos="fade-up"  data-aos-delay="300" >
+                <h1 class="ser-head-font mt-5">Enabling change, building great 
+                    ideas and creating an interesting world</h1>
+            </div>
+        </div>
+    </div>
+</section>         
+<!-- Page Content -->
+<section class="">
+        <div class="container">
+            <div class="row ">
+                 
+                <div class="col-md-7 col-lg-6 ml-auto col-sm-12 p-0 digital-products-text mb-5" data-aos="fade-up"  data-aos-delay="300" >
+                    <h5 class="font-italic text-muted ml-3">From complex problems to 
+                        first-to-market products, our solutions are rooted in
+                         technology, inspired by culture and driven by users</h5>
+                </div>
+             </div>
+         </div>
+      </section>
+      <section>
+        <div class="container-fluid">
+          <div class="row div-hover">
+            <div class="col-md-12 col-lg-9">
+              <div class="row h_100">
+                   <a href="">
+                       <div class="background">
+                         <div class="bg-case-img-b h_100" style="height: 500px">
+                             <img class="d-lg-none d-md-block d-sm-block d-xs-block" src="image/projects_3.jpg" style="width: 100%;height:100%;background:center center no-repeat">
+                         </div>
+                   </a>
+                 </div>
+               </div>
+          </div>
+         <div  class="col-lg-3 p-4 my-auto div-hover overlay-tp  justify-content-center align-self-center" >
+            <h5>Travosh</h5> 
+            <h4 class="font-weight-bold " style="font-family:'my custom font'">Reimagining Shopping experience for a 
+                smart travel</h4>
+                <div class="zoom-aero" style="display:inline-block;position:relative;">
+                        <div></div>
+                  </div>
+                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+        </div>
+       </div>
+      </section>
+<!-- <section>
+    <div class="container-fluid"  >
+        <div class="row div-hover">
+            <div class="col-lg-9 img-hover  p-0" style="height: 500px;" >
+                    <img src="image/projects_3.jpg" width="100%" height="100%" >
+            </div>
+            <div class="col-lg-3 p-4 div-hover overlay-tp  justify-content-center align-self-center" >
+                <h5>Travosh</h5> 
+                <h4 class="font-weight-bold " style="font-family:'my custom font'">Reimagining Shopping experience for a 
+                    smart travel</h4>
+                    <div class="zoom-aero" style="display:inline-block;position:relative;">
+                            <div></div>
+                      </div>
+                    <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+            </div>
+        </div>
+    </div>
+</section> -->
+<section>
+    <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+        <div class="row">
+            <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                <div class="row div-hover">
+                    <div class="col-lg-6 col-md-6 p-0 col-xs-12 img-hover">
+                        <img src="image/sandoitchi.jpg" width="100%" height="100%">
+                    </div>
+                    <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt col-md-6 justify-content-center align-self-center">
+                        <h5>SanDoitch</h5><br>
+                        <h4 class="font-weight-bold work-middel-font" style="font-family:'my custom font'">Filling the day with wholesome goodness
+                       </h4>
+                       <div class="zoom-aero" style="display:inline-block;position:relative;">
+                            <div></div>
+                      </div>
+                    <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="row div-hover">
+                    <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 div-hover p-5 overlay-sm col-md-6 justify-content-center align-self-center">
+                        <h5>Avendus</h5><br>
+                           <h4 class="font-weight-bold work-middel-font" style="font-family:'my custom font'">In pursuit of the next level of excellence
+                        </h4>
+                        <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                <div></div>
+                          </div>
+                        <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                    </div>
+                    <div class="col-lg-6 col-md-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                            <img src="image/avendus.jpg" width="100%" height="100%">
+                    </div>
+                </div>
+             </div>
+            <div class="col-lg-6 p-0 img-hover div-hover" data-aos="fade-up"  data-aos-delay="300" >
+                <img src="image/veena-world-digital.jpg" width="100%" height="100%" class="img-responsive"> 
+            <div class="text-white  p-5 overlay"   data-aos="fade-up"  data-aos-delay="300" >
+                <h5>Veena World</h5>
+                <h1 class="" style="font-family:'my custom font'">Digital transformation for travel company</h1>
+                <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                        <div></div>
+                  </div>
+                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+        <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+            <div class="row">
+                <div class="col-lg-6 p-0 order-2 order-sm-first  img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                    <img src="image/relience.jpg" width="100%" height="100%" class="img-responsive"> 
+                    <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300" >
+                        <h5>Lokmat</h5>
+                        <h1 class="" style="font-family:'my custom font'">Voicing the power of legacy and leadership
+                            </h1>
+                            <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                    </div>
+                </div>
+                <div class="col-lg-6 p-0  " data-aos="fade-up"  data-aos-delay="300" >
+                    <div class="row div-hover pl-3">
+                        <div class="col-lg-6 col-md-6 pl-0 pr-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                            <img src="image/empyrean.jpg" width="100%" height="100%"   >
+                        </div>
+                        <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt col-md-6 justify-content-center align-self-center">
+                            <h5 >Empyrean</h5><br>
+                            <h4 class="font-weight-bold work-middel-font" style="font-family:'my custom font'">Creating a whole new school of thought
+
+                           </h4>
+                           <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                <div></div>
+                          </div>
+                        <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="row div-hover">
+                        <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm col-md-6 justify-content-center align-self-center">
+                            <h5>Kapiva</h5><br>
+                               <h4 class="font-weight-bold work-middel-font" style="font-family:'my custom font'">Restoring well-being through Pure Ayurveda
+                            </h4>
+                            <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                                <img src="image/kapiva.jpg" width="100%" height="100%">
+                        </div>
+                    </div>
+                    
+                 </div>
+               
+            </div>
+        </div>
+</section>
+<section>
+        <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+            <div class="row">
+                <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                    <div class="row div-hover">
+                        <div class="col-lg-6 col-md-6 p-0 img-hover">
+                            <img src="image/rocsearch.jpg" width="100%" height="100%">
+                        </div>
+                        <div class="col-lg-6 overlay-bt p-5 col-md-6 justify-content-center align-self-center">
+                            <h5>Rocsearch</h5><br>
+                            <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Steering a business intelligence firm towards its summit
+                           </h4>
+                           <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                <div></div>
+                          </div>
+                        <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="row div-hover">
+                        <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm  col-md-6 justify-content-center align-self-center">
+                            <h5>Telentica</h5><br>
+                               <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">A start-up culture at the crossroads of people and workspace
+                            </h4>
+                            <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                        <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 col-md-6 p-0 img-hover">
+                                <img src="image/telentica.jpg" width="100%" height="100%">
+                        </div>
+                    </div>
+                    
+                 </div>
+                <div class="col-lg-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                    <img src="image/compoz.jpg" width="100%" height="100%" class="img-responsive"> 
+                <div class="text-white p-5  overlay" data-aos="fade-up"  data-aos-delay="300">
+                    <h5>Compoz</h5>
+                    <h1 class="" style="font-family:'my custom font'">The world seen through the lens of short stories</h1>
+                    <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                            <div></div>
+                      </div>
+                    <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                </div>
+                </div>
+            </div>
+        </div>
+</section>
+<section>
+            <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+                <div class="row">
+                    <div class="col-lg-6 p-0   img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                        <img src="image/bellwether.jpg" width="100%" height="100%" class="img-responsive"> 
+                        <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300">
+                            <h5>BellWether Capital</h5>
+                            <h1 style="font-family:'my custom font'" class="">Boost the value of tomorrow for a wealth management company
+                                </h1>
+                                <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                    <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                        <div class="row div-hover pl-3">
+                            <div class="col-lg-6 col-md-6 pl-0 pr-0 img-hover">
+                                <img src="image/relience.jpg" width="100%" height="100%">
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt  col-md-6 justify-content-center align-self-center">
+                                <h5>Relience ADAG</h5><br>
+                                <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Fuelling diversity of a national 
+                                    conglomerate to inspire a unified experience
+    
+                               </h4>
+                               <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                        </div>
+                        <div class="row div-hover">
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm col-md-6 justify-content-center align-self-center">
+                                <h5>Nookad Nation</h5><br>
+                                  <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Reliving the neighbourhood nostalgia
+                                     by evoking chatpata by-lanes of memories
+                                 </h4>
+                                <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                              </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 col-md-6 p-0 img-hover">
+                               <img src="image/na.jpg" width="100%" height="100%">
+                            </div>
+                        </div>
+                        
+                     </div>
+                   
+                </div>
+            </div>
+</section>
+<section>
+        <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+                <div class="row">
+                    <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                        <div class="row div-hover">
+                            <div class="col-lg-6 col-md-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                                <img src="image/talentpool.jpg" width="100%" height="100%">
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt col-md-6 justify-content-center align-self-center">
+                                <h5>Talentpool</h5><br>
+                                <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">A simple, strategic and seamless website for a powerful recruitment tool
+                               </h4>
+                               <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                        </div>
+                        <div class="row div-hover">
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm col-md-6 justify-content-center align-self-center">
+                                <h5>Nookad Namkin</h5><br>
+                                   <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Creating a daily option of snacking by 
+                                       mixing food, moments and memories
+                                </h4>
+                                <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                        <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 col-md-6 p-0 img-hover">
+                                    <img src="image/nn.jpg" width="100%" height="100%">
+                            </div>
+                        </div>
+                        
+                     </div>
+                    <div class="col-lg-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                        <img src="image/surya.jpg" width="100%" height="100%" class="img-responsive"> 
+                    <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300">
+                        <h5>Surya Hospital</h5>
+                        <h1 style="font-family:'my custom font'" class="">Fostering child care where tenderness is the greatest healer
+                            </h1>
+                            <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<section>
+         <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+                <div class="row">
+                    <div class="col-lg-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                        <img src="image/bigflix.jpg" width="100%" height="100%" class="img-responsive"> 
+                        <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300">
+                            <h5>Bigflix</h5>
+                            <h1 style="font-family:'my custom font'" class="">Crafting the experience 
+                                for India’s first movie-on-demand service
+
+                                </h1>
+                                <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                        <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                        <div class="row div-hover pl-3">
+                            <div class="col-lg-6 col-md-6 pl-0 pr-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                                <img src="image/Lennup.jpg" width="100%" height="100%">
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt col-md-6 justify-content-center align-self-center">
+                                <h5>Lennep Media</h5><br>
+                                <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Marking a strong presence of international 
+                                    brand to Indian market audiences
+    
+                               </h4>
+                               <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                        </div>
+                        <div class="row div-hover">
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm  col-md-6 justify-content-center align-self-center">
+                                <h5>Taaza</h5><br>
+                                   <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Creating a platform for personalised 
+                                       video content unto a mobile webapp
+                                </h4>
+                                <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                        <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 col-md-6 p-0 img-hover">
+                                    <img src="image/taaza.jpg" width="100%" height="100%">
+                            </div>
+                        </div>
+                        
+                     </div>
+                   
+                </div>
+        </div>
+</section>
+<section>
+        <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+                <div class="row">
+                    <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                        <div class="row div-hover">
+                            <div class="col-lg-6 col-md-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                                <img src="image/gvk.jpg" width="100%" height="100%">
+                            </div>
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-bt col-md-6 justify-content-center align-self-center">
+                                <h5>Mumbai Airport</h5><br>
+                                <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Elevate the passenger experience through effective wayfinding
+                               </h4>
+                               <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                        </div>
+                        <div class="row div-hover">
+                            <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 p-5 overlay-sm  col-md-6 justify-content-center align-self-center">
+                                <h5>Foram Mall</h5><br>
+                                   <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">A range of forms synthesized together for 
+                                       vibrancy and a consistent experience
+                                </h4>
+                                <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                        <div></div>
+                                  </div>
+                                <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                            </div>
+                            <div  data-aos="fade-up"  data-aos-delay="300" class="col-lg-6 col-md-6 p-0 img-hover">
+                                    <img src="image/forum.jpg" width="100%" height="100%">
+                            </div>
+                        </div>
+                        
+                     </div>
+                    <div class="col-lg-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                        <img src="image/wockhardt.jpg" width="100%" height="100%" class="img-responsive"> 
+                    <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300" >
+                        <h5>wockhardt Hospital</h5>
+                        <h1 style="font-family:'my custom font'" class="">Engaging people in pleasant experiences to create a healing environment
+                            </h1>
+                            <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                    </div>
+                    </div>
+                </div>
+            </div>
+</section>
+<section>
+        <div class="container-fluid" data-aos="fade-up"  data-aos-delay="300" >
+               <div class="row">
+                   <div class="col-lg-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                       <img src="image/edelweissh.jpg" width="100%" height="100%" class="img-responsive"> 
+                       <div class="text-white p-5 overlay" data-aos="fade-up"  data-aos-delay="300">
+                           <h5>Edelweiss House</h5>
+                           <h1 style="font-family:'my custom font'" class="">Crafting a wealth of possibilities for Edelweiss House
+                               </h1>
+                               <div class="zoom-aero-white" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                       </div>
+                   </div>
+                   <div class="col-lg-6 p-0" data-aos="fade-up"  data-aos-delay="300" >
+                       <div class="row div-hover pl-3">
+                           <div class="col-lg-6 col-md-6 pl-0 pr-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                               <img src="image/veena-world.jpg" width="100%" height="100%">
+                           </div>
+                           <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 overlay-bt p-5 col-md-6 justify-content-center align-self-center">
+                               <h5>Veena World</h5><br>
+                               <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Breathing life into a whole new world of travel
+   
+                              </h4>
+                              <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                           </div>
+                       </div>
+                       <div class="row div-hover">
+                           <div data-aos="fade-up"  data-aos-delay="300"  class="col-lg-6 overlay-sm p-5  col-md-6 justify-content-center align-self-center">
+                               <h5>Make My Day</h5><br>
+                                  <h4 style="font-family:'my custom font'" class="font-weight-bold work-middel-font">Serving up a selection of everyday emotions
+                               </h4>
+                               <div class="zoom-aero" style="display:inline-block;position:relative;">
+                                    <div></div>
+                              </div>
+                            <span class="mt-1"><i style="margin-left:-5px;" class="fas fa-caret-right"></i></span>
+                           </div>
+                           <div class="col-lg-6 col-md-6 p-0 img-hover" data-aos="fade-up"  data-aos-delay="300" >
+                                   <img src="image/MMD.jpg" width="100%" height="100%">
+                           </div>
+                       </div>
+                       
+                    </div>
+                  
+               </div>
+       </div>
+</section>
+<section>
+        <div class="container py-5" data-aos="fade-up"  data-aos-delay="300" >
+            <div class="row">
+              <div class="col-md-10 m-auto text-center">
+                <h1 style="font-family:'my custom font'" class=" title-font p-0 m-0 font-weight-bold">Let’s build something great together</h1>
+                <div class="col py-5">
+                    <button type="button" class=" col-lg-5 btn-weight text-center p-4 btn btn-outline-primary">Connect with us</button>
+                </div>
+                </div>
+            </div>
+        </div>
+</section>
+<!-- footer -->
+<footer data-aos="fade-up"  data-aos-delay="300" >
+    <div class="container-fluid" style="background-color:black;">
+        <div class="row footer-padding">
+            <div class="col-lg-12">
+                <h1 class="text-white  font-weight-bold text-center footer-text">
+                    Simple as Leaf
+                </h1>
+            </div>
+        </div>
+    <div class="container">
+         <div class="row">
+             <div class="col-lg-3 col-xs-12 col-sm-6">
+                <p class=" " style="color:#9c9c9c;font-family:'IBM Plex serief';font-size:20px;">Adapt and thrive in the age of
+                     acceleration with us</p>
+                <h4 class="text-white   social-icon">Connect</h4>
+             </div>
+             <div class="col-lg-3 col-xs-12 col-sm-6">
+                    <p class=" " style="color:#9c9c9c;font-family:'IBM Plex serief';font-size:20px;">Never stop learning in an inclusive,
+                         dynamic team</p>
+                    <h4 class="text-white   social-icon">Join</h4>
+            </div>
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+                    <p class=" "style="color:#9c9c9c;font-family:'IBM Plex serief';font-size:20px;">The who, what, why and how behind Leaf</p>
+                    <h5 class="text-white    social-icon">Profile</h4>
+            </div>
+            <div class="col-lg-3 col-xs-12 col-sm-6">
+                    <p class=" "style="color:#9c9c9c;font-family:'IBM Plex serief';font-size:20px;">What we’re thinking, reading and sharing</p>
+                    <div class="">
+                        <span><i class="fab fa-facebook-f text-white fa-2x m-2 social-icon"></i></span>
+                        <span><i class="fab fa-instagram text-white fa-2x m-2 social-icon"></i></span>
+                        <span><i class="fab fa-twitter text-white fa-2x m-2 social-icon"></i></span>
+                        <span><i class="fab fa-linkedin text-white fa-2x m-2 social-icon"></i></span>
+                    </div> 
+            </div>
+         </div>
+    </div>
+    <div class=" footer-padding text-center">
+        <h6 class=" " style="font-family:'IBM Plex serief';font-size:20px;color:#9c9c9c">© 2019 Leaf Design, 411 Abhishek, Off New Link Road, Andheri West, Mumbai 400053</h6>
+    </div>
+    </div>
+</footer>  
+     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+     <script src="http://code.jquery.com/jquery-3.1.1.slim.min.js"></script> 
+<script>
+$(document).ready(function() {
+	$('.trigger').click(function() {
+        $('#nav-overlay').css("position","fixed");
+	  var $this = $(this),
+	  notThis = $this.hasClass('open'),
+	  thisNav = $this.attr("rel");
+	  //close if you click another menu trigger
+	  if (!notThis) {
+		 $('.triggered-area, .trigger').removeClass('open');
+          $('.triggered-area, .trigger').removeClass('#nav-overlay');  
+           $(".nav-menu").css("z-index","100");
+             $('body').css('overflow-y', 'hidden');
+	       }
+        else{
+            $('#nav-overlay').css("position","relative");
+             $(".nav-menu").css("z-index","0");
+              $('body').css('overflow-y', 'auto');
+        }
+	  //open the nav
+      
+	  $this.toggleClass('open');
+	  $("#"+thisNav).toggleClass('open');   
+	});
+	$('#nav-overlay').css("position","relative"); 
+
+});
+
+
+var prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+var currentScrollPos = window.pageYOffset;
+  if (prevScrollpos > currentScrollPos) {
+    document.getElementById("nav-hide").style.top = "0";
+  } else {
+    document.getElementById("nav-hide").style.top = "-80px";
+  }
+  prevScrollpos = currentScrollPos;
+}
+</script>
+     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+      <script>
+      AOS.init();
+     </script>
+     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+    </html>

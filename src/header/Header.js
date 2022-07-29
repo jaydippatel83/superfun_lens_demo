@@ -204,11 +204,11 @@ export default function Header() {
                         size="large"
                         edge="start"
                         color="inherit"
-                        aria-label="open drawer"
-                        sx={{ mr: 2 }}
+                        aria-label="open drawer" 
+                        sx={{ display: { xs: 'block', sm: 'none' },mr: 2  }}
                         onClick={handleDrawerOpen}
                     >
-                         <MenuIcon   sx={{ display: { xs: 'block', sm: 'none' } }}/>
+                         <MenuIcon   />
                       
                     </IconButton>
 
