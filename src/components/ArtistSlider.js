@@ -12,13 +12,13 @@ import { LinkedCamera } from "@mui/icons-material";
 
 
 
-export default function TrendingSlider() {
+export default function ArtistSlider() {
     var settings = {
         dots: true,
         infinite: false,
         speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         initialSlide: 0,
         responsive: [
             {
@@ -125,7 +125,7 @@ export default function TrendingSlider() {
                                         srcSet={`${item.img} `}
                                         alt={item.name}
                                         loading="lazy"
-                                        width="100%" style={{ borderRadius: '20px', height: '150px', padding: '10px', cursor: 'pointer' }}
+                                        width="100%" style={{ borderRadius: '20px', height: '300px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
                                         style == item.name && <ImageListItemBar
