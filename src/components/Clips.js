@@ -8,28 +8,35 @@ import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
 import BeachAccessIcon from '@mui/icons-material/BeachAccess';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Clips() {
     const clipData = [
         {
-            name: "Clip0",
-            img: "https://www.youtube.com/watch?v=uelA2U9TbgM"
+            name: "'alpha' is defined but never used  ",
+            img: "https://www.youtube.com/watch?v=uelA2U9TbgM",
+            user:'@jaydippatel83'
         },
         {
-            name: "Clip1",
-            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk"
+            name: "'alpha' is defined but never used  ",
+            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk",
+            user:'@mansijoshi'
         },
         {
-            name: "Clip1",
-            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk"
+            name: "InputBase' is defined but never used ",
+            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk",
+            user:'@karanpujara'
         },
         {
-            name: "Clip1",
-            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk"
+            name: "InputBase' is defined but never used ",
+            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk",
+            user:'@disha'
         },
         {
-            name: "Clip1",
-            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk"
+            name: "Cli'SearchIcon' is defined but never usedp1",
+            img: "https://www.youtube.com/watch?v=t_cSk9tQQkk",
+            user:'@jaydippatel30'
         },
     ]
     return (
@@ -37,8 +44,8 @@ function Clips() {
             <div className='row'>
                 <div className="col-12 mt-4 mb-2">
                     <div className="d-flex justify-content-between">
-                        <h4>Clips</h4>
-                        <h4>View All Clips</h4>
+                        <h4>Clips</h4> 
+                        <Button component={Link} to="/clips">View All Clips</Button>
                     </div>
                 </div>
                 {
@@ -55,7 +62,7 @@ function Clips() {
                                                         <ImageIcon />
                                                     </Avatar>
                                                 </ListItemAvatar>
-                                                <ListItemText primary="Photos"/>
+                                                <ListItemText primary={e.name} secondary={e.user}/>
                                             </ListItem> 
                                         </List>
                                     </div>
@@ -68,7 +75,7 @@ function Clips() {
                                                         <ImageIcon />
                                                     </Avatar>
                                                 </ListItemAvatar>
-                                                <ListItemText primary="Photos"/>
+                                                <ListItemText primary={e.name} secondary={e.user}/>
                                             </ListItem> 
                                         </List>
                                         </div>

@@ -8,6 +8,11 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import TopCreatorsDetail from './components/Lists/TopCreatorsList'; 
+import ClipList from './components/Lists/ClipList';
+import ContestList from './components/Lists/ContestList';
+import StorieList from './components/Lists/StorieList';
+import TrendingList from './components/Lists/TrendingList';
 
 const darkTheme = createTheme({
   palette: {
@@ -25,6 +30,11 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App/>} />  
+        <Route path="/memers" element={<TopCreatorsDetail/>} />  
+        <Route path="/trending" element={<TrendingList/>} />  
+        <Route path="/clips" element={<ClipList/>} />  
+        <Route path="/stories" element={<StorieList/>} />  
+        <Route path="/contest" element={<ContestList/>} />  
       </Routes>
     </BrowserRouter>
     </ThemeProvider>

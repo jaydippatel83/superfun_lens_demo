@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { LinkedCamera } from "@mui/icons-material";
+import { Link } from "react-router-dom";
+import { Button } from "@mui/material";
 
 
 
@@ -103,8 +105,8 @@ export default function ArtistSlider() {
             <div className="row">
                 <div className="col mt-4 mb-2">
                     <div className="d-flex justify-content-between">
-                        <h4>Trendings</h4>
-                        <h4>View All</h4>
+                        <h4>Trendings</h4> 
+                        <Button component={Link} to="/contest">View All</Button>
                     </div>
                     <Slider {...settings}>
 

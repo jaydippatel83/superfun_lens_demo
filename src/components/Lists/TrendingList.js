@@ -1,57 +1,24 @@
-import React, { useState } from "react";
-import Slider from "react-slick";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
-import IconButton from '@mui/material/IconButton';
+import { Box, IconButton, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import Header from '../../header/Header'
+import Search from '../Search'
 import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { LinkedCamera } from "@mui/icons-material";
-import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/system';
 
+function TrendingList() {
+    const [colWidth, setColWidth]= useState();
 
+    const theme = useTheme();
+    const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
+    const smallToMid = useMediaQuery(theme.breakpoints.between("sm", "md"));
+    const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+    const xsmall = useMediaQuery(theme.breakpoints.down("xs"));
 
-export default function TrendingSlider() {
-    var settings = {
-        dots: true,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
+    
 
-    const [style, setStyle] = useState("");
-
+     
     const sliderData = [
         {
             name: "Slider0",
@@ -99,20 +66,19 @@ export default function TrendingSlider() {
         }
     ]
 
+    const [style, setStyle] = useState("");
 
     return (
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col mt-4 mb-2">
-                    <div className="d-flex justify-content-between">
-                        <h4>Trendings</h4> 
-                        <Button component={Link} to="/trending">View All</Button>
-                    </div>
-                    <Slider {...settings}>
-
-                        {sliderData.map((item) => {
-                            return (
-                                <ImageListItem
+        <>
+            <Header />
+            <div style={{ marginTop: '100px' }}>
+                <Search />
+                <div className='container'>
+                    <div className='row'>
+                        <Box sx={{ width: '100%', height: 'auto', overflowY: 'scroll',marginTop:'3%' }}>
+                            <ImageList variant="masonry" cols={greaterThanMid && 4 || smallToMid && 3 || lessThanSmall && 2 || xsmall && 1}   gap={8}>  
+                                {sliderData.map((item) => (  
+                                    <ImageListItem
                                     key={item.name}
                                     style={{ cursor: 'pointer' }}
                                     onMouseEnter={e => {
@@ -123,11 +89,11 @@ export default function TrendingSlider() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.img} `}
-                                        srcSet={`${item.img} `}
+                                        src={`${item.img}?w=248&fit=crop&auto=format`}
+                                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                         alt={item.name}
                                         loading="lazy"
-                                        width="100%" style={{ borderRadius: '20px', height: '150px', padding: '10px', cursor: 'pointer' }}
+                                          style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
                                         style == item.name && <ImageListItemBar
@@ -158,8 +124,8 @@ export default function TrendingSlider() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.img} `}
-                                                    srcSet={`${item.img} `}
+                                                src={`${item.img}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                                     alt={item.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
@@ -191,12 +157,18 @@ export default function TrendingSlider() {
 
                                     }
                                 </ImageListItem>
-                            );
-                        })}
 
-                    </Slider>
+
+
+                                ))}; 
+
+                            </ImageList>
+                        </Box>
+                    </div>
                 </div>
             </div>
-        </div>
-    );
+        </>
+    )
 }
+
+export default TrendingList

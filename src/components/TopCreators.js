@@ -1,5 +1,6 @@
-import { Avatar } from '@mui/material'
+import { Avatar, Button } from '@mui/material'
 import React from 'react'
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 
 const storyData = [
@@ -123,13 +124,15 @@ function TopCreators() {
     };
 
 
+
+
     return (
         <div className='container mt-5' >
             <div className='row'>
                 <div className='col mt-5'>
                     <div className="d-flex justify-content-between">
                         <h5>Top Memers</h5>
-                        <h5>View All</h5>
+                        <Button component={Link} to="/memers">View All</Button>
                     </div>
                     <Slider {...settings}>
                         {

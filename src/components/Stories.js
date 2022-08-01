@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function Stories() {
     const [style, setStyle] = useState("");
@@ -110,8 +112,8 @@ function Stories() {
                 <div className='row'>
                     <div className="col-12 mt-4 mb-2">
                         <div className="d-flex justify-content-between">
-                            <h4>Stories</h4>
-                            <h4>View All Stories</h4>
+                            <h4>Stories</h4> 
+                            <Button  component={Link} to="/stories">View All</Button>
                         </div>
                     </div>
 

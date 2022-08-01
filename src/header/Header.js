@@ -26,6 +26,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
+import { useRoutes,Link } from 'react-router-dom';
 
 
 const pages = ['Memers', 'Contest', 'Hire Memers', 'Upload'];
@@ -39,6 +40,7 @@ export default function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = React.useState(false);
+    // const navigate = useRoutes();
 
     const theme = useTheme();
 
@@ -68,6 +70,10 @@ export default function Header() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
+    // const handleNavigate =(e)=>{
+    //     navigate(`/${e}`);
+    // }
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -229,13 +235,8 @@ export default function Header() {
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{  display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
-                    {pages.map((page) => (
-                        <Button
-                            key={page}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            {page}
-                        </Button>
+                    {pages.map((page) => ( 
+                        <Link key={page} to={`/${page}`} underline="none" sx={{ my: 2, color: 'white', display: 'block',   }}>{page}</Link>
                     ))}
                 </Box>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
