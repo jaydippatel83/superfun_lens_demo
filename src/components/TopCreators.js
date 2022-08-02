@@ -1,7 +1,8 @@
-import { Avatar, Button } from '@mui/material'
+import { Avatar, Button, Link } from '@mui/material'
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from "react-router-dom";
 import Slider from 'react-slick';
+import Profile from "./Profile";
 
 const storyData = [
     {
@@ -72,6 +73,7 @@ const storyData = [
 ]
 
 function TopCreators() {
+ 
 
     var settings = {
         dots: true,
@@ -126,6 +128,7 @@ function TopCreators() {
 
 
 
+
     return (
         <div className='container mt-5' >
             <div className='row'>
@@ -138,11 +141,20 @@ function TopCreators() {
                         {
                             storyData.map((e) => {
                                 return (
-                                    <div key={e.name}>
-                                       <div className="story" style={{backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${e.img})`}}>
-                                            <Avatar  src={e.img} className="storyAvatar" />
+                                    <div key={e.name}> 
+                                        <Link
+                                            to={`/${e.name}`}
+                                            state={{ Profile : e }}
+                                            params={{ e }}
+                                            color="inherit"
+                                            underline="hover"
+                                            component={RouterLink}
+                                        > 
+                                        <div   className="story" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${e.img})` }}>
+                                            <Avatar src={e.img} className="storyAvatar" />
                                             <h4>{e.name}</h4>
                                         </div>
+                                        </Link>
                                     </div>
                                 )
                             })
@@ -152,7 +164,7 @@ function TopCreators() {
             </div>
 
         </div>
- 
+
     )
 }
 

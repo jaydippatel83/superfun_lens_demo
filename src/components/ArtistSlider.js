@@ -105,7 +105,7 @@ export default function ArtistSlider() {
             <div className="row">
                 <div className="col mt-4 mb-2">
                     <div className="d-flex justify-content-between">
-                        <h4>Trendings</h4> 
+                        <h4>Contests</h4> 
                         <Button component={Link} to="/contest">View All</Button>
                     </div>
                     <Slider {...settings}>

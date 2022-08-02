@@ -1,7 +1,10 @@
 import React from 'react'
+import Header from '../../header/Header'
 
 export default function ContestList() {
   return (
-    <div>ContestList</div>
+    <>
+    <Header/>
+    ContestList</ >
   )
 }

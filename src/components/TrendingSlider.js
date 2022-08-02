@@ -10,11 +10,12 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { LinkedCamera } from "@mui/icons-material";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 export default function TrendingSlider() {
+    const navigate = useNavigate();
     var settings = {
         dots: true,
         infinite: false,
@@ -99,6 +100,11 @@ export default function TrendingSlider() {
         }
     ]
 
+    const handleNavigate=(e)=>{
+        console.log(e,"eee");
+        navigate(`/trendingDetails${e.name}`)
+    }
+
 
     return (
         <div className="container mt-5">
@@ -115,6 +121,7 @@ export default function TrendingSlider() {
                                 <ImageListItem
                                     key={item.name}
                                     style={{ cursor: 'pointer' }}
+                                    onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
                                         setStyle(item.name);
                                     }}

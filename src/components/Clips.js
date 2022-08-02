@@ -37,7 +37,7 @@ function Clips() {
             name: "Cli'SearchIcon' is defined but never usedp1",
             img: "https://www.youtube.com/watch?v=t_cSk9tQQkk",
             user:'@jaydippatel30'
-        },
+        }, 
     ]
     return (
         <div className='container'>

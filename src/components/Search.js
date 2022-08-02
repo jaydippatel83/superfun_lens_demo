@@ -35,7 +35,7 @@ function Search() {
             <div className='row'   >
             <CssBaseline /> 
                 <div className={`${classes} ${sticky == 'is-sticky' ? 'col-10' : 'col-9'}`} 
-                 style={ {  backgroundColor: 'rgba(255, 255, 255,0.3)' , borderRadius:'4px' , padding:'10px 10px 0 10px' }}>
+                 style={{backgroundColor:'rgba(255, 255, 255,0.1)', borderRadius:'4px' , padding:'10px 10px 0 10px' }}>
                     <div >
                         <Paper 
                             elevation={3} 
@@ -48,7 +48,7 @@ function Search() {
                                     placeholder="Search by memers, Stories, contest  "
                                     inputProps={{ 'aria-label': 'Search by memers' }}
                                 />
-                                <Button sx={{ p: '12px' }} variant="contained" color='inherit' endIcon={<SearchIcon style={{color:'black'}} />}>
+                                <Button sx={{ p: '12px' }} variant="contained"  style={{background:  'linear-gradient(360deg, hsla(41, 100%, 53%, 1) 7%, hsla(20, 92%, 55%, 1) 58%)'}} endIcon={<SearchIcon  />}>
                                 </Button>
                             </div>
                         </Paper>

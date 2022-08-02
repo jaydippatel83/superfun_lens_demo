@@ -26,7 +26,8 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
-import { useRoutes,Link } from 'react-router-dom';
+import { useRoutes,Link, useNavigate } from 'react-router-dom';
+import { Image } from '@mui/icons-material';
 
 
 const pages = ['Memers', 'Contest', 'Hire Memers', 'Upload'];
@@ -34,6 +35,7 @@ const pages = ['Memers', 'Contest', 'Hire Memers', 'Upload'];
 
 
 export default function Header() {
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -160,6 +162,10 @@ export default function Header() {
         </Menu>
     );
 
+    const navigateToHome=()=>{
+        navigate('/');
+    }
+
     return (
         <div className='container p-0 '>
             <Box sx={{ flexGrow: 1 }} >
@@ -191,8 +197,8 @@ export default function Header() {
                             anchor="left"
                             open={open}
                         >
-                            <DrawerHeader>
-                                Logo
+                            <DrawerHeader> 
+                                <img style={{cursor:'pointer'}} onClick={navigateToHome} src='assets/superfunLogo1.png' />
                                 <IconButton onClick={handleDrawerClose}>
                                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                                 </IconButton>
@@ -223,15 +229,15 @@ export default function Header() {
                                     </ListItem>
                                 ))}
                             </List>
-                        </Drawer>
+                        </Drawer> 
 
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' } }}
-                        >
-                            SuperFun
+                            sx={{  display: { xs: 'none', sm: 'block' }, cursor:'pointer' }}
+                        > 
+                           <img   onClick={navigateToHome} src='assets/superfunLogo1.png' />
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{  display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
