@@ -1,14 +1,10 @@
 import React, { useState } from "react";
-import Slider from "react-slick";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import ImageList from '@mui/material/ImageList';
+import Slider from "react-slick"; 
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
+import ImageListItemBar from '@mui/material/ImageListItemBar'; 
 import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { LinkedCamera } from "@mui/icons-material";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { Button } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -137,7 +133,7 @@ export default function TrendingSlider() {
                                         width="100%" style={{ borderRadius: '20px', height: '150px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -155,7 +151,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -177,7 +173,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

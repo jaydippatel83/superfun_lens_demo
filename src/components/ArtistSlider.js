@@ -1,20 +1,17 @@
 import React, { useState } from "react";
-import Slider from "react-slick";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import ImageList from '@mui/material/ImageList';
+import Slider from "react-slick"; 
 import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
+import ImageListItemBar from '@mui/material/ImageListItemBar'; 
 import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { LinkedCamera } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 
 
 
 export default function ArtistSlider() {
+    const navigate = useNavigate();
     var settings = {
         dots: true,
         infinite: false,
@@ -99,6 +96,11 @@ export default function ArtistSlider() {
         }
     ]
 
+    const handleNavigate=(e)=>{
+        console.log(e,"eee");
+        navigate(`/contestDetails${e.name}`)
+    }
+
 
     return (
         <div className="container mt-5">
@@ -118,6 +120,7 @@ export default function ArtistSlider() {
                                     onMouseEnter={e => {
                                         setStyle(item.name);
                                     }}
+                                    onClick={()=>handleNavigate(item)}
                                     onMouseLeave={e => {
                                         setStyle("");
                                     }}
@@ -130,7 +133,7 @@ export default function ArtistSlider() {
                                         width="100%" style={{ borderRadius: '20px', height: '300px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -148,7 +151,7 @@ export default function ArtistSlider() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -170,7 +173,7 @@ export default function ArtistSlider() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

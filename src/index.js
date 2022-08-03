@@ -7,14 +7,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider, createTheme,responsiveFontSizes } from '@mui/material/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import TopCreatorsDetail from './components/Lists/TopCreatorsList'; 
+import "slick-carousel/slick/slick-theme.css"; 
 import ClipList from './components/Lists/ClipList';
 import ContestList from './components/Lists/ContestList';
 import StorieList from './components/Lists/StorieList';
 import TrendingList from './components/Lists/TrendingList';
 import Profile from './components/Profile'; 
 import TrendingDetails from './components/DetailPages/TrendingDetails';
+import ContestDetails from './components/DetailPages/ContestDetails';
+import MemeList from './components/Lists/MemeList';
  
 
 let darkTheme = createTheme({
@@ -58,13 +59,14 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App/>} />  
-        <Route path="/memers" element={<TopCreatorsDetail/>} />  
+        <Route path="/memers" element={<MemeList/>} />    
         <Route path="/trending" element={<TrendingList/>} />  
         <Route path="/clips" element={<ClipList/>} />  
         <Route path="/stories" element={<StorieList/>} />  
         <Route path="/contest" element={<ContestList/>} />  
         <Route path="/:id" element={<Profile/>} /> 
         <Route path="/trendingDetails:id" element={<TrendingDetails/>} />  
+        <Route path="/contestDetails:id" element={<ContestDetails/>} />  
       </Routes>
     </BrowserRouter>
     </ThemeProvider>

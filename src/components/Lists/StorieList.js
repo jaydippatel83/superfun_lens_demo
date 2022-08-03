@@ -1,16 +1,14 @@
  
 
 import { Box, IconButton, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import Header from '../../header/Header'
 import Search from '../Search'
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { styled } from '@mui/material/styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { useTheme } from '@mui/system';
 
-function StorieList() {
-    const [colWidth, setColWidth]= useState();
+function StorieList() { 
 
     const theme = useTheme();
     const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
@@ -98,7 +96,7 @@ function StorieList() {
                                           style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -116,7 +114,7 @@ function StorieList() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -138,7 +136,7 @@ function StorieList() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

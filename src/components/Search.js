@@ -3,9 +3,16 @@ import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider'; 
 import SearchIcon from '@mui/icons-material/Search'; 
-import { Button } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-import ListSubheader from '@mui/material/ListSubheader';
+import { Button, styled } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline'; 
+
+const ColorButton = styled(Button)(({ theme }) => ({
+    color: 'white', 
+    background: 'linear-gradient(to right top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
+    '&:hover': {
+        background: 'linear-gradient(to left top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
+    },
+  }));
 
 function Search() {
 
@@ -34,7 +41,7 @@ function Search() {
         <div className='container mt-5'>
             <div className='row'   >
             <CssBaseline /> 
-                <div className={`${classes} ${sticky == 'is-sticky' ? 'col-10' : 'col-9'}`} 
+                <div className={`${classes} ${sticky === 'is-sticky' ? 'col-10' : 'col-9'}`} 
                  style={{backgroundColor:'rgba(255, 255, 255,0.1)', borderRadius:'4px' , padding:'10px 10px 0 10px' }}>
                     <div >
                         <Paper 
@@ -42,14 +49,14 @@ function Search() {
                             component="form"
                             sx={{ p: '0', display: 'flex', alignItems: 'center', borderRadius: '10px' }}
                         >
-                            <div className="input-group" style={{ backgroundColor: 'white' }}>
+                            <div className="input-group" style={{ background: 'white' }}>
                                 <InputBase
                                     sx={{ ml: 1, flex: 1, color: 'black', }}
                                     placeholder="Search by memers, Stories, contest  "
                                     inputProps={{ 'aria-label': 'Search by memers' }}
                                 />
-                                <Button sx={{ p: '12px' }} variant="contained"  style={{background:  'linear-gradient(360deg, hsla(41, 100%, 53%, 1) 7%, hsla(20, 92%, 55%, 1) 58%)'}} endIcon={<SearchIcon  />}>
-                                </Button>
+                                <ColorButton sx={{ p: '12px' }}  endIcon={<SearchIcon  />}>
+                                </ColorButton>
                             </div>
                         </Paper>
                     </div>

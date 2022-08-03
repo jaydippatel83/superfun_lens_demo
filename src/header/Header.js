@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { styled, alpha, useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import InputBase from '@mui/material/InputBase';
+import { styled,  useTheme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar'; 
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import Menu from '@mui/material/Menu'; 
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -26,11 +24,35 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
-import { useRoutes,Link, useNavigate } from 'react-router-dom';
-import { Image } from '@mui/icons-material';
+import {  Link, useNavigate } from 'react-router-dom'; 
 
+ 
+const pages = [
+    { 
+        name: 'Memers',
+        path:'memers'
+    },
+    { 
+        name: 'Contest',
+        path:'contest'
+    },
+    { 
+        name: 'Stories',
+        path:'stories'
+    },
+    { 
+        name: 'Clips',
+        path:'clips'
+    }
+]
 
-const pages = ['Memers', 'Contest', 'Hire Memers', 'Upload'];
+const ColorButton = styled(Button)(({ theme }) => ({
+    color: 'white', 
+    background: 'linear-gradient(to right top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
+    '&:hover': {
+        background: 'linear-gradient(to left top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
+    },
+  }));
 
 
 
@@ -198,7 +220,7 @@ export default function Header() {
                             open={open}
                         >
                             <DrawerHeader> 
-                                <img style={{cursor:'pointer'}} onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                                <img alt='' style={{cursor:'pointer'}} onClick={navigateToHome} src='assets/superfunLogo1.png' />
                                 <IconButton onClick={handleDrawerClose}>
                                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                                 </IconButton>
@@ -237,21 +259,23 @@ export default function Header() {
                             component="div"
                             sx={{  display: { xs: 'none', sm: 'block' }, cursor:'pointer' }}
                         > 
-                           <img   onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                           <img alt=''  onClick={navigateToHome} src='assets/superfunLogo1.png' />
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{  display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
                     {pages.map((page) => ( 
-                        <Link key={page} to={`/${page}`} underline="none" sx={{ my: 2, color: 'white', display: 'block',   }}>{page}</Link>
+                        <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block',   }}>{page.name}</Link>
                     ))}
+                    <ColorButton className='m-2'  >Upload</ColorButton> 
+                    <ColorButton className='m-2' >Connect</ColorButton>
                 </Box>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="error">
                                     <MailIcon />
                                 </Badge>
-                            </IconButton>
-                            <IconButton
+                            </IconButton> */}
+                            {/* <IconButton
                                 size="large"
                                 aria-label="show 17 new notifications"
                                 color="inherit"
@@ -259,7 +283,7 @@ export default function Header() {
                                 <Badge badgeContent={17} color="error">
                                     <NotificationsIcon />
                                 </Badge>
-                            </IconButton>
+                            </IconButton> */}
                             <IconButton
                                 size="large"
                                 edge="end"

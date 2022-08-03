@@ -1,15 +1,14 @@
 import { Box, IconButton, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import Header from '../../header/Header'
 import Search from '../Search'
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { styled } from '@mui/material/styles';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { useTheme } from '@mui/system';
+import { useNavigate } from 'react-router-dom';
 
-function TrendingList() {
-    const [colWidth, setColWidth]= useState();
-
+function TrendingList() { 
+    const navigate = useNavigate();
     const theme = useTheme();
     const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
     const smallToMid = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -68,6 +67,12 @@ function TrendingList() {
 
     const [style, setStyle] = useState("");
 
+    const handleNavigate=(e)=>{
+        console.log(e,"eee");
+        navigate(`/trendingDetails${e.name}`)
+    }
+
+
     return (
         <>
             <Header />
@@ -81,6 +86,7 @@ function TrendingList() {
                                     <ImageListItem
                                     key={item.name}
                                     style={{ cursor: 'pointer' }}
+                                    onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
                                         setStyle(item.name);
                                     }}
@@ -96,7 +102,7 @@ function TrendingList() {
                                           style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -114,7 +120,7 @@ function TrendingList() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -136,7 +142,7 @@ function TrendingList() {
                                         />
                                     }
                                     {
-                                        style == item.name && <ImageListItemBar
+                                        style === item.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

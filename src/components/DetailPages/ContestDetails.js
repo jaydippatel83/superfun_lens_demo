@@ -5,7 +5,6 @@ import Header from '../../header/Header';
 import Search from '../Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
- 
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
 
@@ -63,14 +62,13 @@ const tags = [
   " #happy tuesday good morning",
   " #good tuesday morning"
 ]
-function TrendingDetails() {
-  const [data, setData] = useState(); 
+function ContestDetails() {
+  const [data, setData] = useState();
   const [detail, setDetail] = useState();
+  const param = useParams();
   const [showComment, setShowComment] = useState(false);
   const [comment, setComments] = React.useState([""]);
 
-  const param = useParams();
-  console.log(param, "param");
   useEffect(() => {
 
     const dd = sliderData && sliderData.filter((e) => e.name === param.id);
@@ -79,10 +77,8 @@ function TrendingDetails() {
 
 
   const handleNavigate = (data) => {
-    setDetail(data); 
+    setDetail(data);
   }
-
-  console.log(detail, "data");
 
   const handleShowComment = () => {
     setShowComment(!showComment);
@@ -107,7 +103,7 @@ function TrendingDetails() {
 
                         </Avatar>
                       }
-                      title={e.name} 
+                      title={e.name}
                     />
                     <CardMedia
                       component="img"
@@ -120,8 +116,8 @@ function TrendingDetails() {
                         {e.description}
                       </Typography> */}
                     </CardContent>
-                    <CardActions disableSpacing>
-                    <div 
+                    <CardActions disableSpacing> 
+                      <div 
                         className="d-flex align-items-center"
                         style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       >
@@ -138,85 +134,6 @@ function TrendingDetails() {
                         <span className="d-none-xss">Comment</span>
                       </div>
 
-                      <IconButton
-                        sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                      >
-                        < ShareOutlinedIcon />
-                      </IconButton>
-                      <label>Share</label>
-                    </CardActions>
-
-                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white' }} />
-                    {showComment ? (
-                      <div className='m-2'>
-                        <div className="d-flex justify-content-around mt-2">
-                          <div className="p-0">
-                             <Avatar src={detail && detail.img}/>
-                          </div>
-                          <form className="col-10 header-search ms-3 d-flex align-items-center">
-                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
-                            <InputBase
-                                     onChange={(e) => setComments(e.target.value)}
-                                    sx={{ ml: 1, flex: 1, color: 'black'}}
-                                    placeholder="Write a comment.."
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                /> 
-                            </div>
-                            <IconButton  >
-                              <Send  />
-                            </IconButton>
-                          </form>
-                        </div> 
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </Card>
-                  {
-                    tags.map((e) => (
-                      <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                    ))
-                  }
-                </div>
-              )) :
-                <div className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
-                  <Card   >
-                  <CardHeader
-                      avatar={
-                        <Avatar src={detail && detail.img} aria-label="recipe">
-
-                        </Avatar>
-                      }
-                      title={detail && detail.name} 
-                    />
-                    <CardMedia
-                      component="img"
-                      image={detail && detail.img}
-                      alt={ detail && detail.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
-                    />
-                    <CardContent>
-                      {/* <Typography variant="body2" color="text.secondary">
-                    {e.description}
-                  </Typography> */}
-                    </CardContent>
-                    <CardActions disableSpacing>
-                    <div 
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        <FavoriteBorderIcon />
-                        <span className="d-none-xss">Likes</span>
-                      </div>
-
-                      <div
-                        onClick={handleShowComment}
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        < ModeCommentOutlinedIcon />
-                        <span className="d-none-xss">Comment</span>
-                      </div>
                        
                       <IconButton
                         sx={{ color: 'white', padding: '5px', margin: '10px' }}
@@ -257,13 +174,96 @@ function TrendingDetails() {
                     ))
                   }
                 </div>
+              )) :
+                <div className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                  <Card   >
+                    <CardHeader
+                      avatar={
+                        <Avatar src={detail && detail.img} aria-label="recipe">
+
+                        </Avatar>
+                      }
+                      title={detail && detail.name}
+                    />
+                    <CardMedia
+                      component="img"
+                      image={detail && detail.img}
+                      alt={detail && detail.name}
+                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                    />
+                    <CardContent>
+                      {/* <Typography variant="body2" color="text.secondary">
+                    {e.description}
+                  </Typography> */}
+                    </CardContent>
+                    <CardActions disableSpacing>
+
+                    <div 
+                        className="d-flex align-items-center"
+                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      >
+                        <FavoriteBorderIcon />
+                        <span className="d-none-xss">Likes</span>
+                      </div>
+
+                      <div
+                        onClick={handleShowComment}
+                        className="d-flex align-items-center"
+                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      >
+                        < ModeCommentOutlinedIcon />
+                        <span className="d-none-xss">Comment</span>
+                      </div>
+                      
+                       
+                      <IconButton
+                        sx={{ color: 'white', padding: '5px', margin: '10px' }}
+                      >
+                        < ShareOutlinedIcon />
+                      </IconButton>
+                      <label>Share</label>
+                    </CardActions>
+
+                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white'}} />
+                    {showComment ? (
+                      <div className='m-2'>
+                        <div className="d-flex justify-content-around mt-2">
+                          <div className="p-0">
+                             <Avatar src={detail && detail.img}/>
+                          </div>
+                          <form className="col-10 header-search ms-3 d-flex align-items-center">
+                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
+                            <InputBase
+                                     onChange={(e) => setComments(e.target.value)}
+                                    sx={{ ml: 1, flex: 1, color: 'black'}}
+                                    placeholder="Write a comment.."
+                                    inputProps={{ 'aria-label': 'Search by memers' }}
+                                /> 
+                            </div>
+                            <IconButton  >
+                              <Send  />
+                            </IconButton>
+                          </form>
+                        </div> 
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    
+                  </Card>
+                  {
+                    tags.map((e) => (
+                      <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
+                    ))
+                  }
+                </div>
             }
             {
               sliderData && sliderData.map((e) => {
                 if (e.name !== param.id) {
                   return (
                     <div className='col-12 col-sm-3 col-md-3 col-lg-3'>
-                      <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
+                      <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} style={{ cursor: 'pointer' }} >
                         <CardMedia
                           component="img"
                           height="194"
@@ -297,4 +297,4 @@ function TrendingDetails() {
   )
 }
 
-export default TrendingDetails
+export default ContestDetails

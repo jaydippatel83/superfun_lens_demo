@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Fab, IconButton, ImageList, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Divider, IconButton, InputBase, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Header from '../header/Header';
@@ -6,10 +6,9 @@ import MemeCard from './Cards/MemeCard';
 import Search from './Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import { LinkOutlined } from '@mui/icons-material';
 import Chip from '@mui/material/Chip';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import Stack from '@mui/material/Stack';
+import { Send } from '@mui/icons-material';
 
 function Profile() {
     const params = useParams();
@@ -17,6 +16,12 @@ function Profile() {
     const [data, setData] = useState();
     const [show, setShow] = useState(false);
     const [detail, setDetail] = useState();
+    const [showComment, setShowComment] = useState(false);
+    const [comment, setComments] = React.useState([""]);
+
+    const handleShowComment = () => {
+        setShowComment(!showComment);
+    };
 
     const storyData = [
         {
@@ -104,7 +109,7 @@ function Profile() {
     }, [params])
 
 
-    console.log(data, "data");
+
 
     return (
         < >
@@ -120,7 +125,7 @@ function Profile() {
                                     return (
                                         <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                             <div className='text-center'>
-                                                <img src={e.img} width="100" height="100" style={{ borderRadius: '50%' }} />
+                                                <img src={e.img} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
                                                 <h5 className='pt-4' style={{ fontWeight: '600' }}>{e.name}</h5>
                                                 <h6 className='' style={{ fontWeight: '600' }}>{`@${e.name.trim().toLowerCase()}`}</h6>
                                                 <p>{e.description}</p>
@@ -160,6 +165,15 @@ function Profile() {
                                         {/* <p>{detail.description}</p> */}
 
                                         <Card   >
+                                            <CardHeader
+                                                avatar={
+                                                    <Avatar src={detail.img} aria-label="recipe">
+
+                                                    </Avatar>
+                                                }
+                                                title={detail.name}
+                                                subheader={detail.date}
+                                            />
                                             <CardMedia
                                                 component="img"
                                                 image={detail.img}
@@ -172,23 +186,55 @@ function Profile() {
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
-                                                <IconButton aria-label="add to favorites">
+                                                <div
+                                                    className="d-flex align-items-center"
+                                                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                                                >
                                                     <FavoriteBorderIcon />
-                                                </IconButton>
+                                                    <span className="d-none-xss">Likes</span>
+                                                </div>
+
+                                                <div
+                                                    onClick={handleShowComment}
+                                                    className="d-flex align-items-center"
+                                                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                                                >
+                                                    < ModeCommentOutlinedIcon />
+                                                    <span className="d-none-xss">Comment</span>
+                                                </div>
                                                 <IconButton
                                                     sx={{ color: 'white', padding: '5px', margin: '10px' }}
                                                 >
-                                                    < ModeCommentOutlinedIcon />
+                                                    < ShareOutlinedIcon />
                                                 </IconButton>
-                                                <label>Comments</label>
-                                                <IconButton
-                                            sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                                        >
-                                            < ShareOutlinedIcon />
-                                        </IconButton>
-                                        <label>Share</label>
+                                                <label>Share</label>
                                             </CardActions>
-                                        </Card> 
+                                            <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
+                                            {showComment ? (
+                                                <div className='m-2'>
+                                                    <div className="d-flex justify-content-around mt-2">
+                                                        <div className="p-0">
+                                                            <Avatar src={detail && detail.img} />
+                                                        </div>
+                                                        <form className="col-10 header-search ms-3 d-flex align-items-center">
+                                                            <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
+                                                                <InputBase
+                                                                    onChange={(e) => setComments(e.target.value)}
+                                                                    sx={{ ml: 1, flex: 1, color: 'black' }}
+                                                                    placeholder="Write a comment.."
+                                                                    inputProps={{ 'aria-label': 'Search by memers' }}
+                                                                />
+                                                            </div>
+                                                            <IconButton  >
+                                                                <Send />
+                                                            </IconButton>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                ""
+                                            )}
+                                        </Card>
 
                                         <div className='col-12 ' style={{ margin: '10px 0' }}>
                                             {
@@ -198,8 +244,7 @@ function Profile() {
                                             }
                                         </div>
 
-
-                                    </div> 
+                                    </div>
                                 </div>
                             }
                             <div className='row'>
