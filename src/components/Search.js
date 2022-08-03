@@ -63,7 +63,7 @@ function Search() {
                     <div className=' d-flex mt-2 justify-content-center'>
                         <p style={{cursor:'pointer'}}>Memers</p> 
                         <Divider orientation="vertical" style={{border:'1px solid white', height:'25px',margin :'0 10px'}} />
-                        <p style={{cursor:'pointer'}}>Clops</p> 
+                        <p style={{cursor:'pointer'}}>Clips</p> 
                         <Divider orientation="vertical" style={{border:'1px solid white', height:'25px',margin :'0 10px'}}/>
                         <p style={{cursor:'pointer'}}> Stories</p> 
                         <Divider orientation="vertical"  style={{border:'1px solid white', height:'25px',margin :'0 10px'}}/>

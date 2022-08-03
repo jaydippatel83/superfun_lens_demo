@@ -16,6 +16,7 @@ import Profile from './components/Profile';
 import TrendingDetails from './components/DetailPages/TrendingDetails';
 import ContestDetails from './components/DetailPages/ContestDetails';
 import MemeList from './components/Lists/MemeList';
+import Footer from './header/Footer';
  
 
 let darkTheme = createTheme({
@@ -68,6 +69,7 @@ root.render(
         <Route path="/trendingDetails:id" element={<TrendingDetails/>} />  
         <Route path="/contestDetails:id" element={<ContestDetails/>} />  
       </Routes>
+      <Footer/>
     </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>

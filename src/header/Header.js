@@ -25,6 +25,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
 import {  Link, useNavigate } from 'react-router-dom'; 
+import UploadModal from '../components/modals/UploadModal';
 
  
 const pages = [
@@ -266,7 +267,7 @@ export default function Header() {
                     {pages.map((page) => ( 
                         <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block',   }}>{page.name}</Link>
                     ))}
-                    <ColorButton className='m-2'  >Upload</ColorButton> 
+                     <UploadModal/> 
                     <ColorButton className='m-2' >Connect</ColorButton>
                 </Box>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

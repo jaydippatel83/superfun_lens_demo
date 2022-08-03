@@ -162,10 +162,7 @@ function TrendingList() {
                                         />
 
                                     }
-                                </ImageListItem>
-
-
-
+                                </ImageListItem> 
                                 ))}; 
 
                             </ImageList>
