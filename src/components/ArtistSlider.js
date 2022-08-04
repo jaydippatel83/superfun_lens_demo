@@ -4,9 +4,9 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar'; 
 import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
-import { Link, useNavigate } from "react-router-dom";
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';  
 import { Button } from "@mui/material";
+import { Link  as RouterLink, useNavigate} from 'react-router-dom';
 
 
 
@@ -107,8 +107,8 @@ export default function ArtistSlider() {
             <div className="row">
                 <div className="col mt-4 mb-2">
                     <div className="d-flex justify-content-between">
-                        <h4>Contests</h4> 
-                        <Button component={Link} to="/contest">View All</Button>
+                        <h5>Contests</h5> 
+                        <Button component={RouterLink} to="/contest">View All</Button>
                     </div>
                     <Slider {...settings}>
 

@@ -1,13 +1,53 @@
-import { Box, IconButton, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from '@mui/material'
+import { Box, Button, IconButton, ImageList, ImageListItem, ImageListItemBar, useMediaQuery } from '@mui/material'
 import React, { useState } from 'react'
 import Header from '../../header/Header'
 import Search from '../Search'
 import LinkIcon from '@mui/icons-material/Link';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import AddIcon from '@mui/icons-material/Add';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import ContestCard from '../Cards/ContestCard';
 
-function ContestList() { 
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 1}}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+function ContestList() {
     const navigate = useNavigate();
     const theme = useTheme();
     const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
@@ -15,62 +55,87 @@ function ContestList() {
     const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const xsmall = useMediaQuery(theme.breakpoints.down("xs"));
 
-    
 
-    
+    const [value, setValue] = React.useState(0);
 
-     
-    const sliderData = [
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+
+
+    const storyData = [
         {
-            name: "Slider0",
-            img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif"
+            name: "Jaydip Patel",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTBiIBka08VQlJa_2LMCkrZKqZ7fT-PV_zw&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider1",
-            img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif"
+            name: "Mansi Joshi",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2AnKOLhLgzlFjwD4nLP21BDjglT43XsVwJQ&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '4 day ago'
         },
         {
-            name: "Slider2",
-            img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif"
+            name: "Disha Sathwara",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWkh-FmK4k2h4a0dVk9FDO14869w7TjqwyA&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago',
         },
         {
-            name: "Slider3",
-            img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif"
+            name: "Dhruv Sathwara",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDXiKxCdCFAZverAZZPHT77HqndAlgTEtncg&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider4",
-            img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif"
+            name: "Karan Pujara",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScPSEyda4ZdKgzlMZpIjmCoa6Hyt8xVBNeg&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider5",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
+            name: "Web3Builder",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQGFlovSwUJsdCOFZYqKxiGTy9aBjCLmQVw&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider6",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
+            name: "CryptoYard",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIuplMPz5muZkszIGtUUO0H7XkCw5gxhTew&usqp=CAU",
+            description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
+            date: '3 day ago'
         },
         {
-            name: "Slider7",
-            img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif"
+            name: "CrypticDev",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4meNTJr3kzXWPMkCAjzkTNXeD3Ys8LBfGPziN_epUuBsbmG9PTCMux02sno7Tm6TKspA&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations"
         },
         {
-            name: "Slider8",
-            img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif"
+            name: "CryptoPunk",
+            img: "https://g.foolcdn.com/art/companylogos/square/link.png",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider9",
-            img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif"
+            name: "Vitalik",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJbf16Wo-44LjPMWnx9UPvA11MzO8_0igDw&usqp=CAU",
+            description: "Apologies Aren’t Enough, We Need Reparations",
+            date: '3 day ago'
         },
         {
-            name: "Slider10",
-            img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif"
+            name: "Polygon",
+            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIB9Rv-Q2c3sp_1N-bKK0EspLRtR5Y45iJUA&usqp=CAU",
+            description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
+            date: '3 day ago'
         }
     ]
 
     const [style, setStyle] = useState("");
 
-    const handleNavigate=(e)=>{
-        console.log(e,"eee");
+    const handleNavigate = (e) => {
+        console.log(e, "eee");
         navigate(`/contestDetails${e.name}`)
     }
 
@@ -79,99 +144,42 @@ function ContestList() {
         <>
             <Header />
             <div style={{ marginTop: '100px' }}>
-                <Search />
                 <div className='container'>
                     <div className='row'>
-                        <Box sx={{ width: '100%', height: 'auto', overflowY: 'scroll',marginTop:'3%' }}>
-                            <ImageList variant="masonry" cols={greaterThanMid && 4 || smallToMid && 3 || lessThanSmall && 2 || xsmall && 1}   gap={8}>  
-                                {sliderData.map((item) => (  
-                                    <ImageListItem
-                                    key={item.name}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={()=>handleNavigate(item)}
-                                    onMouseEnter={e => {
-                                        setStyle(item.name);
-                                    }}
-                                    onMouseLeave={e => {
-                                        setStyle("");
-                                    }}
-                                >
-                                    <img
-                                        src={`${item.img}?w=248&fit=crop&auto=format`}
-                                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                        alt={item.name}
-                                        loading="lazy"
-                                          style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
-                                    />
-                                    {
-                                        style === item.name && <ImageListItemBar
-                                            sx={{
-                                                background:
-                                                    'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-                                                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                                            }}
-                                            position="top"
-                                            actionIcon={
-                                                <IconButton
-                                                    sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                                                >
-                                                    <FavoriteBorderIcon />
-                                                </IconButton>
-                                            }
-                                            actionPosition="right"
-                                        />
+
+                        <div className='col-12'>
+                            <div className="d-flex justify-content-end mb-2">
+                                < Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button>
+                            </div>
+                        </div>
+                        <div className='col-12'>
+                            <Box sx={{ width: '100%',p:0 }}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                                        <Tab label="All" {...a11yProps(0)} />
+                                        <Tab label="Participated" {...a11yProps(1)} />
+                                        <Tab label="Created" {...a11yProps(2)} />
+                                    </Tabs>
+                                </Box>
+                                <TabPanel value={value} index={0} className="p-0">
+                                    {/* <div className='container'> */}
+                                        <div className='row p-0'>
+                                        {
+                                     storyData && storyData.map((e)=>(
+                                        <ContestCard data={e}/>
+                                     ))   
                                     }
-                                    {
-                                        style === item.name && <ImageListItemBar
-                                            sx={{
-                                                background:
-                                                    'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
-                                                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                                            }}
-
-                                            position="bottom"
-                                            actionIcon={
-                                                <img
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                    alt={item.name}
-                                                    loading="lazy"
-                                                    width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
-                                                />
-
-                                            }
-                                            actionPosition="left"
-                                        />
-                                    }
-                                    {
-                                        style === item.name && <ImageListItemBar
-                                            sx={{
-                                                background:
-                                                    'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
-                                                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                                            }}
-
-                                            position="bottom"
-                                            actionIcon={
-                                                <IconButton
-                                                    sx={{ color: 'white', padding: '5px', margin: '10px 15px' }}
-                                                    aria-label={`star ${item.name}`}
-                                                >
-                                                    <LinkIcon />
-                                                </IconButton>
-                                            }
-                                            actionPosition="right"
-                                        />
-
-                                    }
-                                </ImageListItem>
-
-
-
-                                ))}; 
-
-                            </ImageList>
-                        </Box>
+                                        {/* </div> */}
+                                    </div>
+                                </TabPanel>
+                                <TabPanel value={value} index={1}>
+                                    Participated
+                                </TabPanel>
+                                <TabPanel value={value} index={2}>
+                                    Created
+                                </TabPanel>
+                            </Box>
+                        </div>  
                     </div>
                 </div>
             </div>

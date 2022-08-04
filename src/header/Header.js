@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { styled,  useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar'; 
+import { styled, useTheme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
 import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
-import Menu from '@mui/material/Menu'; 
+import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
@@ -24,36 +24,36 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
-import {  Link, useNavigate } from 'react-router-dom'; 
+import { Link, useNavigate } from 'react-router-dom';
 import UploadModal from '../components/modals/UploadModal';
 
- 
+
 const pages = [
-    { 
-        name: 'Memers',
-        path:'memers'
+    {
+        name: 'Memes',
+        path: 'memes'
     },
-    { 
-        name: 'Contest',
-        path:'contest'
+    {
+        name: 'PFPs',
+        path: 'pfps'
     },
-    { 
-        name: 'Stories',
-        path:'stories'
+    {
+        name: 'Contests',
+        path: 'contest'
     },
-    { 
-        name: 'Clips',
-        path:'clips'
+    {
+        name: 'Artists',
+        path: 'artist'
     }
 ]
 
 const ColorButton = styled(Button)(({ theme }) => ({
-    color: 'white', 
+    color: 'white',
     background: 'linear-gradient(to right top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
     '&:hover': {
         background: 'linear-gradient(to left top, #ff0f7b, #ff3d61, #ff6049, #ff7f36, #f89b29);',
     },
-  }));
+}));
 
 
 
@@ -185,14 +185,14 @@ export default function Header() {
         </Menu>
     );
 
-    const navigateToHome=()=>{
+    const navigateToHome = () => {
         navigate('/');
     }
 
     return (
         <div className='container p-0 '>
             <Box sx={{ flexGrow: 1 }} >
-                <AppBar sx={{ padding: { xs: '0', md: '0 85px', background:'black' } }} color='primary' open={open}>
+                <AppBar sx={{ padding: { xs: '0', md: '0 85px', lg:'0 4%', background: 'black' } }} color='primary' open={open}>
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -220,15 +220,15 @@ export default function Header() {
                             anchor="left"
                             open={open}
                         >
-                            <DrawerHeader> 
-                                <img alt='' style={{cursor:'pointer'}} onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                            <DrawerHeader>
+                                <img alt='' style={{ cursor: 'pointer' }} onClick={navigateToHome} src='assets/superfunLogo1.png' />
                                 <IconButton onClick={handleDrawerClose}>
                                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                                 </IconButton>
                             </DrawerHeader>
                             <Divider />
                             <List>
-                                {['Sports', 'Stickers', 'Artists', 'Clips'].map((text, index) => (
+                                {['Memes', 'PFPs', 'Artists', 'Contests'].map((text, index) => (
                                     <ListItem key={text} disablePadding>
                                         <ListItemButton>
                                             <ListItemIcon>
@@ -252,24 +252,24 @@ export default function Header() {
                                     </ListItem>
                                 ))}
                             </List>
-                        </Drawer> 
+                        </Drawer>
 
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{  display: { xs: 'none', sm: 'block' }, cursor:'pointer' }}
-                        > 
-                           <img alt=''  onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                            sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+                        >
+                            <img alt='' onClick={navigateToHome} src='assets/superfunLogo1.png' />
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
-                        <Box sx={{  display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
-                    {pages.map((page) => ( 
-                        <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block',   }}>{page.name}</Link>
-                    ))}
-                     <UploadModal/> 
-                    <ColorButton className='m-2' >Connect</ColorButton>
-                </Box>
+                        <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
+                            {pages.map((page) => (
+                                <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block', }}>{page.name}</Link>
+                            ))}
+                            <UploadModal />
+                            < Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform:'capitalize' }}>Login</Button>
+                        </Box>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
                                 <Badge badgeContent={4} color="error">
@@ -311,7 +311,7 @@ export default function Header() {
                         </Box>
                     </Toolbar>
                 </AppBar>
-                
+
                 {renderMobileMenu}
                 {renderMenu}
             </Box>

@@ -1,8 +1,7 @@
 
 import './App.css';
 import ArtistSlider from './components/ArtistSlider';
-import TrendingSlider from './components/TrendingSlider';
-import Clips from './components/Clips';
+import TrendingSlider from './components/TrendingSlider'; 
 import Header from './header/Header';
 import Stories from './components/Stories';
 import TopCreators from './components/TopCreators';
@@ -15,8 +14,7 @@ function App() {
       <TopCreators/>
       <Search/>
       <TrendingSlider/>
-      <ArtistSlider/>
-      <Clips/>
+      <ArtistSlider/> 
       <Stories/>
     </>
   );

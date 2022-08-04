@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Divider, IconButton, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Divider, IconButton, InputBase, Tab, Tabs, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../header/Header';
@@ -7,61 +7,114 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
+import PropTypes from 'prop-types';
+import Overview from '../contests/Overview';
+import MyProject from '../contests/MyProject';
+import Participants from '../contests/Participants';
 
-const sliderData = [
+const storyData = [
   {
-    name: "Slider0",
-    img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif"
+    name: "Jaydip Patel",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTBiIBka08VQlJa_2LMCkrZKqZ7fT-PV_zw&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider1",
-    img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif"
+    name: "Mansi Joshi",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2AnKOLhLgzlFjwD4nLP21BDjglT43XsVwJQ&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '4 day ago'
   },
   {
-    name: "Slider2",
-    img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif"
+    name: "Disha Sathwara",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWkh-FmK4k2h4a0dVk9FDO14869w7TjqwyA&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago',
   },
   {
-    name: "Slider3",
-    img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif"
+    name: "Dhruv Sathwara",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDXiKxCdCFAZverAZZPHT77HqndAlgTEtncg&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider4",
-    img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif"
+    name: "Karan Pujara",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScPSEyda4ZdKgzlMZpIjmCoa6Hyt8xVBNeg&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider5",
-    img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
+    name: "Web3Builder",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQGFlovSwUJsdCOFZYqKxiGTy9aBjCLmQVw&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider6",
-    img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
+    name: "CryptoYard",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIuplMPz5muZkszIGtUUO0H7XkCw5gxhTew&usqp=CAU",
+    description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
+    date: '3 day ago'
   },
   {
-    name: "Slider7",
-    img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif"
+    name: "CrypticDev",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4meNTJr3kzXWPMkCAjzkTNXeD3Ys8LBfGPziN_epUuBsbmG9PTCMux02sno7Tm6TKspA&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider8",
-    img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif"
+    name: "CryptoPunk",
+    img: "https://g.foolcdn.com/art/companylogos/square/link.png",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider9",
-    img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif"
+    name: "Vitalik",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJbf16Wo-44LjPMWnx9UPvA11MzO8_0igDw&usqp=CAU",
+    description: "Apologies Aren’t Enough, We Need Reparations",
+    date: '3 day ago'
   },
   {
-    name: "Slider10",
-    img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif"
+    name: "Polygon",
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIB9Rv-Q2c3sp_1N-bKK0EspLRtR5Y45iJUA&usqp=CAU",
+    description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
+    date: '3 day ago'
   }
 ]
-const tags = [
-  "#tuesday ",
-  "#happy tuesday",
-  "#doggies ",
-  " #happy tuesday morning",
-  " #happy tuesday good morning",
-  " #good tuesday morning"
-]
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 1 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
 function ContestDetails() {
   const [data, setData] = useState();
   const [detail, setDetail] = useState();
@@ -71,7 +124,7 @@ function ContestDetails() {
 
   useEffect(() => {
 
-    const dd = sliderData && sliderData.filter((e) => e.name === param.id);
+    const dd = storyData && storyData.filter((e) => e.name === param.id);
     setData(dd);
   }, [param, detail])
 
@@ -84,214 +137,68 @@ function ContestDetails() {
     setShowComment(!showComment);
   };
 
+  const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
 
   return (
     <>
       <Header />
-      <Box sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
-        <Search />
+      <div style={{ marginTop: '100px' }}>
         <div className='container'>
-          {/* <div className='row mt-5'> */}
-          <div className='row mt-5'>
-            {
-              detail === undefined && data ? data.map((e) => (
-                <div key={e.name} className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
-                  <Card   >
-                    <CardHeader
-                      avatar={
-                        <Avatar src={e.img} aria-label="recipe">
+          <div className='row'>
 
-                        </Avatar>
-                      }
-                      title={e.name}
-                    />
-                    <CardMedia
-                      component="img"
-                      image={e.img}
-                      alt={e.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
-                    />
-                    <CardContent>
-                      {/* <Typography variant="body2" color="text.secondary">
+            <div className='col-12'>
+              <div className="mb-2">
+                 {
+                  data && data.map((e)=>(
+                    <> 
+                    <Typography gutterBottom   variant="h4"  >
+                        {e.name}
+                    </Typography> 
+                    <Typography  gutterBottom   variant="body2" component="div" color="text.secondary">
                         {e.description}
-                      </Typography> */}
-                    </CardContent>
-                    <CardActions disableSpacing> 
-                      <div 
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        <FavoriteBorderIcon />
-                        <span className="d-none-xss">Likes</span>
-                      </div>
-
-                      <div
-                        onClick={handleShowComment}
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        < ModeCommentOutlinedIcon />
-                        <span className="d-none-xss">Comment</span>
-                      </div>
-
-                       
-                      <IconButton
-                        sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                      >
-                        < ShareOutlinedIcon />
-                      </IconButton>
-                      <label>Share</label>
-                    </CardActions>
-                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white' }} />
-                    {showComment ? (
-                      <div className='m-2'>
-                        <div className="d-flex justify-content-around mt-2">
-                          <div className="p-0">
-                             <Avatar src={detail && detail.img}/>
-                          </div>
-                          <form className="col-10 header-search ms-3 d-flex align-items-center">
-                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
-                            <InputBase
-                                     onChange={(e) => setComments(e.target.value)}
-                                    sx={{ ml: 1, flex: 1, color: 'black'}}
-                                    placeholder="Write a comment.."
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                /> 
-                            </div>
-                            <IconButton  >
-                              <Send  />
-                            </IconButton>
-                          </form>
-                        </div> 
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </Card>
-                  {
-                    tags.map((e) => (
-                      <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                    ))
-                  }
-                </div>
-              )) :
-                <div className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
-                  <Card   >
-                    <CardHeader
-                      avatar={
-                        <Avatar src={detail && detail.img} aria-label="recipe">
-
-                        </Avatar>
-                      }
-                      title={detail && detail.name}
-                    />
-                    <CardMedia
-                      component="img"
-                      image={detail && detail.img}
-                      alt={detail && detail.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
-                    />
-                    <CardContent>
-                      {/* <Typography variant="body2" color="text.secondary">
-                    {e.description}
-                  </Typography> */}
-                    </CardContent>
-                    <CardActions disableSpacing>
-
-                    <div 
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        <FavoriteBorderIcon />
-                        <span className="d-none-xss">Likes</span>
-                      </div>
-
-                      <div
-                        onClick={handleShowComment}
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        < ModeCommentOutlinedIcon />
-                        <span className="d-none-xss">Comment</span>
-                      </div>
-                      
-                       
-                      <IconButton
-                        sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                      >
-                        < ShareOutlinedIcon />
-                      </IconButton>
-                      <label>Share</label>
-                    </CardActions>
-
-                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white'}} />
-                    {showComment ? (
-                      <div className='m-2'>
-                        <div className="d-flex justify-content-around mt-2">
-                          <div className="p-0">
-                             <Avatar src={detail && detail.img}/>
-                          </div>
-                          <form className="col-10 header-search ms-3 d-flex align-items-center">
-                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
-                            <InputBase
-                                     onChange={(e) => setComments(e.target.value)}
-                                    sx={{ ml: 1, flex: 1, color: 'black'}}
-                                    placeholder="Write a comment.."
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                /> 
-                            </div>
-                            <IconButton  >
-                              <Send  />
-                            </IconButton>
-                          </form>
-                        </div> 
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    
-                  </Card>
-                  {
-                    tags.map((e) => (
-                      <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                    ))
-                  }
-                </div>
-            }
-            {
-              sliderData && sliderData.map((e) => {
-                if (e.name !== param.id) {
-                  return (
-                    <div className='col-12 col-sm-3 col-md-3 col-lg-3'>
-                      <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} style={{ cursor: 'pointer' }} >
-                        <CardMedia
-                          component="img"
-                          height="194"
-                          image={e.img}
-                          alt={e.name}
-                        />
-                        <CardContent>
-                          <Typography variant="body2" color="text.secondary">
-
-                          </Typography>
-                        </CardContent>
-                        <CardActions disableSpacing>
-                          <IconButton aria-label="add to favorites">
-                            <FavoriteBorderIcon />
-                          </IconButton>
-                        </CardActions>
-                      </Card>
-                    </div>
-                  )
-                }
-                return (
-                  <></>
-                )
-              })
-            }
+                    </Typography>
+                    </>
+                  ))
+                 }
+              </div>
+            </div>
+            <div className='col-12'>
+              <Box sx={{ width: '100%', p: 0 }}>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                  <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label="Overview" {...a11yProps(0)} />
+                    <Tab label="My Submission" {...a11yProps(1)} />
+                    <Tab label=" Participants" {...a11yProps(2)} />
+                    <Tab label="Rules" {...a11yProps(3)} />
+                    <Tab label="Prizes" {...a11yProps(4)} />
+                     
+                  </Tabs>
+                </Box>
+                <TabPanel value={value} index={0} className="p-0">
+                  <Overview data={data}/>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                <MyProject data={data}/>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                   <Participants data={storyData}/>
+                </TabPanel>
+                <TabPanel value={value} index={3} className="p-0">
+                  ds
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                  Participated
+                </TabPanel>
+              </Box>
+            </div>
           </div>
         </div>
-      </Box>
+      </div>
 
     </ >
   )

@@ -7,8 +7,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { ThemeProvider, createTheme,responsiveFontSizes } from '@mui/material/styles';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css"; 
-import ClipList from './components/Lists/ClipList';
+import "slick-carousel/slick/slick-theme.css";  
 import ContestList from './components/Lists/ContestList';
 import StorieList from './components/Lists/StorieList';
 import TrendingList from './components/Lists/TrendingList';
@@ -61,8 +60,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App/>} />  
         <Route path="/memers" element={<MemeList/>} />    
-        <Route path="/trending" element={<TrendingList/>} />  
-        <Route path="/clips" element={<ClipList/>} />  
+        <Route path="/trending" element={<TrendingList/>} />   
         <Route path="/stories" element={<StorieList/>} />  
         <Route path="/contest" element={<ContestList/>} />  
         <Route path="/:id" element={<Profile/>} /> 

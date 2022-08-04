@@ -9,7 +9,7 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link  as RouterLink} from 'react-router-dom';
 
 function Stories() {
     const [style, setStyle] = useState("");
@@ -108,13 +108,13 @@ function Stories() {
             loader={<h4 className='text-center'>Loading...</h4>}
 
         >
-            <div className='container mt-5'>
+            <div className='container mt-3'>
                 <div className='row'>
-                    <div className="col-12 mt-4 mb-2">
-                        <div className="d-flex justify-content-between">
-                            <h4>Stories</h4> 
-                            <Button  component={Link} to="/stories">View All</Button>
-                        </div>
+                    <div className="col-12 mt-2 mb-2"> 
+                        <div className="d-flex justify-content-between mb-2">
+                        <h5>Stories</h5>
+                        <Button  component={RouterLink} to="/stories">View All</Button>
+                    </div>
                     </div>
 
 

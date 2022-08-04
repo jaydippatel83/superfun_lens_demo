@@ -1,4 +1,4 @@
-import { Avatar, Button, Link } from '@mui/material'
+import { Avatar, Button, Divider, Link } from '@mui/material'
 import React from 'react'
 import { Link as RouterLink } from "react-router-dom";
 import Slider from 'react-slick'; 
@@ -129,12 +129,12 @@ function TopCreators() {
 
 
     return (
-        <div className='container mt-5' >
+        <div className='container mt-4' >
             <div className='row'>
                 <div className='col mt-5'>
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between mb-2">
                         <h5>Top Memers</h5>
-                        <Button component={Link} to="/memers">View All</Button>
+                        <Button  component={RouterLink} to="/memers">View All</Button>
                     </div>
                     <Slider {...settings}>
                         {
@@ -149,15 +149,16 @@ function TopCreators() {
                                             underline="hover"
                                             component={RouterLink}
                                         > 
-                                        <div   className="story" style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${e.img})` }}>
-                                            <Avatar src={e.img} className="storyAvatar" />
+                                        <div   className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.img})` }}>
+                                            
+                                              <Avatar src={e.img} className="storyAvatar" />   
                                             <h4>{e.name}</h4>
                                         </div>
                                         </Link>
                                     </div>
                                 )
                             })
-                        }
+                        } 
                     </Slider>
                 </div>
             </div>

@@ -32,9 +32,9 @@ export default function UploadModal() {
 
     return (
         <div>
-            <ColorButton className='m-2' onClick={handleClickOpen}  >Upload</ColorButton>
+            <Button  className='m-2' style={{background:'#F66A24', color:'white',textTransform:'capitalize'}} onClick={handleClickOpen}  >Post</ Button>
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-                <DialogTitle>Upload</DialogTitle>
+                <DialogTitle>Post</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <TextField className='mt-2' id="outlined-basic" label="Title" variant="outlined" fullWidth />
