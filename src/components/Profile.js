@@ -11,8 +11,7 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
 
 function Profile() {
-    const params = useParams();
-    console.log(params, "param");
+    const params = useParams(); 
     const [data, setData] = useState();
     const [show, setShow] = useState(false);
     const [detail, setDetail] = useState();

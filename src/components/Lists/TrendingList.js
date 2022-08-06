@@ -67,8 +67,7 @@ function TrendingList() {
 
     const [style, setStyle] = useState("");
 
-    const handleNavigate=(e)=>{
-        console.log(e,"eee");
+    const handleNavigate=(e)=>{ 
         navigate(`/trendingDetails${e.name}`)
     }
 

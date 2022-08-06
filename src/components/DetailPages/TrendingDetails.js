@@ -69,8 +69,7 @@ function TrendingDetails() {
   const [showComment, setShowComment] = useState(false);
   const [comment, setComments] = React.useState([""]);
 
-  const param = useParams();
-  console.log(param, "param");
+  const param = useParams(); 
   useEffect(() => {
 
     const dd = sliderData && sliderData.filter((e) => e.name === param.id);
@@ -81,8 +80,7 @@ function TrendingDetails() {
   const handleNavigate = (data) => {
     setDetail(data); 
   }
-
-  console.log(detail, "data");
+ 
 
   const handleShowComment = () => {
     setShowComment(!showComment);

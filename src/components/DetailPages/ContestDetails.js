@@ -11,6 +11,8 @@ import PropTypes from 'prop-types';
 import Overview from '../contests/Overview';
 import MyProject from '../contests/MyProject';
 import Participants from '../contests/Participants';
+import Rules from '../contests/Rules';
+import Prizes from '../contests/Prizes';
 
 const storyData = [
   {
@@ -189,10 +191,10 @@ function ContestDetails() {
                    <Participants data={storyData}/>
                 </TabPanel>
                 <TabPanel value={value} index={3} className="p-0">
-                  ds
+                  <Rules data={data}/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                  Participated
+                  <Prizes data={data}/>
                 </TabPanel>
               </Box>
             </div>

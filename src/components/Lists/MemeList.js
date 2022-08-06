@@ -75,8 +75,7 @@ const storyData = [
 function MemeList() {
     const navigate = useNavigate(); 
 
-    const handleNavigate = (e) => {
-        console.log(e, "eee");
+    const handleNavigate = (e) => { 
         navigate(`/${e.name}`)
     }
 

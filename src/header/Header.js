@@ -26,7 +26,12 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import UploadModal from '../components/modals/UploadModal';
-
+import { login } from '../LensProtocol/Login-user';
+import ProfileCreation from '../components/modals/CreateProfileModal';
+import { generateChallenge } from '../LensProtocol/login/generate-challenge';
+import { signText } from '../LensProtocol/services/ethers-service';
+import { authenticate } from '../LensProtocol/login/authenticate';
+import getProfiles from '../LensProtocol/profile/get-profiles';
 
 const pages = [
     {
@@ -96,6 +101,30 @@ export default function Header() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const connectWallet = async () => {
+        const accounts = await window.ethereum?.request({
+            method: "eth_requestAccounts",
+        });
+        const challengeResponse = await generateChallenge(accounts[0]);
+        console.log(challengeResponse, "challengeResponse");
+        const signature = await signText(challengeResponse.data.challenge.text);
+        console.log(signature, "signature");
+        const accessTokens = await authenticate(accounts[0], signature);
+        console.log(accessTokens, "accessTokens");
+
+        window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
+        window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+
+        // Get authed profiles
+        const profilesData = await getProfiles(accounts[0]);
+
+        console.log(profilesData, "profilesData");
+
+    };
+
+   
+
+
     // const handleNavigate =(e)=>{
     //     navigate(`/${e}`);
     // }
@@ -127,7 +156,7 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <ProfileCreation />
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
         </Menu>
     );
@@ -192,7 +221,7 @@ export default function Header() {
     return (
         <div className='container p-0 '>
             <Box sx={{ flexGrow: 1 }} >
-                <AppBar sx={{ padding: { xs: '0', md: '0 85px', lg:'0 4%', background: 'black' } }} color='primary' open={open}>
+                <AppBar sx={{ padding: { xs: '0', md: '0 85px', lg: '0 4%', background: 'black' } }} color='primary' open={open}>
                     <Toolbar>
                         <IconButton
                             size="large"
@@ -268,7 +297,22 @@ export default function Header() {
                                 <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block', }}>{page.name}</Link>
                             ))}
                             <UploadModal />
-                            < Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform:'capitalize' }}>Login</Button>
+                            {/* <Button
+                                type="button"
+                                className="mt-3 w-full inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                                onClick={async () => {
+                                    try {
+                                        await authenticate({ provider: "injected" });
+                                        window.localStorage.setItem("connectorId", "injected");
+                                    } catch (e) {
+                                        console.error(e);
+                                    }
+                                }}
+                            >
+                                <img src={Metamask} alt={"Metamask"} className="h-10 w-10" />
+                                <p className="mx-5">Metamask</p>
+                            </Button> */}
+                            < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button>
                         </Box>
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
@@ -317,4 +361,5 @@ export default function Header() {
             </Box>
         </div>
     );
+
 }

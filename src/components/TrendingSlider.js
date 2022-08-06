@@ -96,8 +96,7 @@ export default function TrendingSlider() {
         }
     ]
 
-    const handleNavigate=(e)=>{
-        console.log(e,"eee");
+    const handleNavigate=(e)=>{ 
         navigate(`/trendingDetails${e.name}`)
     }
 

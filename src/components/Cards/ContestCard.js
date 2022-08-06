@@ -14,8 +14,7 @@ function ContestCard(props) {
     const navigate = useNavigate();
 
 
-    const handleNavigate=(e)=>{
-        console.log(e,"eee");
+    const handleNavigate=(e)=>{ 
         navigate(`/contestDetails${e.name}`)
     }
 

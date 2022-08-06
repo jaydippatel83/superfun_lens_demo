@@ -19,8 +19,7 @@ function Search() {
     const [sticky, setSticky] = useState("");
 
     // on render, set listener
-    useEffect(() => {
-        console.log("hello");
+    useEffect(() => { 
         window.addEventListener("scroll", isSticky);
         return () => {
             window.removeEventListener("scroll", isSticky);
@@ -31,8 +30,7 @@ function Search() {
         /* Method that will fix header after a specific scrollable */
         const scrollTop = window.scrollY;
         const stickyClass = scrollTop >= 250 ? "is-sticky" : "";
-        setSticky(stickyClass);
-        console.log(stickyClass);
+        setSticky(stickyClass); 
     };
 
     const classes = `header-section  m-auto ${sticky}`;

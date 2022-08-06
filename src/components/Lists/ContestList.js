@@ -12,6 +12,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import ContestCard from '../Cards/ContestCard';
+import CreateContestModal from '../modals/CreateContestModal';
 
 
 function TabPanel(props) {
@@ -134,8 +135,7 @@ function ContestList() {
 
     const [style, setStyle] = useState("");
 
-    const handleNavigate = (e) => {
-        console.log(e, "eee");
+    const handleNavigate = (e) => { 
         navigate(`/contestDetails${e.name}`)
     }
 
@@ -149,7 +149,8 @@ function ContestList() {
 
                         <div className='col-12'>
                             <div className="d-flex justify-content-end mb-2">
-                                < Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button>
+                                <CreateContestModal/>
+                                {/* < Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button> */}
                             </div>
                         </div>
                         <div className='col-12'>
