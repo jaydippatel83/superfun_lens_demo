@@ -3,6 +3,7 @@ import createProfile from "../../LensProtocol/profile/Create_Profile";
 import React,{ useState } from "react"; 
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { styled } from "@mui/system";
+import { profile } from "../../LensProtocol/profile/get-profile";
 
 const ColorButton = styled(Button)(({ theme }) => ({
     color: 'white',
@@ -27,7 +28,7 @@ export default function ProfileCreation() {
 
 
 
-    
+
 
   const [handle, setHandle] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -35,27 +36,28 @@ export default function ProfileCreation() {
   var forbiddenCharacter = /[!@#$%^&*()_+\-=[\]{};':"\\|,`<>/?]+/;
 
   const handleSubmit = async (event) => {
-    
-    if (forbiddenCharacter.test(handle)) {
-        console.log(handle,"handle");
-      alert("Special character are not allowed.");
-      return false;
-    } else if (handle.includes(' ')) {
-      alert("Spaces are not allowed.");
-      return false;
-    }
-    setIsLoading(true);
-    const result = await createProfile(handle);
-    console.log(result,"result");
-    // await setDispatcher();
 
-    if (result === false) {
-      setIsLoading(false);
-    } else {
-      navigate(`/profile/${handle}`);
-    }
-    console.log("create profile: profile has been indexed", result);
-    return true;
+  const ss= await profile(handle); 
+    // if (forbiddenCharacter.test(handle)) {
+    //     console.log(handle,"handle");
+    //   alert("Special character are not allowed.");
+    //   return false;
+    // } else if (handle.includes(' ')) {
+    //   alert("Spaces are not allowed.");
+    //   return false;
+    // }
+    // setIsLoading(true);
+    // const result = await createProfile(handle);
+    // console.log(result,"result");
+    // // await setDispatcher();
+
+    // if (result === false) {
+    //   setIsLoading(false);
+    // } else {
+    //   navigate(`/profile/${handle}`);
+    // }
+    // console.log("create profile: profile has been indexed", result);
+    // return true;
   };
 
   if (isLoading) {

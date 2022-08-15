@@ -6,7 +6,7 @@ import { gql } from '@apollo/client'
 import { getAddressFromSigner } from '../services/ethers-service';
 import { login } from '../Login-user';
 import { BigNumber, utils } from "ethers";
-import { loginSS } from '../login/user-login';
+import { loginSS} from '../login/user-login';
 import { pollUntilIndexed } from '../Reffresh/has-transaction-been-indexed';
 
 const CREATE_PROFILE = `

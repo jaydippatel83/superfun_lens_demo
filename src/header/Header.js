@@ -23,15 +23,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Button } from '@mui/material';
+import { Avatar, Button } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import UploadModal from '../components/modals/UploadModal';
-import { login } from '../LensProtocol/Login-user';
 import ProfileCreation from '../components/modals/CreateProfileModal';
-import { generateChallenge } from '../LensProtocol/login/generate-challenge';
-import { signText } from '../LensProtocol/services/ethers-service';
-import { authenticate } from '../LensProtocol/login/authenticate';
 import getProfiles from '../LensProtocol/profile/get-profiles';
+import { useEthers } from "@usedapp/core";
+import Web3Modal from 'web3modal';
+
+import { LensAuthContext } from '../context/LensContext'
+import Blockies from 'react-blockies'
 
 const pages = [
     {
@@ -63,6 +64,11 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 
 export default function Header() {
+
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const { profile, login, disconnectWallet, update } = lensAuthContext;
+
+    const { account, activateBrowserWallet, deactivate } = useEthers();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -73,6 +79,7 @@ export default function Header() {
     // const navigate = useRoutes();
 
     const theme = useTheme();
+    const isConnected = account !== undefined;
 
     const drawerWidth = 240;
 
@@ -100,34 +107,13 @@ export default function Header() {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
-
-    const connectWallet = async () => {
-        const accounts = await window.ethereum?.request({
-            method: "eth_requestAccounts",
-        });
-        const challengeResponse = await generateChallenge(accounts[0]);
-        console.log(challengeResponse, "challengeResponse");
-        const signature = await signText(challengeResponse.data.challenge.text);
-        console.log(signature, "signature");
-        const accessTokens = await authenticate(accounts[0], signature);
-        console.log(accessTokens, "accessTokens");
-
-        window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
-        window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
-
-        // Get authed profiles
-        const profilesData = await getProfiles(accounts[0]);
-
-        console.log(profilesData, "profilesData");
-
-    };
-
-   
-
-
     // const handleNavigate =(e)=>{
     //     navigate(`/${e}`);
     // }
+
+    React.useEffect(() => {
+        console.log(profile, update);
+    }, [profile, update]);
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -156,8 +142,12 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <ProfileCreation />
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {/* <ProfileCreation /> */}
+            {/* <Blockies seed={profile.id} size={10} className="rounded-full" style={{borderRadius:'50%'}} /> */}
+            {/* <Avatar src={profile && profile.picture.original.url} /> */}
+            <MenuItem onClick={handleMenuClose} > {
+                profile && <p>{profile.handle}</p>
+            }</MenuItem>
         </Menu>
     );
 
@@ -185,7 +175,7 @@ export default function Header() {
                         <MailIcon />
                     </Badge>
                 </IconButton>
-                <p>Messages</p>
+
             </MenuItem>
             <MenuItem>
                 <IconButton
@@ -209,7 +199,9 @@ export default function Header() {
                 >
                     <AccountCircle />
                 </IconButton>
-                <p>Profile</p>
+                {
+                    profile && <p>{profile.handle}</p>
+                }
             </MenuItem>
         </Menu>
     );
@@ -312,35 +304,30 @@ export default function Header() {
                                 <img src={Metamask} alt={"Metamask"} className="h-10 w-10" />
                                 <p className="mx-5">Metamask</p>
                             </Button> */}
-                            < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button>
-                        </Box>
-                        <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                            {/* <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                                <Badge badgeContent={4} color="error">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton> */}
-                            {/* <IconButton
-                                size="large"
-                                aria-label="show 17 new notifications"
-                                color="inherit"
-                            >
-                                <Badge badgeContent={17} color="error">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton> */}
-                            <IconButton
-                                size="large"
-                                edge="end"
-                                aria-label="account of current user"
-                                aria-controls={menuId}
-                                aria-haspopup="true"
-                                onClick={handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                        </Box>
+
+                            {
+                                profile && <Button className='m-2' style={{ background: '#488E53', color: 'white', textTransform: 'capitalize' }} onClick={disconnectWallet}>
+                                    Disconnect
+                                </Button>
+                            }
+
+                            {
+                                !profile && <Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }} onClick={login}>
+                                    Login
+                                </Button>
+                            }
+
+                            {/* < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button> */}
+                        </Box> 
+
+                        {
+                            profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+                                {/* <Avatar src={profile && profile.picture.original.url} /> */}
+                                <p className='text-center m-1'>{profile.handle}</p>
+
+                            </Box>
+                        }
+
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size="large"
@@ -357,7 +344,7 @@ export default function Header() {
                 </AppBar>
 
                 {renderMobileMenu}
-                {renderMenu}
+
             </Box>
         </div>
     );

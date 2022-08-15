@@ -17,7 +17,7 @@ import ContestDetails from './components/DetailPages/ContestDetails';
 import MemeList from './components/Lists/MemeList';
 import Footer from './header/Footer';
 import { LensAuthContextProvider } from './context/LensContext';
-
+// import { MoralisProvider } from "react-moralis";
 
 
 let darkTheme = createTheme({
@@ -58,6 +58,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={darkTheme}>
+    {/* <MoralisProvider
+          appId={process.env.REACT_APP_MORALIS_KEY}
+          serverUrl={process.env.REACT_APP_MORALIS_SERVER}
+        > */}
       <LensAuthContextProvider>
         <BrowserRouter>
           <Routes>
@@ -73,6 +77,7 @@ root.render(
           <Footer />
         </BrowserRouter>
       </LensAuthContextProvider>
+      {/* </MoralisProvider> */}
     </ThemeProvider>
   </React.StrictMode>
 );

@@ -99,6 +99,7 @@ export const pollUntilIndexed = async (txHash) => {
     const result = await hasTxBeenIndexed(txHash);
 
     const response = result.data.hasTxHashBeenIndexed;
+    console.log(response,"response");
     if (response.__typename === "TransactionIndexedResult") {
       console.log("pool until indexed: indexed", response.indexed);
 

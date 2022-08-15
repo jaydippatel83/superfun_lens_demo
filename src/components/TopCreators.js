@@ -1,7 +1,10 @@
 import { Avatar, Button, Divider, Link } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link as RouterLink } from "react-router-dom";
-import Slider from 'react-slick'; 
+import Slider from 'react-slick';
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { db } from '../firebase/firebase';
+
 
 const storyData = [
     {
@@ -72,7 +75,27 @@ const storyData = [
 ]
 
 function TopCreators() {
+
+    const [story, setStory] = useState([]);
+
+
+    useEffect(() => {
+        async function getCreator() {
+        var arry = [];
+
+            const q = query(collection(db, "profiles"));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => { 
+                arry.push(doc.data())
+            });
+        console.log(arry); 
+        setStory(arry);
+
+        }
+        getCreator()
+    }, [])
  
+
 
     var settings = {
         dots: true,
@@ -134,31 +157,31 @@ function TopCreators() {
                 <div className='col mt-5'>
                     <div className="d-flex justify-content-between mb-2">
                         <h5>Top Memers</h5>
-                        <Button  component={RouterLink} to="/memers">View All</Button>
+                        <Button component={RouterLink} to="/memers">View All</Button>
                     </div>
                     <Slider {...settings}>
                         {
-                            storyData.map((e) => {
+                           story && story.map((e) => { 
                                 return (
-                                    <div key={e.name}> 
+                                    <div key={e.name}>
                                         <Link
                                             to={`/${e.name}`}
-                                            state={{ Profile : e }}
+                                            state={{ Profile: e }}
                                             params={{ e }}
                                             color="inherit"
                                             underline="hover"
                                             component={RouterLink}
-                                        > 
-                                        <div   className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.img})` }}>
-                                            
-                                              <Avatar src={e.img} className="storyAvatar" />   
-                                            <h4>{e.name}</h4>
-                                        </div>
+                                        >
+                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.photo})` }}>
+
+                                                <Avatar src={e.photo} className="storyAvatar" />
+                                                <h4>{e.handle}</h4>
+                                            </div>
                                         </Link>
                                     </div>
                                 )
                             })
-                        } 
+                        }
                     </Slider>
                 </div>
             </div>

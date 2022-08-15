@@ -1,0 +1,3016 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/base/ERC721Enumerable.sol": {
+      "lastModificationDate": 1660137362976,
+      "contentHash": "03697c05723d997a609b5e8e54ba577a",
+      "sourceName": "contracts/core/base/ERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ERC721Time.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC721Enumerable"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/base/ERC721Time.sol": {
+      "lastModificationDate": 1660137362977,
+      "contentHash": "bfd64facfd5e111366548e6619255e27",
+      "sourceName": "contracts/core/base/ERC721Time.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC721Time.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+        "@openzeppelin/contracts/utils/Address.sol",
+        "@openzeppelin/contracts/utils/Context.sol",
+        "@openzeppelin/contracts/utils/Strings.sol",
+        "@openzeppelin/contracts/utils/introspection/ERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC721Time"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol": {
+      "lastModificationDate": 1660137938745,
+      "contentHash": "f4dd06783f321aa26179bc2b6e361c29",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Enumerable"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/base/IERC721Time.sol": {
+      "lastModificationDate": 1660137362977,
+      "contentHash": "17f1c2070e4168a21cf13d6a4d79e21c",
+      "sourceName": "contracts/core/base/IERC721Time.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Time"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+      "lastModificationDate": 1660137938750,
+      "contentHash": "c22d4395e33763de693fd440c6fd10e1",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Receiver"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol": {
+      "lastModificationDate": 1660137938745,
+      "contentHash": "efbc0d15b80a74e34dbe8da0f3e879bb",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1660137938484,
+      "contentHash": "c476b3895a94798b88a4bb97399e6dfe",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.1"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1660137938491,
+      "contentHash": "5f2c5c4b6af2dd4551027144797bc8be",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
+      "lastModificationDate": 1660137938778,
+      "contentHash": "cf46906c4035f51639a22265066a9e78",
+      "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Strings"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/introspection/ERC165.sol": {
+      "lastModificationDate": 1660137938674,
+      "contentHash": "0e7db055ce108f9da7bb6686a00287c0",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/ERC165.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC165"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1660137938744,
+      "contentHash": "ec99d946db3685a3630554aa6055bd7f",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/introspection/IERC165.sol": {
+      "lastModificationDate": 1660137938739,
+      "contentHash": "03e6768535ac4da0e9756f1d8a4a018a",
+      "sourceName": "@openzeppelin/contracts/utils/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/base/LensNFTBase.sol": {
+      "lastModificationDate": 1660137362979,
+      "contentHash": "94a06945f331ed54396fad93aec8b629",
+      "sourceName": "contracts/core/base/LensNFTBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/ILensNFTBase.sol",
+        "../../libraries/Errors.sol",
+        "../../libraries/DataTypes.sol",
+        "../../libraries/Events.sol",
+        "./ERC721Time.sol",
+        "./ERC721Enumerable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LensNFTBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/ILensNFTBase.sol": {
+      "lastModificationDate": 1660137363067,
+      "contentHash": "896f6a633fc2ca22ee8d58301bb4c0d4",
+      "sourceName": "contracts/interfaces/ILensNFTBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ILensNFTBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/Errors.sol": {
+      "lastModificationDate": 1660137363085,
+      "contentHash": "8b8e8cf73b8a90af6af14d207d5b91ed",
+      "sourceName": "contracts/libraries/Errors.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Errors"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/DataTypes.sol": {
+      "lastModificationDate": 1660137363084,
+      "contentHash": "4ffede1708d195f3cd808be0ed40b17a",
+      "sourceName": "contracts/libraries/DataTypes.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "DataTypes"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/Events.sol": {
+      "lastModificationDate": 1660137363086,
+      "contentHash": "6a2c711ed21e466d20e6904abaa9b337",
+      "sourceName": "contracts/libraries/Events.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Events"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockLensHubV2BadRevision.sol": {
+      "lastModificationDate": 1660137363111,
+      "contentHash": "e2ee6c2b5cf88620fcea818e60590465",
+      "sourceName": "contracts/mocks/MockLensHubV2BadRevision.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/Events.sol",
+        "../libraries/Helpers.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Errors.sol",
+        "../libraries/PublishingLogic.sol",
+        "../libraries/InteractionLogic.sol",
+        "../core/base/LensNFTBase.sol",
+        "../core/base/LensMultiState.sol",
+        "../upgradeability/VersionedInitializable.sol",
+        "./MockLensHubV2Storage.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockLensHubV2BadRevision"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/ILensHub.sol": {
+      "lastModificationDate": 1660137363063,
+      "contentHash": "d23d62a2206997bba245f366f0a22a3a",
+      "sourceName": "contracts/interfaces/ILensHub.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ILensHub"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/Helpers.sol": {
+      "lastModificationDate": 1660137363087,
+      "contentHash": "d5e76ec218a70e09089ae87bc9ad540e",
+      "sourceName": "contracts/libraries/Helpers.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./DataTypes.sol",
+        "./Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Helpers"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/PublishingLogic.sol": {
+      "lastModificationDate": 1660137363100,
+      "contentHash": "31e1e9ad3b4ad67afd56bae3f00093e4",
+      "sourceName": "contracts/libraries/PublishingLogic.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Helpers.sol",
+        "./DataTypes.sol",
+        "./Errors.sol",
+        "./Events.sol",
+        "./Constants.sol",
+        "../interfaces/IFollowModule.sol",
+        "../interfaces/ICollectModule.sol",
+        "../interfaces/IReferenceModule.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "PublishingLogic"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/InteractionLogic.sol": {
+      "lastModificationDate": 1660137363098,
+      "contentHash": "23631ae966f82712b624e088bd7feee3",
+      "sourceName": "contracts/libraries/InteractionLogic.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../upgradeability/FollowNFTProxy.sol",
+        "./Helpers.sol",
+        "./DataTypes.sol",
+        "./Errors.sol",
+        "./Events.sol",
+        "./Constants.sol",
+        "../interfaces/IFollowNFT.sol",
+        "../interfaces/ICollectNFT.sol",
+        "../interfaces/IFollowModule.sol",
+        "../interfaces/ICollectModule.sol",
+        "@openzeppelin/contracts/proxy/Clones.sol",
+        "@openzeppelin/contracts/utils/Strings.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "InteractionLogic"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/base/LensMultiState.sol": {
+      "lastModificationDate": 1660137362978,
+      "contentHash": "d330b13c9eafedffa27ef088ace19bee",
+      "sourceName": "contracts/core/base/LensMultiState.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/Events.sol",
+        "../../libraries/DataTypes.sol",
+        "../../libraries/Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LensMultiState"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/upgradeability/VersionedInitializable.sol": {
+      "lastModificationDate": 1660137363130,
+      "contentHash": "4e1c81004a86b6218540074a549ef55f",
+      "sourceName": "contracts/upgradeability/VersionedInitializable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "VersionedInitializable"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockLensHubV2Storage.sol": {
+      "lastModificationDate": 1660137363113,
+      "contentHash": "5e044534bfc13bc6f5cb96b0940ec87a",
+      "sourceName": "contracts/mocks/MockLensHubV2Storage.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockLensHubV2Storage"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/Constants.sol": {
+      "lastModificationDate": 1660137363073,
+      "contentHash": "e9c79bd128eb57937e95f2a3bfd9af9c",
+      "sourceName": "contracts/libraries/Constants.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Constants"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/IFollowModule.sol": {
+      "lastModificationDate": 1660137363048,
+      "contentHash": "cf3f863cd7896b2a7507ede222e49a7c",
+      "sourceName": "contracts/interfaces/IFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "IFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/ICollectModule.sol": {
+      "lastModificationDate": 1660137363034,
+      "contentHash": "e9756d85d8c5e9fe2bd8ba7d04833ec0",
+      "sourceName": "contracts/interfaces/ICollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ICollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/IReferenceModule.sol": {
+      "lastModificationDate": 1660137363071,
+      "contentHash": "abd9aafaae8435f555f7555b7568c5d1",
+      "sourceName": "contracts/interfaces/IReferenceModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "IReferenceModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/upgradeability/FollowNFTProxy.sol": {
+      "lastModificationDate": 1660137363127,
+      "contentHash": "827f9dfeef6125ee14742fa31a354530",
+      "sourceName": "contracts/upgradeability/FollowNFTProxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "@openzeppelin/contracts/proxy/Proxy.sol",
+        "@openzeppelin/contracts/utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FollowNFTProxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/IFollowNFT.sol": {
+      "lastModificationDate": 1660137363049,
+      "contentHash": "23933c1947f7e24b8c14ce5e40ddaca4",
+      "sourceName": "contracts/interfaces/IFollowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "IFollowNFT"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/ICollectNFT.sol": {
+      "lastModificationDate": 1660137363035,
+      "contentHash": "0c2bd9ff37cdab7b898b19c595efea24",
+      "sourceName": "contracts/interfaces/ICollectNFT.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ICollectNFT"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/proxy/Clones.sol": {
+      "lastModificationDate": 1660137938489,
+      "contentHash": "8d03477cb67af28579646fdb2508ddb0",
+      "sourceName": "@openzeppelin/contracts/proxy/Clones.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Clones"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/proxy/Proxy.sol": {
+      "lastModificationDate": 1660137938767,
+      "contentHash": "40b3d81a836d50ff47e03893dcaaf204",
+      "sourceName": "@openzeppelin/contracts/proxy/Proxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Proxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockProfileCreationProxy.sol": {
+      "lastModificationDate": 1660137363114,
+      "contentHash": "a1b62d92f379220169d710b41028c5e2",
+      "sourceName": "contracts/mocks/MockProfileCreationProxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockProfileCreationProxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockLensHubV2.sol": {
+      "lastModificationDate": 1660137363110,
+      "contentHash": "7b7fd9b438b0e1553f7cdc70a52f0768",
+      "sourceName": "contracts/mocks/MockLensHubV2.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/Events.sol",
+        "../libraries/Helpers.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Errors.sol",
+        "../libraries/PublishingLogic.sol",
+        "../libraries/InteractionLogic.sol",
+        "../core/base/LensNFTBase.sol",
+        "../core/base/LensMultiState.sol",
+        "../upgradeability/VersionedInitializable.sol",
+        "./MockLensHubV2Storage.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockLensHubV2"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/LensHub.sol": {
+      "lastModificationDate": 1660137362973,
+      "contentHash": "e8639792a45eddfac61f2b296ad22318",
+      "sourceName": "contracts/core/LensHub.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/Events.sol",
+        "../libraries/Helpers.sol",
+        "../libraries/Constants.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Errors.sol",
+        "../libraries/PublishingLogic.sol",
+        "../libraries/ProfileTokenURILogic.sol",
+        "../libraries/InteractionLogic.sol",
+        "./base/LensNFTBase.sol",
+        "./base/LensMultiState.sol",
+        "./storage/LensHubStorage.sol",
+        "../upgradeability/VersionedInitializable.sol",
+        "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LensHub"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/libraries/ProfileTokenURILogic.sol": {
+      "lastModificationDate": 1660137363099,
+      "contentHash": "bbfcf1f8e7b28011287712ceabfbc497",
+      "sourceName": "contracts/libraries/ProfileTokenURILogic.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/utils/Base64.sol",
+        "@openzeppelin/contracts/utils/Strings.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ProfileTokenURILogic"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/storage/LensHubStorage.sol": {
+      "lastModificationDate": 1660137363032,
+      "contentHash": "acf7f1019a8eac8faea9029b7bbae486",
+      "sourceName": "contracts/core/storage/LensHubStorage.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LensHubStorage"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/Base64.sol": {
+      "lastModificationDate": 1660137938485,
+      "contentHash": "8f868da0a90e46a85baa348a896d1702",
+      "sourceName": "@openzeppelin/contracts/utils/Base64.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Base64"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/reference/FollowerOnlyReferenceModule.sol": {
+      "lastModificationDate": 1660137363019,
+      "contentHash": "584ea7c34cd3576aa72f0db4d7eefc37",
+      "sourceName": "contracts/core/modules/reference/FollowerOnlyReferenceModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IReferenceModule.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FollowerOnlyReferenceModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/ModuleBase.sol": {
+      "lastModificationDate": 1660137362982,
+      "contentHash": "a5389dc40a798fa341020a01ad49191a",
+      "sourceName": "contracts/core/modules/ModuleBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/Errors.sol",
+        "../../libraries/Events.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ModuleBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/FollowValidationModuleBase.sol": {
+      "lastModificationDate": 1660137362981,
+      "contentHash": "4d040aeb681743841321e6849fb81edc",
+      "sourceName": "contracts/core/modules/FollowValidationModuleBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../interfaces/IFollowModule.sol",
+        "../../interfaces/ILensHub.sol",
+        "../../libraries/Errors.sol",
+        "../../libraries/Events.sol",
+        "./ModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FollowValidationModuleBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/TimedFeeCollectModule.sol": {
+      "lastModificationDate": 1660137362990,
+      "contentHash": "e7b7242b8299691adb253143bcc9e8ed",
+      "sourceName": "contracts/core/modules/collect/TimedFeeCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../../../interfaces/IFollowModule.sol",
+        "../../../interfaces/ILensHub.sol",
+        "../../../libraries/Errors.sol",
+        "../FeeModuleBase.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "TimedFeeCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/FeeModuleBase.sol": {
+      "lastModificationDate": 1660137362980,
+      "contentHash": "376671322d4515bd046a9c26de84f7ee",
+      "sourceName": "contracts/core/modules/FeeModuleBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/Errors.sol",
+        "../../libraries/Events.sol",
+        "../../interfaces/IModuleGlobals.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FeeModuleBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1660137938742,
+      "contentHash": "ad7c2d0af148c8f9f097d65deeb4da6b",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+      "lastModificationDate": 1660137938770,
+      "contentHash": "3a843b05b85a270e9455e3d2e804e633",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol",
+        "../extensions/draft-IERC20Permit.sol",
+        "../../../utils/Address.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "SafeERC20"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/interfaces/IModuleGlobals.sol": {
+      "lastModificationDate": 1660137363068,
+      "contentHash": "04d952692d80f031bf76fa6753b4875f",
+      "sourceName": "contracts/interfaces/IModuleGlobals.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "IModuleGlobals"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
+      "lastModificationDate": 1660137938585,
+      "contentHash": "fb77f144244b9ab12533aa6ce85ef8c5",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Permit"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/follow/FeeFollowModule.sol": {
+      "lastModificationDate": 1660137362994,
+      "contentHash": "d2ee81d89213c1e57023fa5dadc2658f",
+      "sourceName": "contracts/core/modules/follow/FeeFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IFollowModule.sol",
+        "../../../interfaces/ILensHub.sol",
+        "../../../libraries/Errors.sol",
+        "../FeeModuleBase.sol",
+        "../ModuleBase.sol",
+        "./FollowValidatorFollowModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FeeFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/follow/FollowValidatorFollowModuleBase.sol": {
+      "lastModificationDate": 1660137363001,
+      "contentHash": "768085c2fe814624b9cf426d1adff732",
+      "sourceName": "contracts/core/modules/follow/FollowValidatorFollowModuleBase.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IFollowModule.sol",
+        "../../../interfaces/ILensHub.sol",
+        "../../../libraries/Errors.sol",
+        "../ModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FollowValidatorFollowModuleBase"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+      "lastModificationDate": 1660137938742,
+      "contentHash": "909ab67fc5c25033fe6cd364f8c056f9",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../IERC20.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC20Metadata"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/token/ERC20/ERC20.sol": {
+      "lastModificationDate": 1660137938685,
+      "contentHash": "af7bd64e1cfefbf6cb07f2adc1a25392",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/ERC20.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC20.sol",
+        "./extensions/IERC20Metadata.sol",
+        "../../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC20"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/access/Ownable.sol": {
+      "lastModificationDate": 1660137938765,
+      "contentHash": "e436cea06129be2c73cda4b1acc848b5",
+      "sourceName": "@openzeppelin/contracts/access/Ownable.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "Ownable"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/misc/ProfileCreationProxy.sol": {
+      "lastModificationDate": 1660137363103,
+      "contentHash": "f5303e8241b9bd62cb088b96e98ce87b",
+      "sourceName": "contracts/misc/ProfileCreationProxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Errors.sol",
+        "@openzeppelin/contracts/access/Ownable.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ProfileCreationProxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/misc/UIDataProvider.sol": {
+      "lastModificationDate": 1660137363104,
+      "contentHash": "134e8142bdefbbc73a24ce80c4ed48bf",
+      "sourceName": "contracts/misc/UIDataProvider.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ILensHub.sol",
+        "../libraries/DataTypes.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "UIDataProvider"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/misc/LensPeriphery.sol": {
+      "lastModificationDate": 1660137363102,
+      "contentHash": "78e91663c40faac589446a41b3ad9a94",
+      "sourceName": "contracts/misc/LensPeriphery.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../core/base/IERC721Time.sol",
+        "../interfaces/ILensHub.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Events.sol",
+        "../libraries/Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LensPeriphery"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/ModuleGlobals.sol": {
+      "lastModificationDate": 1660137362982,
+      "contentHash": "79e5ba5a1ef5d1df3edc9c0430a91bbb",
+      "sourceName": "contracts/core/modules/ModuleGlobals.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../libraries/Errors.sol",
+        "../../libraries/Events.sol",
+        "../../interfaces/IModuleGlobals.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ModuleGlobals"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/LimitedTimedFeeCollectModule.sol": {
+      "lastModificationDate": 1660137362987,
+      "contentHash": "2661438e45ea32ed6a4573461e47a15c",
+      "sourceName": "contracts/core/modules/collect/LimitedTimedFeeCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../../../libraries/Errors.sol",
+        "../FeeModuleBase.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LimitedTimedFeeCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/follow/RevertFollowModule.sol": {
+      "lastModificationDate": 1660137363004,
+      "contentHash": "602d505d50d7cc46973df536db7951cc",
+      "sourceName": "contracts/core/modules/follow/RevertFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../libraries/Errors.sol",
+        "../ModuleBase.sol",
+        "./FollowValidatorFollowModuleBase.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "RevertFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/follow/ProfileFollowModule.sol": {
+      "lastModificationDate": 1660137363003,
+      "contentHash": "48ba248ea8d88df3218572a0c822ce1e",
+      "sourceName": "contracts/core/modules/follow/ProfileFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IFollowModule.sol",
+        "../../../libraries/Errors.sol",
+        "../ModuleBase.sol",
+        "./FollowValidatorFollowModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ProfileFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockFollowModule.sol": {
+      "lastModificationDate": 1660137363109,
+      "contentHash": "87d3b51d1bf4387eb3e3897ce5678cbf",
+      "sourceName": "contracts/mocks/MockFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IFollowModule.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/follow/ApprovalFollowModule.sol": {
+      "lastModificationDate": 1660137362993,
+      "contentHash": "cb27cb7875cb058a776ffdd3a0e9e286",
+      "sourceName": "contracts/core/modules/follow/ApprovalFollowModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/IFollowModule.sol",
+        "../../../libraries/Errors.sol",
+        "../../../libraries/Events.sol",
+        "../ModuleBase.sol",
+        "./FollowValidatorFollowModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "ApprovalFollowModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol": {
+      "lastModificationDate": 1660137938684,
+      "contentHash": "6baa887a798e95b14f34e093f117e9b2",
+      "sourceName": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Upgrade.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../beacon/IBeacon.sol",
+        "../../interfaces/draft-IERC1822.sol",
+        "../../utils/Address.sol",
+        "../../utils/StorageSlot.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.2"
+      ],
+      "artifacts": [
+        "ERC1967Upgrade"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/proxy/beacon/IBeacon.sol": {
+      "lastModificationDate": 1660137938724,
+      "contentHash": "b6bd23bf19e90b771337037706470933",
+      "sourceName": "@openzeppelin/contracts/proxy/beacon/IBeacon.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IBeacon"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/interfaces/draft-IERC1822.sol": {
+      "lastModificationDate": 1660137938573,
+      "contentHash": "2858d98e74e67987ec81b39605230b74",
+      "sourceName": "@openzeppelin/contracts/interfaces/draft-IERC1822.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "IERC1822Proxiable"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/utils/StorageSlot.sol": {
+      "lastModificationDate": 1660137938775,
+      "contentHash": "f993f8f50186952a59ee5e3a30b68222",
+      "sourceName": "@openzeppelin/contracts/utils/StorageSlot.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "StorageSlot"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/node_modules/@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol": {
+      "lastModificationDate": 1660137938684,
+      "contentHash": "3fc3c7c0a2956f36e766691bb9473b06",
+      "sourceName": "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../Proxy.sol",
+        "./ERC1967Upgrade.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "ERC1967Proxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/upgradeability/TransparentUpgradeableProxy.sol": {
+      "lastModificationDate": 1660137363128,
+      "contentHash": "61130f0f89dbbc9fcef9732708b606e3",
+      "sourceName": "contracts/upgradeability/TransparentUpgradeableProxy.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "TransparentUpgradeableProxy"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/RevertCollectModule.sol": {
+      "lastModificationDate": 1660137362988,
+      "contentHash": "ad577cfc72dd60c149818c46ee8eb273",
+      "sourceName": "contracts/core/modules/collect/RevertCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../../../libraries/Errors.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "RevertCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/LimitedFeeCollectModule.sol": {
+      "lastModificationDate": 1660137362986,
+      "contentHash": "a57e558c6d0d7b544040f74b864da403",
+      "sourceName": "contracts/core/modules/collect/LimitedFeeCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../../../libraries/Errors.sol",
+        "../FeeModuleBase.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "LimitedFeeCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/FreeCollectModule.sol": {
+      "lastModificationDate": 1660137362985,
+      "contentHash": "a0eb00d159aaf25aa159db03f66eda4b",
+      "sourceName": "contracts/core/modules/collect/FreeCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FreeCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/modules/collect/FeeCollectModule.sol": {
+      "lastModificationDate": 1660137362984,
+      "contentHash": "14b228d2d11f838ff4dc08ae4ca27515",
+      "sourceName": "contracts/core/modules/collect/FeeCollectModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../../interfaces/ICollectModule.sol",
+        "../../../libraries/Errors.sol",
+        "../FeeModuleBase.sol",
+        "../ModuleBase.sol",
+        "../FollowValidationModuleBase.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol",
+        "@openzeppelin/contracts/token/ERC721/IERC721.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FeeCollectModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/MockReferenceModule.sol": {
+      "lastModificationDate": 1660137363115,
+      "contentHash": "f9366bc1800c3da2d24bfb737dc7e1b8",
+      "sourceName": "contracts/mocks/MockReferenceModule.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IReferenceModule.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "MockReferenceModule"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/FollowNFT.sol": {
+      "lastModificationDate": 1660137362972,
+      "contentHash": "ba1aa6b3b6ca6e92c45fe03fed6bf9da",
+      "sourceName": "contracts/core/FollowNFT.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IFollowNFT.sol",
+        "../interfaces/IFollowModule.sol",
+        "../interfaces/ILensHub.sol",
+        "../libraries/Errors.sol",
+        "../libraries/Events.sol",
+        "../libraries/DataTypes.sol",
+        "../libraries/Constants.sol",
+        "./base/LensNFTBase.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "FollowNFT"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/Helper.sol": {
+      "lastModificationDate": 1660137363107,
+      "contentHash": "0ed701d3163bef1f655905d904563656",
+      "sourceName": "contracts/mocks/Helper.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/IFollowNFT.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Helper"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/core/CollectNFT.sol": {
+      "lastModificationDate": 1660137362971,
+      "contentHash": "239caf4d0d73e7f750cc0d69e86a1b53",
+      "sourceName": "contracts/core/CollectNFT.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/ICollectNFT.sol",
+        "../interfaces/ILensHub.sol",
+        "../libraries/Errors.sol",
+        "../libraries/Events.sol",
+        "./base/LensNFTBase.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "CollectNFT"
+      ]
+    },
+    "/Users/macbook/Documents/Hackathons/superfun_lens_demo/contracts/mocks/Currency.sol": {
+      "lastModificationDate": 1660137363106,
+      "contentHash": "b9c20aa36a51da5e2703d4b5a7ada779",
+      "sourceName": "contracts/mocks/Currency.sol",
+      "solcConfig": {
+        "version": "0.8.10",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/ERC20.sol"
+      ],
+      "versionPragmas": [
+        "0.8.10"
+      ],
+      "artifacts": [
+        "Currency"
+      ]
+    }
+  }
+}
