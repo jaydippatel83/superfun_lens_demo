@@ -1,8 +1,9 @@
 import { Box, Button, Divider} from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from '../../header/Header'
 import Search from '../Search' 
 import { useNavigate } from 'react-router-dom';
+import { LensAuthContext } from '../../context/LensContext';
 
 const storyData = [
     {
@@ -75,9 +76,13 @@ const storyData = [
 function MemeList() {
     const navigate = useNavigate(); 
 
+ 
     const handleNavigate = (e) => { 
         navigate(`/${e.name}`)
     }
+
+  
+
 
     return (
         <>

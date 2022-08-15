@@ -7,11 +7,16 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { Button } from "@mui/material"; 
 import { Link as RouterLink ,useNavigate} from "react-router-dom";
+import { LensAuthContext } from "../context/LensContext";
 
 
 
 export default function TrendingSlider() {
     const navigate = useNavigate();
+
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const {userPosts  } = lensAuthContext;
+
     var settings = {
         dots: true,
         infinite: false,
@@ -111,14 +116,14 @@ export default function TrendingSlider() {
                     </div>
                     <Slider {...settings}>
 
-                        {sliderData.map((item) => {
+                        {userPosts && userPosts.map((item) => {
                             return (
                                 <ImageListItem
-                                    key={item.name}
+                                    key={item.id}
                                     style={{ cursor: 'pointer' }}
                                     onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
-                                        setStyle(item.name);
+                                        setStyle(item.id);
                                     }}
                                     onMouseLeave={e => {
                                         setStyle("");
@@ -160,9 +165,9 @@ export default function TrendingSlider() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.img} `}
-                                                    srcSet={`${item.img} `}
-                                                    alt={item.name}
+                                                    src={`${item.metadata.media[0].original.url} `}
+                                                    srcSet={`${item.metadata.media[0].original.url} `}
+                                                    alt={item.metadata.description}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
                                                 />
@@ -172,7 +177,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.metadata.description && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -183,7 +188,7 @@ export default function TrendingSlider() {
                                             actionIcon={
                                                 <IconButton
                                                     sx={{ color: 'white', padding: '5px', margin: '10px 15px' }}
-                                                    aria-label={`star ${item.name}`}
+                                                    aria-label={`star ${item.metadata.description}`}
                                                 >
                                                     <LinkIcon />
                                                 </IconButton>

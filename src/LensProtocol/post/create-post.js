@@ -7,9 +7,8 @@ import { createPostTypedData } from './create-post-type-data';
 import { lensHub } from './lens-hub';
 import { v4 as uuidv4 } from 'uuid';
 import { pollUntilIndexed } from '../Reffresh/has-transaction-been-indexed';
-import { BigNumber, utils } from 'ethers';
-import { uploadIpfs } from './ipfs';
-
+import { BigNumber, utils } from 'ethers'; 
+import uploadIpfs from './ipfs'
 
 export const createPost = async (postData) => {
 
@@ -46,7 +45,7 @@ export const createPost = async (postData) => {
 
     const createPostRequest = {
         profileId,
-        contentURI: `https://ipfs.moralis.io:2053/ipfs/QmcXCoHmyAxB7Uut3yNuYMCdktNmMeU75oPdrJFdYjrNd9`,
+        contentURI: 'ipfs://' + ipfsResult.path,
         collectModule: {
             freeCollectModule: { followerOnly: true },
             // timedFeeCollectModule: {

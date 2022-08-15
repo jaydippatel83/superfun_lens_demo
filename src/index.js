@@ -57,11 +57,7 @@ darkTheme = responsiveFontSizes(darkTheme);
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={darkTheme}>
-    {/* <MoralisProvider
-          appId={process.env.REACT_APP_MORALIS_KEY}
-          serverUrl={process.env.REACT_APP_MORALIS_SERVER}
-        > */}
+    <ThemeProvider theme={darkTheme}> 
       <LensAuthContextProvider>
         <BrowserRouter>
           <Routes>
@@ -76,8 +72,7 @@ root.render(
           </Routes>
           <Footer />
         </BrowserRouter>
-      </LensAuthContextProvider>
-      {/* </MoralisProvider> */}
+      </LensAuthContextProvider> 
     </ThemeProvider>
   </React.StrictMode>
 );

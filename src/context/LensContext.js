@@ -64,7 +64,7 @@ const web3Modal = new Web3Modal({
   async function getPosts(){
   const post = await  posts(id);
   console.log(post);
-  setUserPosts(post);
+  setUserPosts(post.data.publications.items);
   }
 
 
@@ -225,7 +225,8 @@ const web3Modal = new Web3Modal({
         profile,
         login,
         update,
-        disconnectWallet
+        disconnectWallet,
+        userPosts
       }}
       {...props}
     >

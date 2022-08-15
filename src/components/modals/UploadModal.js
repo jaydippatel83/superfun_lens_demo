@@ -36,7 +36,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function UploadModal() {
     const lensAuthContext = React.useContext(LensAuthContext);
-    const { profile, login, disconnectWallet, update } = lensAuthContext;
+    const { profile, login, disconnectWallet, update, isUpdate } = lensAuthContext;
     const [open, setOpen] = React.useState(false);
     const [title, setTitle] = React.useState("");
     const [tags, setTags] = React.useState([]);
@@ -72,6 +72,7 @@ export default function UploadModal() {
         console.log(postData,"postData");
         const res = await createPost(postData);
         console.log(res, "res");
+        isUpdate(!update);
     }
 
    
