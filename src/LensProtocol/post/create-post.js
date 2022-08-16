@@ -7,12 +7,12 @@ import { createPostTypedData } from './create-post-type-data';
 import { lensHub } from './lens-hub';
 import { v4 as uuidv4 } from 'uuid';
 import { pollUntilIndexed } from '../Reffresh/has-transaction-been-indexed';
-import { BigNumber, utils } from 'ethers'; 
+import { BigNumber, utils } from 'ethers';
 import uploadIpfs from './ipfs'
 
 export const createPost = async (postData) => {
 
- 
+
 
 
     const profileId = window.localStorage.getItem("profileId");
@@ -20,7 +20,7 @@ export const createPost = async (postData) => {
     // hard coded to make the code example clear
 
 
-    const address = await getAddress(); 
+    const address = await getAddress();
 
     await postData.login(address);
 
@@ -28,34 +28,51 @@ export const createPost = async (postData) => {
         version: '1.0.0',
         metadata_id: uuidv4(),
         description: postData.title,
-        content: 'Content',
-        tags: postData.tags,
+        content:  postData.title, 
         external_url: null,
-        image: postData.photo,
+        image:  null,
         imageMimeType: null,
-        name: null,
-        attributes: [],
-        media: [
+        name: postData.name,
+        attributes: [
+            {
+              traitType: 'string',
+              key: 'type',
+              value: 'post'
+            }
+          ],
+        mainContentFocus: 'IMAGE',
+        media: [ 
+            {
+                item: postData.photo,
+                type: 'image/jpeg'
+            }
         ],
-        appId: 'superfun',
-      });
+        animation_url: null, 
+    });
 
-    
-    const ipfsResult = await uploadIpfs(ipfsData);  
+    console.log(ipfsData,"ipfsData");
+
+    // const aas = { "version": "1.0.0",
+    //  "metadata_id": "73a16764-771c-4c1c-82d7-b84244512eed", 
+    //  "description": "Testing post created by me ", 
+    //  "content": "Testing post created by me ",
+    //   "external_url": null, "image": null,
+    //    "imageMimeType": null, "name": "post by @",
+    //     "attributes": [],
+    //      "media": [{ "item": "https://ipfs.moralis.io:2053/ipfs/QmS6s5uLgHqWbuxDjRaHn9nTn2vri1ps3jZrRY6yrbWvmf", "type": "video/mp4" }], "animation_url": "https://ipfs.moralis.io:2053/ipfs/QmS6s5uLgHqWbuxDjRaHn9nTn2vri1ps3jZrRY6yrbWvmf", "appId": "pax423" }
+ 
+
+    const ipfsResult = await uploadIpfs(ipfsData);
+
+    console.log(ipfsResult, "ipfsResult");
+    // https://superfun.infura-ipfs.io/ipfs/' + ipfsResult.path
 
     const createPostRequest = {
         profileId,
-        contentURI: 'ipfs://' + ipfsResult.path,
+        contentURI: `https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`,
+        // contentURI:' https://ipfs.moralis.io:2053/ipfs/QmSdfobB3pLSEFoFE4GPZT9qtFcPstxCTjt64vUKuHftFR',
         collectModule: {
-            freeCollectModule: { followerOnly: true },
-            // timedFeeCollectModule: {
-            //     amount: {
-            //        currency: "0xD40282e050723Ae26Aeb0F77022dB14470f4e011",
-            //        value: "0.01"
-            //      },
-            //      recipient: "0xEEA0C1f5ab0159dba749Dc0BAee462E5e293daaF",
-            //      referralFee: 10.5
-            //  }
+            freeCollectModule: { followerOnly: true }, 
         },
         referenceModule: {
             followerOnlyReferenceModule: false
@@ -64,11 +81,11 @@ export const createPost = async (postData) => {
 
 
 
-    const result = await createPostTypedData(createPostRequest); 
+    const result = await createPostTypedData(createPostRequest);
     const typedData = result.data.createPostTypedData.typedData;
 
     const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-    const { v, r, s } = splitSignature(signature); 
+    const { v, r, s } = splitSignature(signature);
 
     const tx = await lensHub.postWithSig({
         profileId: typedData.value.profileId,
@@ -76,7 +93,7 @@ export const createPost = async (postData) => {
         collectModule: typedData.value.collectModule,
         collectModuleInitData: typedData.value.collectModuleInitData,
         referenceModule: typedData.value.referenceModule,
-        referenceModuleInitData: typedData.value.referenceModuleInitData, 
+        referenceModuleInitData: typedData.value.referenceModuleInitData,
         sig: {
             v,
             r,
@@ -84,7 +101,7 @@ export const createPost = async (postData) => {
             deadline: typedData.value.deadline,
         },
     });
-    console.log(tx.hash,"has");
+    console.log(tx.hash, "has");
 
 
     const indexedResult = await pollUntilIndexed(tx.hash);

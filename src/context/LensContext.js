@@ -19,11 +19,11 @@ export const LensAuthContextProvider = (props) => {
 
   const options = {};
 
-const web3Modal = new Web3Modal({
+  const web3Modal = new Web3Modal({
     network: "mumbai",
     cacheProvider: true,
     options,
-}); 
+  });
 
   const [userAdd, setUserAdd] = useState("");
   const [profile, setProfile] = useState("");
@@ -45,26 +45,25 @@ const web3Modal = new Web3Modal({
   }, [update])
 
   const id = window.localStorage.getItem("profileId");
- 
+
 
   useEffect(() => {
-    async function getProfile() {  
+    async function getProfile() {
       if (id !== null) {
         const user = await profileById(id);
         setProfile(user);
       }
 
-
     };
     getProfile();
-    getPosts(); 
+    getPosts();
   }, [userAdd, update]);
 
 
-  async function getPosts(){
-  const post = await  posts(id);
-  console.log(post);
-  setUserPosts(post.data.publications.items);
+  async function getPosts() {
+    const post = await posts(id);
+    console.log(post);
+    setUserPosts(post.data.publications.items);
   }
 
 
@@ -173,7 +172,7 @@ const web3Modal = new Web3Modal({
     setUpdate(!update)
     window.location.reload();
 
-}
+  }
 
 
 
@@ -189,13 +188,18 @@ const web3Modal = new Web3Modal({
     const signature = await signText(challengeResponse.data.challenge.text);
     const accessTokens = await authenticate(address, signature);
     const profiles = await profileByAddress(address);
+    console.log(profiles, "profiles");
     window.localStorage.setItem("profileId", profiles?.id);
     setUpdate(!update)
 
-    const q = query(collection(db, "profiles"), where("handle", "==", profiles.handle));
+    // const q = query(collection(db, "profiles"), where("handle", "==", profiles.handle)); 
+    // const querySnapshot = await getDocs(q); 
+    const q = query(collection(db, "profiles"));
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      if (doc.exists()) {
+    querySnapshot.forEach((e) => {
+      console.log(e.data().id, "eee");
+
+      if (e.data().id === profiles?.id) {
         console.log("exist");
       } else {
         const docRef = addDoc(collection(db, "profiles"), {
@@ -206,15 +210,14 @@ const web3Modal = new Web3Modal({
           id: profiles.id,
           metadata: profiles.metadata,
           ownedBy: profiles.ownedBy,
-          photo: profiles.picture.original.url,
+          photo: profiles.picture ? profiles.picture.original.url : null,
         });
       }
-    });
-
-    // setAuthenticationToken(accessTokens.data.authenticate.accessToken);
+    })
+     
     window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
     window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
-    
+
   };
 
 
@@ -226,7 +229,8 @@ const web3Modal = new Web3Modal({
         login,
         update,
         disconnectWallet,
-        userPosts
+        userPosts,
+        setUpdate
       }}
       {...props}
     >

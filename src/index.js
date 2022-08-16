@@ -16,8 +16,7 @@ import TrendingDetails from './components/DetailPages/TrendingDetails';
 import ContestDetails from './components/DetailPages/ContestDetails';
 import MemeList from './components/Lists/MemeList';
 import Footer from './header/Footer';
-import { LensAuthContextProvider } from './context/LensContext';
-// import { MoralisProvider } from "react-moralis";
+import { LensAuthContextProvider } from './context/LensContext'; 
 
 
 let darkTheme = createTheme({

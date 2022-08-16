@@ -21,9 +21,22 @@ import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 // import { create as ipfsHttpClient } from "ipfs-http-client"; 
-const apiToken = process.env.REACT_APP_IPFS;
-const client = new Web3Storage({ token: apiToken });
+import { create } from 'ipfs-http-client';  
 
+const auth =
+  "Basic " +
+  Buffer.from(
+    process.env.REACT_APP_INFURA_PID + ":" + process.env.REACT_APP_INFURA_SECRET
+  ).toString("base64");
+
+const client = create({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
 // const client = ipfsHttpClient('https://2DIKlkyA71zoQOZD912IAmpaZjk:38a490f2dde76d9ce0cbf0a9143a6b01@filecoin.infura.io');
 
 const ColorButton = styled(Button)(({ theme }) => ({
@@ -36,7 +49,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 export default function UploadModal() {
     const lensAuthContext = React.useContext(LensAuthContext);
-    const { profile, login, disconnectWallet, update, isUpdate } = lensAuthContext;
+    const { profile, login, disconnectWallet, update, setUpdate } = lensAuthContext;
     const [open, setOpen] = React.useState(false);
     const [title, setTitle] = React.useState("");
     const [tags, setTags] = React.useState([]);
@@ -67,26 +80,21 @@ export default function UploadModal() {
             title: title,
             photo: file,
             tags: tags,
-            login: login
-        }
-        console.log(postData,"postData");
-        const res = await createPost(postData);
-        console.log(res, "res");
-        isUpdate(!update);
+            login: login,
+            name: profile.handle
+        } 
+        const res = await createPost(postData); 
+        setUpdate(!update);
     }
+ 
 
    
 
     const handleUploadImage = async (e) => {
-        const file = e.target.files[0];
-        const ext = file.name.split('.').pop();
-        const fileName = `${uuidv4()}.${ext}`;
-        const newFile = new File([file], fileName, { type: file.type });
-        const cid = await client.put([newFile], {
-            name: fileName,
-        });
-        const imageURI = `https://${cid}.ipfs.dweb.link/${fileName}`;
-        setFile(imageURI);
+        const file = e.target.files[0]; 
+        const ipfsResult = await client.add(file); 
+        const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`;
+        setFile(imageURI); 
 
     }
 

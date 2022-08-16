@@ -5,75 +5,8 @@ import Slider from 'react-slick';
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 
-
-const storyData = [
-    {
-        name: "Jaydip Patel",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTBiIBka08VQlJa_2LMCkrZKqZ7fT-PV_zw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Mansi Joshi",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2AnKOLhLgzlFjwD4nLP21BDjglT43XsVwJQ&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '4 day ago'
-    },
-    {
-        name: "Disha Sathwara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWkh-FmK4k2h4a0dVk9FDO14869w7TjqwyA&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago',
-    },
-    {
-        name: "Dhruv Sathwara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDXiKxCdCFAZverAZZPHT77HqndAlgTEtncg&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Karan Pujara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScPSEyda4ZdKgzlMZpIjmCoa6Hyt8xVBNeg&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Web3Builder",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQGFlovSwUJsdCOFZYqKxiGTy9aBjCLmQVw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "CryptoYard",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIuplMPz5muZkszIGtUUO0H7XkCw5gxhTew&usqp=CAU",
-        description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
-        date: '3 day ago'
-    },
-    {
-        name: "CrypticDev",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4meNTJr3kzXWPMkCAjzkTNXeD3Ys8LBfGPziN_epUuBsbmG9PTCMux02sno7Tm6TKspA&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations"
-    },
-    {
-        name: "CryptoPunk",
-        img: "https://g.foolcdn.com/art/companylogos/square/link.png",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Vitalik",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJbf16Wo-44LjPMWnx9UPvA11MzO8_0igDw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Polygon",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIB9Rv-Q2c3sp_1N-bKK0EspLRtR5Y45iJUA&usqp=CAU",
-        description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
-        date: '3 day ago'
-    }
-]
-
+import Blockies from 'react-blockies'
+ 
 function TopCreators() {
 
     const [story, setStory] = useState([]);
@@ -172,9 +105,10 @@ function TopCreators() {
                                             underline="hover"
                                             component={RouterLink}
                                         >
-                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.photo})` }}>
+                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.photo ? e.photo : "/assets/bg.png"})` }}>
 
-                                                <Avatar src={e.photo} className="storyAvatar" />
+                                                <Avatar src={e.photo ?  e.photo : "/assets/bg.png"} className="storyAvatar" />
+                                                
                                                 <h4>{e.handle}</h4>
                                             </div>
                                         </Link>

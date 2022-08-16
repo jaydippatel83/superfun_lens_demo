@@ -38,6 +38,8 @@ const auth =
     process.env.REACT_APP_INFURA_PID + ":" + process.env.REACT_APP_INFURA_SECRET
   ).toString("base64");
 
+  console.log(auth,"auth");
+
 const client = create({
   host: "ipfs.infura.io",
   port: 5001,
@@ -47,8 +49,9 @@ const client = create({
   },
 });
 
-const uploadIpfs = async (data) => {
-  return await client.add(JSON.stringify(data));
+const uploadIpfs = async (data) => { 
+  console.log(data,"data");
+  return await client.add(data);
 };
 
 export default uploadIpfs;
