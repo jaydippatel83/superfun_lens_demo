@@ -201,7 +201,7 @@ export const LensAuthContextProvider = (props) => {
 
       if (e.data().id === profiles?.id) {
         console.log("exist");
-      } else {
+      } else if(e.data().id !== profiles?.id) {
         const docRef = addDoc(collection(db, "profiles"), {
           bio: profiles.bio,
           coverPicture: profiles.coverPicture,
@@ -221,6 +221,23 @@ export const LensAuthContextProvider = (props) => {
   };
 
 
+  const loginCreate = async () => {
+
+    const address = await getAddress();
+    const isTokenValid = await refresh();
+    if (isTokenValid) {
+      console.log("login: already logged in");
+      return;
+    }
+    const challengeResponse = await generateChallenge(address);
+    const signature = await signText(challengeResponse.data.challenge.text);
+    const accessTokens = await authenticate(address, signature);  
+    window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
+    window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+
+  };
+
+
   return (
     <LensAuthContext.Provider
       value={{
@@ -230,7 +247,8 @@ export const LensAuthContextProvider = (props) => {
         update,
         disconnectWallet,
         userPosts,
-        setUpdate
+        setUpdate,
+        loginCreate
       }}
       {...props}
     >

@@ -4,6 +4,25 @@ import React,{ useState } from "react";
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 import { profile } from "../../LensProtocol/profile/get-profile";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { create } from 'ipfs-http-client';  
+import { Buffer } from 'buffer';
+import { LensAuthContext } from "../../context/LensContext";
+
+const auth =
+  "Basic " +
+  Buffer.from(
+    process.env.REACT_APP_INFURA_PID + ":" + process.env.REACT_APP_INFURA_SECRET
+  ).toString("base64");
+
+const client = create({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  headers: {
+    authorization: auth,
+  },
+});
 
 const ColorButton = styled(Button)(({ theme }) => ({
     color: 'white',
@@ -15,8 +34,11 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 
 export default function ProfileCreation() {
+  const lensAuthContext = React.useContext(LensAuthContext);
+    const { profile, loginCreate, disconnectWallet, update ,setUpdate,userAdd} = lensAuthContext;
 
     const [open, setOpen] = React.useState(false);
+    const [file, setFile] = React.useState("");
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -26,6 +48,13 @@ export default function ProfileCreation() {
         setOpen(false);
     };
 
+    const handleUploadImage = async (e) => {
+      const file = e.target.files[0]; 
+      const ipfsResult = await client.add(file); 
+      const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`;
+      setFile(imageURI); 
+
+  }
 
 
 
@@ -37,27 +66,34 @@ export default function ProfileCreation() {
 
   const handleSubmit = async (event) => {
 
-  const ss= await profile(handle); 
-    // if (forbiddenCharacter.test(handle)) {
-    //     console.log(handle,"handle");
-    //   alert("Special character are not allowed.");
-    //   return false;
-    // } else if (handle.includes(' ')) {
-    //   alert("Spaces are not allowed.");
-    //   return false;
-    // }
-    // setIsLoading(true);
-    // const result = await createProfile(handle);
-    // console.log(result,"result");
-    // // await setDispatcher();
+  // const ss= await profile(handle); 
+    if (forbiddenCharacter.test(handle)) {
+        console.log(handle,"handle");
+      alert("Special character are not allowed.");
+      return false;
+    } else if (handle.includes(' ')) {
+      alert("Spaces are not allowed.");
+      return false;
+    }
+    setIsLoading(true);
+    const handleData ={
+      handle : handle,
+      url : file,
+      address: userAdd,
+      login: loginCreate
+    }
+    const result = await createProfile(handleData);
+    console.log(result,"result");
+    // await setDispatcher();
 
-    // if (result === false) {
-    //   setIsLoading(false);
-    // } else {
-    //   navigate(`/profile/${handle}`);
-    // }
-    // console.log("create profile: profile has been indexed", result);
-    // return true;
+    if (result === false) {
+      setIsLoading(false);
+    } else {
+      setUpdate(!update);
+      alert("profile created!!!")
+    }
+    console.log("create profile: profile has been indexed", result);
+    return true;
   };
 
   if (isLoading) {
@@ -75,9 +111,24 @@ export default function ProfileCreation() {
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
                 <DialogTitle>Post</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        <TextField className='mt-2' id="outlined-basic" label="Title" variant="outlined" fullWidth />
-                    </DialogContentText> 
+                <div className="flex items-center mt-2" style={{ border: '1px solid white', borderRadius: '6px' }}>
+                        <input
+                            onChange={(e) => handleUploadImage(e)}
+                            type="file"
+                            name="file"
+                            id="file"
+                            className="input-file d-none" />
+                        <label
+                            htmlFor="file"
+                            style={{ width: '100%', cursor: 'pointer' }}
+                            className="rounded-3 text-center    js-labelFile p-2 my-2 w-20  "
+                        >
+                            <CloudUploadIcon />
+                            <p className="js-fileName">
+                                Upload Profile(PNG, JPG, GIF)
+                            </p>
+                        </label>
+                    </div>
                    
 
                     <TextField onChange={(e)=> setHandle(e.target.value)} className='my-2' id="outlined-basic" label="Handle" variant="outlined" fullWidth placeholder='@handle' />

@@ -1,9 +1,11 @@
 import { Box, Button, Divider} from '@mui/material'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../header/Header'
 import Search from '../Search' 
 import { useNavigate } from 'react-router-dom';
 import { LensAuthContext } from '../../context/LensContext';
+import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
 
 const storyData = [
     {
@@ -75,14 +77,30 @@ const storyData = [
 
 function MemeList() {
     const navigate = useNavigate(); 
+    const [story, setStory] = useState([]);
 
  
     const handleNavigate = (e) => { 
         navigate(`/${e.name}`)
     }
 
-  
+    useEffect(() => {
+        async function getCreator() {
+        var arry = [];
 
+        const q = query(collection(db, "profiles")); 
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => { 
+                arry.push(doc.data())
+            }); 
+        setStory(arry);
+
+        }
+        getCreator()
+    }, [])
+
+  
+console.log(story,"story");
 
     return (
         <>
@@ -92,15 +110,16 @@ function MemeList() {
                 <div className='container'>
                     <div className='row mt-5'>
                         {
-                            storyData && storyData.map((e) => {
+                            story && story.map((e) => {
+                                console.log(e,"eeeeee");
                                 return (
-                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.name}>
+                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.id}>
                                         <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                         <div className='text-center' onClick={()=> handleNavigate(e)}>
-                                            <img src={e.img} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.name} />
+                                            <img src={e.photo} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.handle} />
                                             <h5 className='pt-4' style={{ fontWeight: '600' }}>{e.name}</h5>
-                                            <h6 className='' style={{ fontWeight: '600' }}>{`@${e.name.trim().toLowerCase()}`}</h6>
-                                            <p>{e.description}</p>
+                                            <h6 className='' style={{ fontWeight: '600' }}>{`@${e.handle.trim().toLowerCase()}`}</h6>
+                                            {/* <p>{e.description}</p> */}
                                             <Button variant='outlined'>Follow</Button>
                                         </div>
                                         {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}

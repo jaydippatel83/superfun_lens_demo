@@ -16,7 +16,7 @@ function TopCreators() {
         async function getCreator() {
         var arry = [];
 
-            const q = query(collection(db, "profiles"));
+            const q = query(collection(db, "profiles")); 
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => { 
                 arry.push(doc.data())
@@ -96,7 +96,7 @@ function TopCreators() {
                         {
                            story && story.map((e) => { 
                                 return (
-                                    <div key={e.name}>
+                                    <div key={e.handle}>
                                         <Link
                                             to={`/${e.name}`}
                                             state={{ Profile: e }}

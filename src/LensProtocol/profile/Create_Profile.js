@@ -4,7 +4,7 @@ import { apolloClient } from '../services/Apollo_Client';
 // @apollo/client/core!
 import { gql } from '@apollo/client'
 import { getAddressFromSigner } from '../services/ethers-service';
-import { login } from '../Login-user';
+// import { login } from '../Login-user';
 import { BigNumber, utils } from "ethers";
 import { loginSS} from '../login/user-login';
 import { pollUntilIndexed } from '../Reffresh/has-transaction-been-indexed';
@@ -34,15 +34,20 @@ export const createProfileRequest = (createProfileRequest) => {
 
 
 const createProfile = async (handleInput) => {
+  console.log(handleInput,"handleInput");
   if (!handleInput) {
     throw new Error("handleInput is undefined");
   }
   const address = getAddressFromSigner();
 
-  await login(address);
+  await handleInput.login(handleInput.address);
 
   const createProfileResult = await createProfileRequest({
-    handle: handleInput,
+    handle: handleInput.handle,
+    profilePictureUri: handleInput.url,   
+    followModule: {
+         freeFollowModule: true
+      }
   });
 
   console.log(createProfileResult,"createProfileResult");

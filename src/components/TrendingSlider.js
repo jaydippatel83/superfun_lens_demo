@@ -52,54 +52,7 @@ export default function TrendingSlider() {
         ]
     };
 
-    const [style, setStyle] = useState("");
-
-    const sliderData = [
-        {
-            name: "Slider0",
-            img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif"
-        },
-        {
-            name: "Slider1",
-            img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif"
-        },
-        {
-            name: "Slider2",
-            img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif"
-        },
-        {
-            name: "Slider3",
-            img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif"
-        },
-        {
-            name: "Slider4",
-            img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif"
-        },
-        {
-            name: "Slider5",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-        },
-        {
-            name: "Slider6",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-        },
-        {
-            name: "Slider7",
-            img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif"
-        },
-        {
-            name: "Slider8",
-            img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif"
-        },
-        {
-            name: "Slider9",
-            img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif"
-        },
-        {
-            name: "Slider10",
-            img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif"
-        }
-    ]
+    const [style, setStyle] = useState(""); 
 
     const handleNavigate=(e)=>{ 
         navigate(`/trendingDetails${e.name}`)
@@ -116,10 +69,10 @@ export default function TrendingSlider() {
                     </div>
                     <Slider {...settings}>
 
-                        {userPosts && userPosts.map((item) => {
+                        {userPosts && userPosts.map((item) => { 
                             return (
                                 <ImageListItem
-                                    key={item.id}
+                                    key={item.handle}
                                     style={{ cursor: 'pointer' }}
                                     onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
@@ -130,14 +83,14 @@ export default function TrendingSlider() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.img} `}
-                                        srcSet={`${item.img} `}
-                                        alt={item.name}
+                                        src={`${item.metadata.media[0].original.url} `}
+                                        srcSet={`${item.metadata.media[0].original.url} `}
+                                        alt={item.metadata.name}
                                         loading="lazy"
                                         width="100%" style={{ borderRadius: '20px', height: '150px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.metadata.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -155,7 +108,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.metadata.name && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

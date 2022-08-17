@@ -33,6 +33,7 @@ import Web3Modal from 'web3modal';
 
 import { LensAuthContext } from '../context/LensContext'
 import Blockies from 'react-blockies'
+import UpdateProfile from '../components/modals/update-profile';
 
 const pages = [
     {
@@ -76,6 +77,7 @@ export default function Header() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = React.useState(false);
+    const [editopen, setEditOpen] = React.useState(false);
     // const navigate = useRoutes();
 
     const theme = useTheme();
@@ -111,9 +113,7 @@ export default function Header() {
     //     navigate(`/${e}`);
     // }
 
-    React.useEffect(() => {
-        console.log(profile, update);
-    }, [profile, update]);
+    
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -215,6 +215,7 @@ export default function Header() {
             <Box sx={{ flexGrow: 1 }} >
                 <AppBar sx={{ padding: { xs: '0', md: '0 85px', lg: '0 4%', background: 'black' } }} color='primary' open={open}>
                     <Toolbar>
+                        
                         <IconButton
                             size="large"
                             edge="start"
@@ -317,8 +318,12 @@ export default function Header() {
                                 </Button>
                             }
 
+<UpdateProfile />
+
                             {/* < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button> */}
                         </Box> 
+
+                        <ProfileCreation/>
 
                         {
                             profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
@@ -344,7 +349,7 @@ export default function Header() {
                 </AppBar>
 
                 {renderMobileMenu}
-
+{renderMenu}
             </Box>
         </div>
     );
