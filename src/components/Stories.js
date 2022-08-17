@@ -40,16 +40,8 @@ function Stories() {
 
 
 
-    return (
-
-
-        <InfiniteScroll
-            dataLength={userPosts.length}
-            next={loadProducts}
-            hasMore={hasMore}
-            loader={<h4 className='text-center'>Loading...</h4>}
-
-        >
+    return ( 
+        
             <div className='container mt-3'>
                 <div className='row'>
                     <div className="col-12 mt-2 mb-2"> 
@@ -141,9 +133,7 @@ function Stories() {
                         })
                     }
                 </div>
-            </div>
-        </InfiniteScroll>
-
+            </div> 
     )
 }
 
