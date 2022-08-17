@@ -104,19 +104,15 @@ const getProfileRequest = (request) => {
 
  
 
-export const profile = async (profileHandle) => {
-  console.log(profileHandle,"profileHandle");
-  const request = { handle: profileHandle };
-  console.log(request,"request ff");
-  const profile = await getProfileRequest(request);
-  console.log(profile,"profile");
+export const profile = async (profileHandle) => { 
+  const request = { handle: profileHandle }; 
+  const profile = await getProfileRequest(request); 
   return profile;
 }; 
 
 export const profileByAddress = async (address) => { 
   const request = {ownedBy: [address] }; 
-  const profile = await getProfileRequest(request);
-  console.log(profile,"profile");
+  const profile = await getProfileRequest(request); 
   const pId = profile.data.profiles.items[0];
   return pId;
 }; 

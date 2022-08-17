@@ -38,7 +38,7 @@ import UpdateProfile from '../components/modals/update-profile';
 const pages = [
     {
         name: 'Memes',
-        path: 'memes'
+        path: 'trending'
     },
     {
         name: 'PFPs',

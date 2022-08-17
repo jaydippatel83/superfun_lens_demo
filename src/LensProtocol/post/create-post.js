@@ -15,8 +15,7 @@ export const createPost = async (postData) => {
 
 
 
-    const profileId = window.localStorage.getItem("profileId");
-    console.log(profileId, "profileId");
+    const profileId = window.localStorage.getItem("profileId"); 
     // hard coded to make the code example clear
 
 
@@ -49,9 +48,7 @@ export const createPost = async (postData) => {
         ],
         animation_url: null, 
     });
-
-    console.log(ipfsData,"ipfsData");
-
+ 
     // const aas = { "version": "1.0.0",
     //  "metadata_id": "73a16764-771c-4c1c-82d7-b84244512eed", 
     //  "description": "Testing post created by me ", 

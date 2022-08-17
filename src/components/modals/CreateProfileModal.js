@@ -67,8 +67,7 @@ export default function ProfileCreation() {
   const handleSubmit = async (event) => {
 
   // const ss= await profile(handle); 
-    if (forbiddenCharacter.test(handle)) {
-        console.log(handle,"handle");
+    if (forbiddenCharacter.test(handle)) { 
       alert("Special character are not allowed.");
       return false;
     } else if (handle.includes(' ')) {
@@ -82,9 +81,7 @@ export default function ProfileCreation() {
       address: userAdd,
       login: loginCreate
     }
-    const result = await createProfile(handleData);
-    console.log(result,"result");
-    // await setDispatcher();
+    const result = await createProfile(handleData); 
 
     if (result === false) {
       setIsLoading(false);

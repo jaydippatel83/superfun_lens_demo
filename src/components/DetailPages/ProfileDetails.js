@@ -70,18 +70,10 @@ function ProfileDetails() {
   const [showComment, setShowComment] = useState(false);
   const [comment, setComments] = React.useState([""]);
 
-  const param = useParams(); 
-  console.log(param,"param");
-  // useEffect(() => {
+  const param = useParams();  
 
-  //   const dd = sliderData && sliderData.filter((e) => e.name === param.id);
-  //   setData(dd);
-  // }, [param, detail])
-
-  useEffect(() => {
-console.log(param,"param");
-    async function getProfile() {
-      console.log(param,"param");
+  useEffect(() => { 
+    async function getProfile() { 
       if (param.id !== null) {
         const user = await profileById(param.id);
         setData(user);
@@ -89,10 +81,7 @@ console.log(param,"param");
 
     };
     getProfile(); 
-  }, [param])
-
-  console.log(data,"data");
-
+  }, [param]) 
 
   const handleNavigate = (data) => {
     setDetail(data); 

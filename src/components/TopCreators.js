@@ -20,8 +20,7 @@ function TopCreators() {
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => { 
                 arry.push(doc.data())
-            });
-        console.log(arry); 
+            }); 
         setStory(arry);
 
         }

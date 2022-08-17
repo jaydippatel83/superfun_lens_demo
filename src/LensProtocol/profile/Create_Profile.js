@@ -33,8 +33,7 @@ export const createProfileRequest = (createProfileRequest) => {
 }
 
 
-const createProfile = async (handleInput) => {
-  console.log(handleInput,"handleInput");
+const createProfile = async (handleInput) => { 
   if (!handleInput) {
     throw new Error("handleInput is undefined");
   }
@@ -49,8 +48,7 @@ const createProfile = async (handleInput) => {
          freeFollowModule: true
       }
   });
-
-  console.log(createProfileResult,"createProfileResult");
+ 
 
 
   if (createProfileResult?.data.createProfile.__typename === "RelayError") {

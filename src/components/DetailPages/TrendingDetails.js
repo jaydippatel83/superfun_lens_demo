@@ -28,18 +28,10 @@ function TrendingDetails() {
   const lensAuthContext = React.useContext(LensAuthContext);
   const {userPosts  } = lensAuthContext;
 
-  const param = useParams(); 
-  console.log(param,"param");
-  // useEffect(() => {
+  const param = useParams();  
 
-  //   const dd = sliderData && sliderData.filter((e) => e.name === param.id);
-  //   setData(dd);
-  // }, [param, detail])
-
-  useEffect(() => {
-console.log(param,"param");
-    async function getProfile() {
-      console.log(param,"param");
+  useEffect(() => { 
+    async function getProfile() { 
       if (param.id !== null) {
         const user = await  userPosts && userPosts.filter((e)=>e.id === param.id)
         setData(user);
@@ -48,9 +40,7 @@ console.log(param,"param");
     };
     getProfile(); 
   }, [param])
-
-  console.log(data,"data");
-
+ 
 
   const handleNavigate = (data) => {
     setDetail(data); 

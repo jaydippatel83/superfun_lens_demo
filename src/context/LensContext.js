@@ -61,8 +61,7 @@ export const LensAuthContextProvider = (props) => {
 
 
   async function getPosts() {
-    const post = await posts(id);
-    console.log(post);
+    const post = await posts(id); 
     setUserPosts(post.data.publications.items);
 
     // post.data.publications.items.map((data)=>{
@@ -208,8 +207,7 @@ export const LensAuthContextProvider = (props) => {
     const q = query(collection(db, "profiles"));
 
     const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((e) => {
-      console.log(e.data().id, "eee");
+    querySnapshot.forEach((e) => { 
 
       // if (e.data().id === profiles?.id) {
       //   console.log("exist");

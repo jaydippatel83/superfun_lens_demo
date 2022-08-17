@@ -97,10 +97,8 @@ function MemeList() {
 
         }
         getCreator()
-    }, []) 
-
-  
-console.log(story,"story");
+    }, [])
+ 
 
     return (
         <>
@@ -110,16 +108,15 @@ console.log(story,"story");
                 <div className='container'>
                     <div className='row mt-5'>
                         {
-                            story && story.map((e) => {
-                                console.log(e,"eeeeee");
+                            story && story.map((e) => { 
                                 return (
-                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.handle}>
+                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.id}>
                                         <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                         <div className='text-center' onClick={()=> handleNavigate(e)}>
-                                            <img src={e.photo ? e.photo : '/assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.handle} />
+                                            <img src={e.photo ? e.photo : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.handle} />
                                             <h5 className='pt-4' style={{ fontWeight: '600' }}>{e.name}</h5>
                                             <h6 className='' style={{ fontWeight: '600' }}>{`@${e.handle.trim().toLowerCase()}`}</h6>
-                                            {/* <p>{e.description}</p> */}
+                                            <p>{e.description}</p>
                                             <Button variant='outlined'>Follow</Button>
                                         </div>
                                         {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}

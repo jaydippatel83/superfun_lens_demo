@@ -110,10 +110,8 @@ function Profile() {
     // }, [params])
 
 
-    useEffect(() => {
-        console.log(params,"param");
-            async function getProfile() {
-              console.log(params,"param");
+    useEffect(() => { 
+            async function getProfile() { 
               if (params.id !== null) {
                 const user = await profileById(params.id);
                 setData(user);
@@ -123,8 +121,7 @@ function Profile() {
             getProfile(); 
           }, [params])
 
-
-console.log(data,"data");
+ 
 
     return (
         < >
