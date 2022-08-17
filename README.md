@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+## Superfun social
+![MicrosoftTeams-image (2)](https://user-images.githubusercontent.com/45895007/185173456-99fcab6f-56b1-490d-87bd-a5c65b7b8579.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Inspiration 
 
-In the project directory, you can run:
+If we share a meme on Twitter, we can't access it on Facebook but SuperFun ensures maximum composability as it is powered by Lensprotcol, Filecoin, and Polygon. 
 
-### `npm start`
+Meme is a universal language of the Internet and we all know how fast information gets spread through Memes so our aim is to become a goto platform for Meme Artists to generate value for their creativity and brands to create meme contests to crowdsource memes from the best artists and spread a message for their product. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## What it does
 
-### `npm test`
+SuperFun is A social meme app built with Lens Protocol where meme artists get rewarded with crypto for super fun content and brands can create contests to crowdsource memes from the best artists. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## How we built it 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+-Currently, it is deployed on Testnet. We have created a profile on Lens so need to sign in by connecting wallet.  All the meme posts which get minted through Lens social graph store metadata on IPFS and will be on Polygon blockchain by which meme artists can also claim ownership and proof of their creative work.
+-  To create a meme we need to fill up details like name, and category and select an image, add a relevant hashtag, and post it.  This meme will be posted as NFT in lens protocol terminology it's called publication.
+-  Anyone who wants to create a contest can submit the details here and get SuperFun memes from the best artists.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Challenges we ran into
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- First, we got stuck in creating a profile through lens protocol's opensource social graph but their documentation is good so after so many tries we were able to fix the issues as well as got our wallet whitelisted to claim .lens handle on mainnet.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Accomplishments that we're proud of
 
-## Learn More
+While creating this app we understood how important 1) Compatibility and 2) Ownership of content to the creator is. By using decentralized we can open a door to a lot of new use cases and give the best user experience to users by enabling them to have all of their content on one platform.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+## What we learned
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Filecoin - IPFS is opening up many possibilities for Dapp builders to access decentralized storage solutions and make the Dapps truly decentralized and persistent. 
 
-### Analyzing the Bundle Size
+## What's next for SuperFun
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+We aim to be a go to platform for Meme Artists to generate value for their creativity and brands to create meme contests to crowdsource memes from the best artists and spread a message for their product.
 
-### Making a Progressive Web App
+## Homepage
+<img width="1265" alt="Screenshot 2022-08-17 at 6 42 42 PM" src="https://user-images.githubusercontent.com/45895007/185174023-7d98227d-bd91-4fd8-93a0-2cd25977c0bf.png">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Artists
+<img width="1274" alt="Screenshot 2022-08-17 at 6 43 00 PM" src="https://user-images.githubusercontent.com/45895007/185174067-9c480aea-18b3-4fbb-b7ae-9d81d42019a4.png">
 
-### Advanced Configuration
+## Create Post
+<img width="1278" alt="Screenshot 2022-08-17 at 6 43 12 PM" src="https://user-images.githubusercontent.com/45895007/185174160-8b7829bc-8f04-4211-bea7-acf21136aee3.png">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contests
 
-### Deployment
+<img width="1278" alt="Screenshot 2022-08-17 at 6 43 23 PM" src="https://user-images.githubusercontent.com/45895007/185174276-d9d87245-4f71-407c-8f9a-8884080227db.png">
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Memes 
+<img width="1280" alt="Screenshot 2022-08-17 at 6 44 18 PM" src="https://user-images.githubusercontent.com/45895007/185174336-1e77be10-7290-408e-8114-2a86fd15632d.png">
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Meme Detail Page
+ <img width="1276" alt="Screenshot 2022-08-17 at 6 44 42 PM" src="https://user-images.githubusercontent.com/45895007/185175288-9bb40b61-3be8-4434-b210-db51c4af5d3b.png">
+
+
+
+
+
+
