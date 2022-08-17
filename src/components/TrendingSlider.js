@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick"; 
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar'; 
@@ -8,6 +8,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Button } from "@mui/material"; 
 import { Link as RouterLink ,useNavigate} from "react-router-dom";
 import { LensAuthContext } from "../context/LensContext";
+import { collection, getDocs, query } from "firebase/firestore";
+import { db } from "../firebase/firebase";
 
 
 
@@ -54,10 +56,32 @@ export default function TrendingSlider() {
 
     const [style, setStyle] = useState(""); 
 
-    const handleNavigate=(e)=>{ 
-        navigate(`/trendingDetails${e.name}`)
+    const handleNavigate=(id)=>{ 
+        navigate(`/trendingDetails${id}`)
     }
 
+    const [story, setStory] = useState([]);
+
+
+    useEffect(() => {
+        async function getCreator() {
+        var arry = [];
+
+            const q = query(collection(db, "posts")); 
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => { 
+                 
+                arry.push(doc.data())
+            });
+        // console.log(arry); 
+        setStory(arry);
+
+        }
+        getCreator()
+    }, [])
+
+
+    console.log(userPosts,"userPosts");
 
     return (
         <div className="container mt-5">
@@ -70,11 +94,12 @@ export default function TrendingSlider() {
                     <Slider {...settings}>
 
                         {userPosts && userPosts.map((item) => { 
+                            console.log(item,"item");
                             return (
                                 <ImageListItem
-                                    key={item.handle}
+                                    key={item.id}
                                     style={{ cursor: 'pointer' }}
-                                    onClick={()=>handleNavigate(item)}
+                                    onClick={()=>handleNavigate(item.id)}
                                     onMouseEnter={e => {
                                         setStyle(item.id);
                                     }}

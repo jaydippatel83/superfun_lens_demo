@@ -1,13 +1,11 @@
 import { apolloClient } from '../services/Apollo_Client';
 import { gql } from '@apollo/client'
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../firebase/firebase';
 
-const GET_POSTS = `
-query Publications {
-    publications(request: {
-      profileId: "0x40bf",
-      publicationTypes: [POST, COMMENT, MIRROR],
-      limit: 10
-    }) {
+const GET_PUBLICATIONS = `
+  query($request: PublicationsQueryRequest!) {
+    publications(request: $request) {
       items {
         __typename 
         ... on Post {
@@ -27,21 +25,19 @@ query Publications {
       }
     }
   }
-  
   fragment MediaFields on Media {
     url
     mimeType
   }
-  
   fragment ProfileFields on Profile {
     id
     name
     bio
     attributes {
-       displayType
-       traitType
-       key
-       value
+      displayType
+      traitType
+      key
+      value
     }
     isFollowedByMe
     isFollowing(who: null)
@@ -103,20 +99,18 @@ query Publications {
         recipient
       }
       ... on ProfileFollowModuleSettings {
-       type
+        type
       }
       ... on RevertFollowModuleSettings {
-       type
+        type
       }
     }
   }
-  
   fragment PublicationStatsFields on PublicationStats { 
     totalAmountOfMirrors
     totalAmountOfCollects
     totalAmountOfComments
   }
-  
   fragment MetadataOutputFields on MetadataOutput {
     name
     description
@@ -132,20 +126,18 @@ query Publications {
       value
     }
   }
-  
   fragment Erc20Fields on Erc20 {
     name
     symbol
     decimals
     address
   }
-  
   fragment CollectModuleFields on CollectModule {
     __typename
     ... on FreeCollectModuleSettings {
-        type
-        followerOnly
-        contractAddress
+      type
+      followerOnly
+      contractAddress
     }
     ... on FeeCollectModuleSettings {
       type
@@ -199,7 +191,6 @@ query Publications {
       endTimestamp
     }
   }
-  
   fragment PostFields on Post {
     id
     profile {
@@ -226,7 +217,6 @@ query Publications {
     mirrors(by: null)
     hasCollectedByMe
   }
-  
   fragment MirrorBaseFields on Mirror {
     id
     profile {
@@ -252,7 +242,6 @@ query Publications {
     reaction(request: null)
     hasCollectedByMe
   }
-  
   fragment MirrorFields on Mirror {
     ...MirrorBaseFields
     mirrorOf {
@@ -264,7 +253,6 @@ query Publications {
      }
     }
   }
-  
   fragment CommentBaseFields on Comment {
     id
     profile {
@@ -291,7 +279,6 @@ query Publications {
     mirrors(by: null)
     hasCollectedByMe
   }
-  
   fragment CommentFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -311,7 +298,6 @@ query Publications {
       }
     }
   }
-  
   fragment CommentMirrorOfFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -325,11 +311,11 @@ query Publications {
   }
 `;
 
-const getUserPosts = (profileId) => {
+const getPublicationsRequest = (getPublicationQuery) => {
     return apolloClient.query({
-        query: gql(GET_POSTS),
+        query: gql(GET_PUBLICATIONS),
         variables: {
-            profileId,
+          request: getPublicationQuery,
         },
     });
 };
@@ -337,8 +323,14 @@ const getUserPosts = (profileId) => {
 
 
 export const posts = async (profileId) => { 
-    const request = { profileId: profileId }; 
-    const posts = await getUserPosts(request);
-    console.log(posts, "posts");
-    return posts;
+    const request = {
+    profileId,
+    publicationTypes: ['POST', 'COMMENT', 'MIRROR'],
+  }; 
+
+    const result = await getPublicationsRequest(request); 
+    
+    // const posts = await getUserPosts(request);
+    console.log(result, "posts");
+    return result;
 }; 

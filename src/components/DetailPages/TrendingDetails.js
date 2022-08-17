@@ -7,54 +7,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
  
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
-import { Send } from '@mui/icons-material';
-
-const sliderData = [
-  {
-    name: "Slider0",
-    img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif"
-  },
-  {
-    name: "Slider1",
-    img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif"
-  },
-  {
-    name: "Slider2",
-    img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif"
-  },
-  {
-    name: "Slider3",
-    img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif"
-  },
-  {
-    name: "Slider4",
-    img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif"
-  },
-  {
-    name: "Slider5",
-    img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-  },
-  {
-    name: "Slider6",
-    img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-  },
-  {
-    name: "Slider7",
-    img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif"
-  },
-  {
-    name: "Slider8",
-    img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif"
-  },
-  {
-    name: "Slider9",
-    img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif"
-  },
-  {
-    name: "Slider10",
-    img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif"
-  }
-]
+import { PanoramaSharp, Send } from '@mui/icons-material';
+import { profileById } from '../../context/query';
+import { LensAuthContext } from '../../context/LensContext';
+ 
 const tags = [
   "#tuesday ",
   "#happy tuesday",
@@ -69,12 +25,31 @@ function TrendingDetails() {
   const [showComment, setShowComment] = useState(false);
   const [comment, setComments] = React.useState([""]);
 
-  const param = useParams(); 
-  useEffect(() => {
+  const lensAuthContext = React.useContext(LensAuthContext);
+  const {userPosts  } = lensAuthContext;
 
-    const dd = sliderData && sliderData.filter((e) => e.name === param.id);
-    setData(dd);
-  }, [param, detail])
+  const param = useParams(); 
+  console.log(param,"param");
+  // useEffect(() => {
+
+  //   const dd = sliderData && sliderData.filter((e) => e.name === param.id);
+  //   setData(dd);
+  // }, [param, detail])
+
+  useEffect(() => {
+console.log(param,"param");
+    async function getProfile() {
+      console.log(param,"param");
+      if (param.id !== null) {
+        const user = await  userPosts && userPosts.filter((e)=>e.id === param.id)
+        setData(user);
+      }
+
+    };
+    getProfile(); 
+  }, [param])
+
+  console.log(data,"data");
 
 
   const handleNavigate = (data) => {
@@ -97,20 +72,20 @@ function TrendingDetails() {
           <div className='row mt-5'>
             {
               detail === undefined && data ? data.map((e) => (
-                <div key={e.name} className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                <div key={e.metadata.name} className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
                   <Card   >
                     <CardHeader
                       avatar={
-                        <Avatar src={e.img} aria-label="recipe">
+                        <Avatar src={e.metadata.media[0].original.url} aria-label="recipe">
 
                         </Avatar>
                       }
-                      title={e.name} 
+                      title={e.metadata.name} 
                     />
                     <CardMedia
                       component="img"
-                      image={e.img}
-                      alt={e.name}
+                      image={e.metadata.media[0].original.url}
+                      alt={e.metadata.name}
                       sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                     />
                     <CardContent>
@@ -181,16 +156,16 @@ function TrendingDetails() {
                   <Card   >
                   <CardHeader
                       avatar={
-                        <Avatar src={detail && detail.img} aria-label="recipe">
+                        <Avatar src={detail && detail.metadata.media[0].original.url} aria-label="recipe">
 
                         </Avatar>
                       }
-                      title={detail && detail.name} 
+                      title={detail && detail.metadata.name} 
                     />
                     <CardMedia
                       component="img"
-                      image={detail && detail.img}
-                      alt={ detail && detail.name}
+                      image={detail && detail.metadata.media[0].original.url}
+                      alt={ detail && detail.metadata.name}
                       sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                     />
                     <CardContent>
@@ -228,7 +203,7 @@ function TrendingDetails() {
                       <div className='m-2'>
                         <div className="d-flex justify-content-around mt-2">
                           <div className="p-0">
-                             <Avatar src={detail && detail.img}/>
+                             <Avatar src={detail && detail.metadata.media[0].original.url}/>
                           </div>
                           <form className="col-10 header-search ms-3 d-flex align-items-center">
                             <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
@@ -257,16 +232,16 @@ function TrendingDetails() {
                 </div>
             }
             {
-              sliderData && sliderData.map((e) => {
-                if (e.name !== param.id) {
+              userPosts && userPosts.map((e) => {
+                if (e.id !== param.id) {
                   return (
                     <div className='col-12 col-sm-3 col-md-3 col-lg-3'>
                       <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
                         <CardMedia
                           component="img"
                           height="194"
-                          image={e.img}
-                          alt={e.name}
+                          image={e.metadata.media[0].original.url}
+                          alt={e.metadata.name}
                         />
                         <CardContent>
                           <Typography variant="body2" color="text.secondary">

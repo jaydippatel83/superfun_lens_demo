@@ -9,79 +9,17 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Button } from '@mui/material';
-import { Link  as RouterLink} from 'react-router-dom';
+import { Link  as RouterLink, useNavigate} from 'react-router-dom';
+import { LensAuthContext } from '../context/LensContext';
+
 
 function Stories() {
     const [style, setStyle] = useState("");
-    const storyData = [
-        {
-            name: "Slider0",
-            img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider1",
-            img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '4 day ago'
-        },
-        {
-            name: "Slider2",
-            img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago',
-        },
-        {
-            name: "Slider3",
-            img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider4",
-            img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider5",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider6",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif",
-            description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider7",
-            img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations"
-        },
-        {
-            name: "Slider8",
-            img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider9",
-            img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Slider10",
-            img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif",
-            description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
-            date: '3 day ago'
-        }
-    ]
-
-    const [storyItem, setStoryItem] = useState(storyData);
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const {userPosts  } = lensAuthContext;
+   
+    const navigate = useNavigate();
+    // const [storyItem, setStoryItem] = useState(storyData);
     const [hasMore, setHasmore] = useState(true);
     const [lastPosition, setLastPosition] = useState(0);
     const perPage = 4;
@@ -96,13 +34,17 @@ function Stories() {
     }, []);
 
 
+    const handleNavigate=(id)=>{ 
+        navigate(`/trendingDetails${id}`)
+    }
+
 
 
     return (
 
 
         <InfiniteScroll
-            dataLength={storyItem.length}
+            dataLength={userPosts.length}
             next={loadProducts}
             hasMore={hasMore}
             loader={<h4 className='text-center'>Loading...</h4>}
@@ -112,34 +54,35 @@ function Stories() {
                 <div className='row'>
                     <div className="col-12 mt-2 mb-2"> 
                         <div className="d-flex justify-content-between mb-2">
-                        <h5>Stories</h5>
+                        <h5>Memes</h5>
                         <Button  component={RouterLink} to="/stories">View All</Button>
                     </div>
                     </div>
 
 
                     {
-                        storyData.map((item, i) => { 
+                      userPosts &&  userPosts.map((item, i) => { 
                             return (
                                 <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
                                     <ImageListItem
                                         style={{ cursor: 'pointer' }}
                                         onMouseEnter={e => {
-                                            setStyle(item.name);
+                                            setStyle(item.metadata.name);
                                         }}
                                         onMouseLeave={e => {
                                             setStyle("");
                                         }}
+                                        onClick={()=>handleNavigate(item.id)}
                                     >
                                         <img
-                                            src={`${item.img} `}
-                                            srcSet={`${item.img} `}
-                                            alt={item.name}
+                                            src={`${item.metadata.media[0].original.url} `}
+                                            srcSet={`${item.metadata.media[0].original.url} `}
+                                            alt={item.metadata.name}
                                             loading="lazy"
                                             width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer' }}
                                         />
                                         {
-                                            style == item.name && <ImageListItemBar
+                                            style == item.metadata.name && <ImageListItemBar
                                                 sx={{
                                                     background:
                                                         'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -157,7 +100,7 @@ function Stories() {
                                             />
                                         }
                                         {
-                                            style == item.name && <ImageListItemBar
+                                            style == item.metadata.name && <ImageListItemBar
                                                 sx={{
                                                     background:
                                                         'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -167,9 +110,9 @@ function Stories() {
                                                 position="top"
                                                 actionIcon={
                                                     <img
-                                                        src={`${item.img} `}
-                                                        srcSet={`${item.img} `}
-                                                        alt={item.name}
+                                                        src={`${item.metadata.media[0].original.url} `}
+                                                        srcSet={`${item.metadata.media[0].original.url} `}
+                                                        alt={item.metadata.name}
                                                         loading="lazy"
                                                         width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
                                                     />
@@ -187,7 +130,7 @@ function Stories() {
                                             position="bottom"
                                             actionIcon={
                                                 <div className='p-2 mb-0'>
-                                                    <p className='mb-0' >{item.description}</p><span>{item.date}</span></div>
+                                                    <p className='mb-0' >{item.metadata.description}</p><span>{item.createdAt}</span></div>
                                             }
                                             actionPosition="left"
                                         />

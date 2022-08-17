@@ -95,9 +95,9 @@ const getProfileRequest = (request) => {
     });
 };
 
-export const profileById = async (id) => { 
+export const profileById = async (id) => {  
     const request = { profileId: id };
-    const profile = await getProfileRequest(request); 
+    const profile = await getProfileRequest(request);  
     const pId = profile.data.profile;
     return pId;
 };

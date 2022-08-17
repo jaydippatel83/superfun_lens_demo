@@ -9,6 +9,7 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import Chip from '@mui/material/Chip';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
+import { profileById } from '../context/query';
 
 function Profile() {
     const params = useParams(); 
@@ -21,6 +22,7 @@ function Profile() {
     const handleShowComment = () => {
         setShowComment(!showComment);
     };
+
 
     const storyData = [
         {
@@ -99,16 +101,30 @@ function Profile() {
         " #good tuesday morning"
     ]
 
+    // useEffect(() => {
+    //     const getUserData = () => {
+    //         const dd = storyData && storyData.filter((e) => e.name === params.id);
+    //         setData(dd);
+    //     }
+    //     getUserData();
+    // }, [params])
+
+
     useEffect(() => {
-        const getUserData = () => {
-            const dd = storyData && storyData.filter((e) => e.name === params.id);
-            setData(dd);
-        }
-        getUserData();
-    }, [params])
+        console.log(params,"param");
+            async function getProfile() {
+              console.log(params,"param");
+              if (params.id !== null) {
+                const user = await profileById(params.id);
+                setData(user);
+              }
+        
+            };
+            getProfile(); 
+          }, [params])
 
 
-
+console.log(data,"data");
 
     return (
         < >

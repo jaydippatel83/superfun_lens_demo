@@ -64,6 +64,15 @@ export const LensAuthContextProvider = (props) => {
     const post = await posts(id);
     console.log(post);
     setUserPosts(post.data.publications.items);
+
+    // post.data.publications.items.map((data)=>{
+    //   const docRef = addDoc(collection(db, "posts"), {
+    //     posts: data
+    //    });
+    // })
+
+    
+    
   }
 
 
@@ -192,27 +201,30 @@ export const LensAuthContextProvider = (props) => {
     window.localStorage.setItem("profileId", profiles?.id);
     setUpdate(!update)
 
+   
+
     // const q = query(collection(db, "profiles"), where("handle", "==", profiles.handle)); 
     // const querySnapshot = await getDocs(q); 
     const q = query(collection(db, "profiles"));
+
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((e) => {
       console.log(e.data().id, "eee");
 
-      if (e.data().id === profiles?.id) {
-        console.log("exist");
-      } else if(e.data().id !== profiles?.id) {
-        const docRef = addDoc(collection(db, "profiles"), {
-          bio: profiles.bio,
-          coverPicture: profiles.coverPicture,
-          handle: profiles.handle,
-          name: profiles.name,
-          id: profiles.id,
-          metadata: profiles.metadata,
-          ownedBy: profiles.ownedBy,
-          photo: profiles.picture ? profiles.picture.original.url : null,
-        });
-      }
+      // if (e.data().id === profiles?.id) {
+      //   console.log("exist");
+      // } else if(e.data().id !== profiles?.id) {
+      //   const docRef = addDoc(collection(db, "profiles"), {
+      //     bio: profiles.bio,
+      //     coverPicture: profiles.coverPicture,
+      //     handle: profiles.handle,
+      //     name: profiles.name,
+      //     id: profiles.id,
+      //     metadata: profiles.metadata,
+      //     ownedBy: profiles.ownedBy,
+      //     photo: profiles.picture ? profiles.picture.original.url : null,
+      //   });
+      // }
     })
      
     window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
