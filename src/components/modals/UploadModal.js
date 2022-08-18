@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/system';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { InputBase } from '@mui/material';
+import { CircularProgress, InputBase } from '@mui/material';
 import { YouTube } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
@@ -22,6 +22,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // import { create as ipfsHttpClient } from "ipfs-http-client"; 
 import { create } from 'ipfs-http-client';  
+import { toast } from 'react-toastify';
 
 const auth =
   "Basic " +
@@ -54,6 +55,7 @@ export default function UploadModal() {
     const [title, setTitle] = React.useState("");
     const [tags, setTags] = React.useState([]);
     const [file, setFile] = React.useState("");
+    const [loading, setLoading] = React.useState(false);
 
 
     const handleClickOpen = () => {
@@ -76,6 +78,7 @@ export default function UploadModal() {
     };
 
     const handleUpload = async () => { 
+        setLoading(true);
         const postData = {
             title: title,
             photo: file,
@@ -85,6 +88,12 @@ export default function UploadModal() {
         } 
         const res = await createPost(postData); 
         setUpdate(!update);
+        setFile("");
+        setTags([]);
+        setTitle("");
+        setLoading(false); 
+        toast.success("Post is Successfully created!");
+
     }
  
 
@@ -141,7 +150,7 @@ export default function UploadModal() {
                 </DialogContent>
                 <DialogActions>
                     <ColorButton onClick={handleClose}>Cancel</ColorButton>
-                    <ColorButton onClick={handleUpload}>Upload</ColorButton>
+                    <ColorButton onClick={handleUpload}>{loading ? <CircularProgress/> : "Upload"}</ColorButton>
                 </DialogActions>
             </Dialog>
         </div>

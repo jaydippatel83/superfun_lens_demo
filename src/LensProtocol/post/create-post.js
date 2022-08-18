@@ -46,7 +46,8 @@ export const createPost = async (postData) => {
                 type: 'image/jpeg'
             }
         ],
-        animation_url: null, 
+        appId: 'superfun',
+        animation_url: null,
     });
  
     // const aas = { "version": "1.0.0",

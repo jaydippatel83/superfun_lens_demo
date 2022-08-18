@@ -17,6 +17,8 @@ import ContestDetails from './components/DetailPages/ContestDetails';
 import MemeList from './components/Lists/MemeList';
 import Footer from './header/Footer';
 import { LensAuthContextProvider } from './context/LensContext'; 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 
 let darkTheme = createTheme({
@@ -57,6 +59,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={darkTheme}> 
+    <ToastContainer/>
       <LensAuthContextProvider>
         <BrowserRouter>
           <Routes>

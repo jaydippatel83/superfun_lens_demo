@@ -12,6 +12,7 @@ import { profile, profileByAddress } from "../LensProtocol/profile/get-profile";
 import { db } from "../firebase/firebase";
 import Web3Modal from 'web3modal';
 import { posts } from "../LensProtocol/post/get-post";
+import { getPublicationByLatest } from "../LensProtocol/post/explore/explore-publications";
 
 export const LensAuthContext = createContext(undefined);
 
@@ -51,6 +52,8 @@ export const LensAuthContextProvider = (props) => {
     async function getProfile() {
       if (id !== null) {
         const user = await profileById(id);
+        const data = await getPublicationByLatest();
+        console.log(data,"data by latest");
         setProfile(user);
       }
 

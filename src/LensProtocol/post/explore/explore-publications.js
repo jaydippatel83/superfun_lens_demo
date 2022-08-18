@@ -1,11 +1,10 @@
-import { apolloClient } from '../services/Apollo_Client';
+ 
 import { gql } from '@apollo/client'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+import { apolloClient } from '../../services/Apollo_Client'
 
-const GET_PUBLICATIONS = `
-  query($request: PublicationsQueryRequest!) {
-    publications(request: $request) {
+const EXPLORE_PUBLICATIONS = `
+  query($request: ExplorePublicationRequest!) {
+    explorePublications(request: $request) {
       items {
         __typename 
         ... on Post {
@@ -25,10 +24,14 @@ const GET_PUBLICATIONS = `
       }
     }
   }
+
   fragment MediaFields on Media {
     url
+    width
+    height
     mimeType
   }
+
   fragment ProfileFields on Profile {
     id
     name
@@ -39,9 +42,9 @@ const GET_PUBLICATIONS = `
       key
       value
     }
-    isFollowedByMe
+        isFollowedByMe
     isFollowing(who: null)
-    followNftAddress
+        followNftAddress
     metadata
     isDefault
     handle
@@ -56,6 +59,12 @@ const GET_PUBLICATIONS = `
         original {
           ...MediaFields
         }
+        small {
+          ...MediaFields
+        }
+        medium {
+          ...MediaFields
+        }
       }
     }
     coverPicture {
@@ -67,6 +76,12 @@ const GET_PUBLICATIONS = `
       }
       ... on MediaSet {
         original {
+          ...MediaFields
+        }
+        small {
+         ...MediaFields
+        }
+        medium {
           ...MediaFields
         }
       }
@@ -99,24 +114,32 @@ const GET_PUBLICATIONS = `
         recipient
       }
       ... on ProfileFollowModuleSettings {
-        type
+       type
       }
       ... on RevertFollowModuleSettings {
-        type
+       type
       }
     }
   }
+
   fragment PublicationStatsFields on PublicationStats { 
     totalAmountOfMirrors
     totalAmountOfCollects
     totalAmountOfComments
   }
+
   fragment MetadataOutputFields on MetadataOutput {
     name
     description
     content
     media {
       original {
+        ...MediaFields
+      }
+      small {
+        ...MediaFields
+      }
+      medium {
         ...MediaFields
       }
     }
@@ -126,18 +149,18 @@ const GET_PUBLICATIONS = `
       value
     }
   }
+
   fragment Erc20Fields on Erc20 {
     name
     symbol
     decimals
     address
   }
+
   fragment CollectModuleFields on CollectModule {
     __typename
     ... on FreeCollectModuleSettings {
       type
-      followerOnly
-      contractAddress
     }
     ... on FeeCollectModuleSettings {
       type
@@ -191,6 +214,7 @@ const GET_PUBLICATIONS = `
       endTimestamp
     }
   }
+
   fragment PostFields on Post {
     id
     profile {
@@ -212,11 +236,12 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
-    reaction(request: null)
-    mirrors(by: null)
+        hidden
+        reaction(request: null)
+        mirrors(by: null)
     hasCollectedByMe
   }
+
   fragment MirrorBaseFields on Mirror {
     id
     profile {
@@ -238,10 +263,11 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
+      hidden
     reaction(request: null)
     hasCollectedByMe
   }
+
   fragment MirrorFields on Mirror {
     ...MirrorBaseFields
     mirrorOf {
@@ -253,6 +279,7 @@ const GET_PUBLICATIONS = `
      }
     }
   }
+
   fragment CommentBaseFields on Comment {
     id
     profile {
@@ -274,11 +301,12 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
+      hidden
     reaction(request: null)
     mirrors(by: null)
     hasCollectedByMe
   }
+
   fragment CommentFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -298,6 +326,7 @@ const GET_PUBLICATIONS = `
       }
     }
   }
+
   fragment CommentMirrorOfFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -309,45 +338,25 @@ const GET_PUBLICATIONS = `
       }
     }
   }
-`;
+`
 
-const getPublicationsRequest = (getPublicationQuery) => {
-    return apolloClient.query({
-        query: gql(GET_PUBLICATIONS),
-        variables: {
-          request: getPublicationQuery,
-        },
-    });
-};
+export const explorePublications = (explorePublicationQueryRequest) => {
+   return apolloClient.query({
+    query: gql(EXPLORE_PUBLICATIONS),
+    variables: {
+      request: explorePublicationQueryRequest
+    },
+  })
+}
 
+export const getPublicationByLatest= async()=>{
+    const query =  {
+        "sortCriteria": "LATEST", 
+        "publicationTypes": ["POST", "COMMENT", "MIRROR"], 
+        "sources": ["superfun"], 
+     }
 
-
-export const posts = async (profileId) => { 
-    const request = {
-    profileId,
-    publicationTypes: ['POST', 'COMMENT', 'MIRROR'],
-  }; 
-
-    const result = await getPublicationsRequest(request); 
-
-    // 
-
-    result && result.data.publications.items.map(async(e)=>{
-      console.log(e,"eeee"); 
-      const q = query(collection(db, "posts"),where("id", "==", e.id));
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((data)=>{
-        console.log(data.data(),"data");
-       if(data.data() !== e.id){
-        const docRef = addDoc(collection(db, "posts"), {
-           e
-        });
-       }
-      })
-
-    })
-    
-    // const posts = await getUserPosts(request);
-    console.log(result.data.publications.items, "posts");
-    return result;
-}; 
+     const result = await explorePublications(query);
+     console.log(result);
+     return result;
+}
