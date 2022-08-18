@@ -6,9 +6,12 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { useTheme } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import { LensAuthContext } from '../../context/LensContext';
 
 function TrendingList() { 
     const navigate = useNavigate();
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const {userPosts  } = lensAuthContext;
     const theme = useTheme();
     const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
     const smallToMid = useMediaQuery(theme.breakpoints.between("sm", "md"));
@@ -17,54 +20,7 @@ function TrendingList() {
 
     
 
-     
-    const sliderData = [
-        {
-            name: "Slider0",
-            img: "https://media.giphy.com/media/3o6YgrDPMg1pa2kV0s/giphy.gif"
-        },
-        {
-            name: "Slider1",
-            img: "https://media.giphy.com/media/uk4Va5MkRp2bfkOk6f/giphy.gif"
-        },
-        {
-            name: "Slider2",
-            img: "https://media.giphy.com/media/t56wjBdpeFNwxQglmJ/giphy.gif"
-        },
-        {
-            name: "Slider3",
-            img: "https://media.giphy.com/media/MCeIiRETfwBK2rtGRi/giphy.gif"
-        },
-        {
-            name: "Slider4",
-            img: "https://media.giphy.com/media/fvr9cMCOqerIpC4Ipm/giphy.gif"
-        },
-        {
-            name: "Slider5",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-        },
-        {
-            name: "Slider6",
-            img: "https://media.giphy.com/media/mguPrVJAnEHIY/giphy.gif"
-        },
-        {
-            name: "Slider7",
-            img: "https://media.giphy.com/media/iJJ6E58EttmFqgLo96/giphy.gif"
-        },
-        {
-            name: "Slider8",
-            img: "https://media.giphy.com/media/pynZagVcYxVUk/giphy.gif"
-        },
-        {
-            name: "Slider9",
-            img: "https://media.giphy.com/media/3NtY188QaxDdC/giphy.gif"
-        },
-        {
-            name: "Slider10",
-            img: "https://media.giphy.com/media/srV1WPgHVbDal3UJ9h/giphy.gif"
-        }
-    ]
-
+ 
     const [style, setStyle] = useState("");
 
     const handleNavigate=(e)=>{ 
@@ -81,27 +37,27 @@ function TrendingList() {
                     <div className='row'>
                         <Box sx={{ width: '100%', height: 'auto', overflowY: 'scroll',marginTop:'3%' }}>
                             <ImageList variant="masonry" cols={greaterThanMid && 4 || smallToMid && 3 || lessThanSmall && 2 || xsmall && 1}   gap={8}>  
-                                {sliderData.map((item) => (  
+                                {userPosts && userPosts.map((item) => (  
                                     <ImageListItem
-                                    key={item.name}
+                                    key={item.id}
                                     style={{ cursor: 'pointer' }}
                                     onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
-                                        setStyle(item.name);
+                                        setStyle(item.id);
                                     }}
                                     onMouseLeave={e => {
                                         setStyle("");
                                     }}
                                 >
                                     <img
-                                        src={`${item.img}?w=248&fit=crop&auto=format`}
-                                        srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
+                                        srcSet={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                         alt={item.name}
                                         loading="lazy"
                                           style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
                                     />
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -119,7 +75,7 @@ function TrendingList() {
                                         />
                                     }
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -129,9 +85,9 @@ function TrendingList() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                src={`${item.img}?w=248&fit=crop&auto=format`}
-                                                srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                                    alt={item.name}
+                                                src={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                    alt={item.metadata.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
                                                 />
@@ -141,7 +97,7 @@ function TrendingList() {
                                         />
                                     }
                                     {
-                                        style === item.name && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -152,7 +108,7 @@ function TrendingList() {
                                             actionIcon={
                                                 <IconButton
                                                     sx={{ color: 'white', padding: '5px', margin: '10px 15px' }}
-                                                    aria-label={`star ${item.name}`}
+                                                    aria-label={`star ${item.metadata.name}`}
                                                 >
                                                     <LinkIcon />
                                                 </IconButton>

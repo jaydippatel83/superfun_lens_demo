@@ -112,10 +112,11 @@ export default function TrendingSlider() {
                                         srcSet={`${item.metadata.media[0].original.url} `}
                                         alt={item.metadata.name}
                                         loading="lazy"
-                                        width="100%" style={{ borderRadius: '20px', height: '150px', padding: '10px', cursor: 'pointer' }}
+
+                                        width="100%" style={{ borderRadius: '20px', height: '200px', padding: '10px', cursor: 'pointer' ,objectFit:'fill'}}
                                     />
                                     {
-                                        style === item.metadata.name && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -133,7 +134,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style === item.metadata.name && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -155,7 +156,7 @@ export default function TrendingSlider() {
                                         />
                                     }
                                     {
-                                        style === item.metadata.description && <ImageListItemBar
+                                        style === item.id && <ImageListItemBar
                                             sx={{
                                                 background:
                                                     'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +

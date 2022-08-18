@@ -62,7 +62,7 @@ function TrendingDetails() {
           <div className='row mt-5'>
             {
               detail === undefined && data ? data.map((e) => (
-                <div key={e.metadata.name} className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                <div key={e.metadata.name} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                   <Card   >
                     <CardHeader
                       avatar={
@@ -75,8 +75,8 @@ function TrendingDetails() {
                     <CardMedia
                       component="img"
                       image={e.metadata.media[0].original.url}
-                      alt={e.metadata.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                      alt={e.metadata.name} 
+                      style={{objectFit:'fill'}}
                     />
                     <CardContent>
                       {/* <Typography variant="body2" color="text.secondary">
@@ -142,7 +142,7 @@ function TrendingDetails() {
                   }
                 </div>
               )) :
-                <div className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                <div className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                   <Card   >
                   <CardHeader
                       avatar={
@@ -154,6 +154,7 @@ function TrendingDetails() {
                     />
                     <CardMedia
                       component="img"
+                      style={{objectFit:'fill'}}
                       image={detail && detail.metadata.media[0].original.url}
                       alt={ detail && detail.metadata.name}
                       sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
@@ -225,13 +226,14 @@ function TrendingDetails() {
               userPosts && userPosts.map((e) => {
                 if (e.id !== param.id) {
                   return (
-                    <div className='col-12 col-sm-3 col-md-3 col-lg-3'>
+                    <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
                       <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
                         <CardMedia
-                          component="img"
-                          height="194"
+                          component="img" 
+                          height="240"
                           image={e.metadata.media[0].original.url}
-                          alt={e.metadata.name}
+                          alt={e.metadata.name} 
+                          style={{objectFit:'fill'}}
                         />
                         <CardContent>
                           <Typography variant="body2" color="text.secondary">

@@ -103,7 +103,7 @@ function ProfileDetails() {
           <div className='row mt-5'>
             {
               detail === undefined && data ? data.map((e) => (
-                <div key={e.name} className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                <div key={e.name} className='col-12 col-sm-7 col-md-7 col-lg-7' style={{ margin: '10px 0' }}>
                   <Card   >
                     <CardHeader
                       avatar={
@@ -117,7 +117,7 @@ function ProfileDetails() {
                       component="img"
                       image={e.img}
                       alt={e.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                      // sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                     />
                     <CardContent>
                       {/* <Typography variant="body2" color="text.secondary">
@@ -183,7 +183,7 @@ function ProfileDetails() {
                   }
                 </div>
               )) :
-                <div className='col-12 col-sm-9 col-md-9 col-lg-9' style={{ margin: '10px 0' }}>
+                <div className='col-12 col-sm-7 col-md-7 col-lg-7' style={{ margin: '10px 0' }}>
                   <Card   >
                   <CardHeader
                       avatar={
@@ -197,7 +197,7 @@ function ProfileDetails() {
                       component="img"
                       image={detail && detail.img}
                       alt={ detail && detail.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                      // sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                     />
                     <CardContent>
                       {/* <Typography variant="body2" color="text.secondary">
@@ -266,7 +266,7 @@ function ProfileDetails() {
               sliderData && sliderData.map((e) => {
                 if (e.name !== param.id) {
                   return (
-                    <div className='col-12 col-sm-3 col-md-3 col-lg-3'>
+                    <div className='col-12 col-sm-5 col-md-5 col-lg-5'>
                       <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
                         <CardMedia
                           component="img"

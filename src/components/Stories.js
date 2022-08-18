@@ -59,7 +59,7 @@ function Stories() {
                                     <ImageListItem
                                         style={{ cursor: 'pointer' }}
                                         onMouseEnter={e => {
-                                            setStyle(item.metadata.name);
+                                            setStyle(item.id);
                                         }}
                                         onMouseLeave={e => {
                                             setStyle("");
@@ -71,10 +71,10 @@ function Stories() {
                                             srcSet={`${item.metadata.media[0].original.url} `}
                                             alt={item.metadata.name}
                                             loading="lazy"
-                                            width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer' }}
+                                            width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer',objectFit:'fill' }}
                                         />
                                         {
-                                            style == item.metadata.name && <ImageListItemBar
+                                            style == item.id && <ImageListItemBar
                                                 sx={{
                                                     background:
                                                         'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
@@ -92,7 +92,7 @@ function Stories() {
                                             />
                                         }
                                         {
-                                            style == item.metadata.name && <ImageListItemBar
+                                            style == item.id && <ImageListItemBar
                                                 sx={{
                                                     background:
                                                         'linear-gradient(to bottom, rgba(0,0,0,0) 0%, ' +
@@ -106,7 +106,7 @@ function Stories() {
                                                         srcSet={`${item.metadata.media[0].original.url} `}
                                                         alt={item.metadata.name}
                                                         loading="lazy"
-                                                        width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
+                                                        width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px',objectFit:'fill' }}
                                                     />
 
                                                 }

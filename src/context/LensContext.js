@@ -52,8 +52,7 @@ export const LensAuthContextProvider = (props) => {
     async function getProfile() {
       if (id !== null) {
         const user = await profileById(id);
-        const data = await getPublicationByLatest();
-        console.log(data,"data by latest");
+       
         setProfile(user);
       }
 
@@ -65,16 +64,9 @@ export const LensAuthContextProvider = (props) => {
 
   async function getPosts() {
     const post = await posts(id); 
-    setUserPosts(post.data.publications.items);
-
-    // post.data.publications.items.map((data)=>{
-    //   const docRef = addDoc(collection(db, "posts"), {
-    //     posts: data
-    //    });
-    // })
-
-    
-    
+    const data = await getPublicationByLatest();
+    console.log(data,"data by latest");
+    setUserPosts(data.data.explorePublications.items); 
   }
 
 

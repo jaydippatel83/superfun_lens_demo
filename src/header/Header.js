@@ -50,7 +50,7 @@ const pages = [
     },
     {
         name: 'Artists',
-        path: 'artist'
+        path: 'memers'
     }
 ]
 
