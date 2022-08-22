@@ -326,6 +326,7 @@ export const posts = async (profileId) => {
     const request = {
     profileId,
     publicationTypes: ['POST', 'COMMENT', 'MIRROR'],
+    sources: ['superfun'], 
   };  
     const result = await getPublicationsRequest(request);  
     return result;

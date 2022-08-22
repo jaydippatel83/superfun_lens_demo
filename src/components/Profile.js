@@ -10,6 +10,7 @@ import Chip from '@mui/material/Chip';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
 import { profileById } from '../context/query';
+import { posts } from '../LensProtocol/post/get-post';
 
 function Profile() {
     const params = useParams(); 
@@ -18,79 +19,11 @@ function Profile() {
     const [detail, setDetail] = useState();
     const [showComment, setShowComment] = useState(false);
     const [comment, setComments] = React.useState([""]);
+    const [post, setPosts] = useState([]);
 
     const handleShowComment = () => {
         setShowComment(!showComment);
-    };
-
-
-    const storyData = [
-        {
-            name: "Jaydip Patel",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTBiIBka08VQlJa_2LMCkrZKqZ7fT-PV_zw&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Mansi Joshi",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2AnKOLhLgzlFjwD4nLP21BDjglT43XsVwJQ&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '4 day ago'
-        },
-        {
-            name: "Disha Sathwara",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWkh-FmK4k2h4a0dVk9FDO14869w7TjqwyA&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago',
-        },
-        {
-            name: "Dhruv Sathwara",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDXiKxCdCFAZverAZZPHT77HqndAlgTEtncg&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Karan Pujara",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScPSEyda4ZdKgzlMZpIjmCoa6Hyt8xVBNeg&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Web3Builder",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQGFlovSwUJsdCOFZYqKxiGTy9aBjCLmQVw&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "CryptoYard",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIuplMPz5muZkszIGtUUO0H7XkCw5gxhTew&usqp=CAU",
-            description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
-            date: '3 day ago'
-        },
-        {
-            name: "CrypticDev",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4meNTJr3kzXWPMkCAjzkTNXeD3Ys8LBfGPziN_epUuBsbmG9PTCMux02sno7Tm6TKspA&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations"
-        },
-        {
-            name: "CryptoPunk",
-            img: "https://g.foolcdn.com/art/companylogos/square/link.png",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Vitalik",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJbf16Wo-44LjPMWnx9UPvA11MzO8_0igDw&usqp=CAU",
-            description: "Apologies Aren’t Enough, We Need Reparations",
-            date: '3 day ago'
-        },
-        {
-            name: "Polygon",
-            img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIB9Rv-Q2c3sp_1N-bKK0EspLRtR5Y45iJUA&usqp=CAU",
-            description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
-            date: '3 day ago'
-        }
-    ]
+    }; 
 
     const tags = [
         "#tuesday ",
@@ -101,28 +34,28 @@ function Profile() {
         " #good tuesday morning"
     ]
 
-    // useEffect(() => {
-    //     const getUserData = () => {
-    //         const dd = storyData && storyData.filter((e) => e.name === params.id);
-    //         setData(dd);
-    //     }
-    //     getUserData();
-    // }, [params])
+    useEffect(() => {
+        const getUserData = async () => {
+            const dd = await posts(params.id);
+            setPosts(dd.data.publications.items);
+        }
+        getUserData();
+    }, [params])
 
 
     useEffect(() => { 
             async function getProfile() { 
               if (params.id !== null) {
                 const user = await profileById(params.id);
+                console.log(user,"user");
                 setData(user);
-              }
-        
+              } 
             };
             getProfile(); 
           }, [params])
 
  
-
+console.log(post,"post");
     return (
         < >
             <Header />
@@ -133,14 +66,12 @@ function Profile() {
                     <div className='row mt-5'>
                         <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
                             {
-                                data && data.map((e) => {
-                                    return (
-                                        <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
+                                data &&  <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                             <div className='text-center'>
-                                                <img src={e.img} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
-                                                <h5 className='pt-4' style={{ fontWeight: '600' }}>{e.name}</h5>
-                                                <h6 className='' style={{ fontWeight: '600' }}>{`@${e.name.trim().toLowerCase()}`}</h6>
-                                                <p>{e.description}</p>
+                                                <img src={data.picture != null ? data.picture.original.url : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
+                                                <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
+                                                <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
+                                                {/* <p>{e.description}</p> */}
                                                 <Button variant='outlined'>Follow</Button>
                                             </div>
                                             {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
@@ -164,9 +95,7 @@ function Profile() {
                                                 <Button variant='outlined'>Hire Me</Button>
                                                 <Button variant='outlined'>Send Message</Button>
                                             </div>
-                                        </Box>
-                                    )
-                                })
+                                        </Box> 
                             }
                         </div>
 
@@ -179,22 +108,22 @@ function Profile() {
                                         <Card   >
                                             <CardHeader
                                                 avatar={
-                                                    <Avatar src={detail.img} aria-label="recipe">
+                                                    <Avatar src={detail.profile.picture != null ? detail.profile.picture.original.url : 'assets/bg.png'} aria-label="recipe">
 
                                                     </Avatar>
                                                 }
-                                                title={detail.name}
-                                                subheader={detail.date}
+                                                title={detail.metadata.name}
+                                                subheader={detail.createdAt}
                                             />
                                             <CardMedia
                                                 component="img"
-                                                image={detail.img}
-                                                alt={detail.name}
-                                                sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                                                image={detail.metadata.media[0].original.url}
+                                                alt={detail.metadata.name}
+                                                sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px',objectFit:'fill' } }}
                                             />
                                             <CardContent>
                                                 <Typography variant="body2" color="text.secondary">
-                                                    {detail.description}
+                                                    {detail.metadata.description}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
@@ -261,13 +190,13 @@ function Profile() {
                             }
                             <div className='row'>
                                 {
-                                    storyData && storyData.map((e) => {
+                                    post.length !== 0 ? post.map((e) => {
                                         return (
                                             <div className='col-12 col-sm-6 col-md-6 col-lg-4'>
                                                 <MemeCard data={e} setDetail={setDetail} setShow={setShow} />
                                             </div>
                                         )
-                                    })
+                                    }) : <h1>No publications is created!</h1>
                                 }
                             </div>
                         </div>

@@ -5,75 +5,7 @@ import Search from '../Search'
 import { useNavigate } from 'react-router-dom';
 import { LensAuthContext } from '../../context/LensContext';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
-
-const storyData = [
-    {
-        name: "Jaydip Patel",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNTBiIBka08VQlJa_2LMCkrZKqZ7fT-PV_zw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Mansi Joshi",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2AnKOLhLgzlFjwD4nLP21BDjglT43XsVwJQ&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '4 day ago'
-    },
-    {
-        name: "Disha Sathwara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgWkh-FmK4k2h4a0dVk9FDO14869w7TjqwyA&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago',
-    },
-    {
-        name: "Dhruv Sathwara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDXiKxCdCFAZverAZZPHT77HqndAlgTEtncg&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Karan Pujara",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTScPSEyda4ZdKgzlMZpIjmCoa6Hyt8xVBNeg&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Web3Builder",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPQGFlovSwUJsdCOFZYqKxiGTy9aBjCLmQVw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "CryptoYard",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRIuplMPz5muZkszIGtUUO0H7XkCw5gxhTew&usqp=CAU",
-        description: "21 GIFs From the Second Truss–Sunak Tory Leadership Debate",
-        date: '3 day ago'
-    },
-    {
-        name: "CrypticDev",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4meNTJr3kzXWPMkCAjzkTNXeD3Ys8LBfGPziN_epUuBsbmG9PTCMux02sno7Tm6TKspA&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations Apologies Aren’t Enough, We Need Reparations"
-    },
-    {
-        name: "CryptoPunk",
-        img: "https://g.foolcdn.com/art/companylogos/square/link.png",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Vitalik",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbJbf16Wo-44LjPMWnx9UPvA11MzO8_0igDw&usqp=CAU",
-        description: "Apologies Aren’t Enough, We Need Reparations",
-        date: '3 day ago'
-    },
-    {
-        name: "Polygon",
-        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIB9Rv-Q2c3sp_1N-bKK0EspLRtR5Y45iJUA&usqp=CAU",
-        description: "A Showdown Over Abortion Access Is Unfolding In Kansas",
-        date: '3 day ago'
-    }
-]
+import { db } from '../../firebase/firebase'; 
 
 function MemeList() {
     const navigate = useNavigate(); 
@@ -84,7 +16,7 @@ function MemeList() {
 
  
     const handleNavigate = (e) => { 
-        navigate(`/${e.name}`)
+        navigate(`/${e.id}`)
     }
 
     useEffect(() => {
@@ -101,6 +33,8 @@ function MemeList() {
         }
         getCreator()
     }, [])
+
+    console.log(story,"story");
  
 
     return (
@@ -113,7 +47,7 @@ function MemeList() {
                         {
                             story && story.map((e) => { 
                                 return (
-                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.id}>
+                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.handle}>
                                         <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                         <div className='text-center' onClick={()=> handleNavigate(e)}>
                                             <img src={e.photo ? e.photo : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.handle} />

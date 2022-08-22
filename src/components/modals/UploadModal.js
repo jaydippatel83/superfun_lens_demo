@@ -102,7 +102,7 @@ export default function UploadModal() {
     const handleUploadImage = async (e) => {
         const file = e.target.files[0]; 
         const ipfsResult = await client.add(file); 
-        const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`; 
+        const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`;  
         setFile(imageURI); 
 
     }

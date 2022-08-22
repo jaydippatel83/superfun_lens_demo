@@ -19,12 +19,13 @@ export default function MemeCard(props) {
             <CardMedia
                 component="img"
                 height="194"
-                image={props.data.img}
-                alt={props.data.name}
+                image={props.data.metadata.media[0].original.url}
+                alt={props.data.metadata.name}
+                style={{objectFit:'fill' }}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    {props.data.description}
+                    {props.data.metadata.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
