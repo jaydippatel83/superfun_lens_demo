@@ -46,16 +46,14 @@ function Profile() {
     useEffect(() => { 
             async function getProfile() { 
               if (params.id !== null) {
-                const user = await profileById(params.id);
-                console.log(user,"user");
+                const user = await profileById(params.id); 
                 setData(user);
               } 
             };
             getProfile(); 
           }, [params])
 
- 
-console.log(post,"post");
+  console.log(data,"data");
     return (
         < >
             <Header />
@@ -79,13 +77,13 @@ console.log(post,"post");
                                             <div className='d-flex justify-content-around text-left mt-4'>
                                                 <div className='p-0 m-0'>
                                                     <p className='p-0 m-0'>Followers</p>
-                                                    <h4 className='p-0 m-0'>101</h4>
+                                                    <h4 className='p-0 m-0'>{data.stats.totalFollowers}</h4>
 
                                                 </div>
                                                 <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
                                                 <div className='p-0 m-0'>
                                                     <p className='p-0 m-0'>Following</p>
-                                                    <h4 className='p-0 m-0'>56</h4>
+                                                    <h4 className='p-0 m-0'>{data.stats.totalFollowing}</h4>
 
                                                 </div>
                                             </div>
@@ -112,18 +110,18 @@ console.log(post,"post");
 
                                                     </Avatar>
                                                 }
-                                                title={detail.metadata.name}
+                                                title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                 subheader={detail.createdAt}
                                             />
                                             <CardMedia
                                                 component="img"
-                                                image={detail.metadata.media[0].original.url}
-                                                alt={detail.metadata.name}
+                                                image={detail.__typename === "Comment" ?   detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
+                                                alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                 sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px',objectFit:'fill' } }}
                                             />
                                             <CardContent>
                                                 <Typography variant="body2" color="text.secondary">
-                                                    {detail.metadata.description}
+                                                    {detail.__typename === "Comment" ? detail.mainPost.metadata.description :  detail.metadata.description}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>

@@ -33,8 +33,7 @@ function MemeList() {
         }
         getCreator()
     }, [])
-
-    console.log(story, "story");
+ 
 
 
     return (

@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
-export default function MemeCard(props) {
+export default function MemeCard(props) { 
 
     const handleNavigate = ( data) => {
         props.setDetail(data);
@@ -19,13 +19,13 @@ export default function MemeCard(props) {
             <CardMedia
                 component="img"
                 height="194"
-                image={props.data.metadata.media[0].original.url}
-                alt={props.data.metadata.name}
+                image={props.data.__typename === "Comment" ?   props.data.mainPost.metadata.media[0].original.url : props.data.metadata.media[0].original.url }
+                alt={props.data.__typename === "Comment" ? props.data.mainPost.metadata.content : props.data.metadata.content }
                 style={{objectFit:'fill' }}
             />
             <CardContent>
                 <Typography variant="body2" color="text.secondary">
-                    {props.data.metadata.description}
+                    {props.data.__typename === "Comment" ? props.data.mainPost.metadata.description : props.data.metadata.description}
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
