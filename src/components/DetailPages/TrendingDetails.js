@@ -1,16 +1,21 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, Divider, IconButton, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, InputBase, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Header from '../../header/Header';
 import Search from '../Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
- 
+
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { PanoramaSharp, Send } from '@mui/icons-material';
 import { profileById } from '../../context/query';
 import { LensAuthContext } from '../../context/LensContext';
- 
+import { createComment } from '../../LensProtocol/post/comments/create-comment';
+import { toast } from 'react-toastify';
+import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
+import { posts } from '../../LensProtocol/post/get-post';
+import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
+
 const tags = [
   "#tuesday ",
   "#happy tuesday",
@@ -20,37 +25,68 @@ const tags = [
   " #good tuesday morning"
 ]
 function TrendingDetails() {
-  const [data, setData] = useState(); 
+  const [data, setData] = useState();
   const [detail, setDetail] = useState();
   const [showComment, setShowComment] = useState(false);
   const [comment, setComments] = React.useState([""]);
-
+  const [loading, setLoading] = useState(false);
   const lensAuthContext = React.useContext(LensAuthContext);
-  const {userPosts  } = lensAuthContext;
 
-  const param = useParams();  
+  const [posts, setPosts] = useState([]);
 
-  useEffect(() => { 
-    async function getProfile() { 
-      if (param.id !== null) {
-        const user = await  userPosts && userPosts.filter((e)=>e.id === param.id)
-        setData(user);
-      }
+  const { userPosts, userAdd,
+    update,
+    setUpdate,
+    loginCreate } = lensAuthContext;
 
-    };
-    getProfile(); 
-  }, [param])
- 
+  const param = useParams();
+
+  async function get_posts() { 
+    try { 
+      const pst = await getpublicationById(param.id);
+      setData(pst.data.publication); 
+      const d = await getPublicationByLatest(); 
+      setPosts(d.data.explorePublications.items);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+  }
+
+
+  useEffect(() => {
+    get_posts();
+  }, [param.id])
+
+
+
 
   const handleNavigate = (data) => {
-    setDetail(data); 
+    setDetail(data);
   }
- 
+
 
   const handleShowComment = () => {
     setShowComment(!showComment);
   };
 
+  const handleComment = async (data) => { 
+    const id = window.localStorage.getItem("profileId");
+    setLoading(true);
+    const obj = {
+      address: userAdd,
+      comment: comment,
+      login: loginCreate,
+      profileId: id,
+      publishId: data.id
+    }
+    const result = await createComment(obj);
+    toast.success("Success!!")
+    setLoading(false);
+    setUpdate(!update);
+
+  } 
 
   return (
     <>
@@ -61,30 +97,30 @@ function TrendingDetails() {
           {/* <div className='row mt-5'> */}
           <div className='row mt-5'>
             {
-              detail === undefined && data ? data.map((e) => (
-                <div key={e.metadata.name} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
+              detail === undefined && data &&
+                <div key={data.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                   <Card   >
                     <CardHeader
-                      avatar={
-                        <Avatar src={e.metadata.media[0].original.url} aria-label="recipe">
+                        avatar={
+                          <Avatar src={ data && data.__typename === "Comment"  ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url} aria-label="recipe">
 
-                        </Avatar>
-                      }
-                      title={e.metadata.name} 
-                    />
-                    <CardMedia
-                      component="img"
-                      image={e.metadata.media[0].original.url}
-                      alt={e.metadata.name} 
-                      style={{objectFit:'fill'}}
-                    />
+                          </Avatar>
+                        }
+                        title={data && data.__typename === "Comment"? data.mainPost.metadata.name : data.metadata.name}
+                      />
+                      <CardMedia
+                        component="img"
+                        image={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url}
+                        alt={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
+                        style={{ objectFit: 'fill' }}
+                      />
                     <CardContent>
                       {/* <Typography variant="body2" color="text.secondary">
                         {e.description}
                       </Typography> */}
                     </CardContent>
                     <CardActions disableSpacing>
-                    <div 
+                      <div
                         className="d-flex align-items-center"
                         style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       >
@@ -109,27 +145,28 @@ function TrendingDetails() {
                       <label>Share</label>
                     </CardActions>
 
-                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white' }} />
+                    <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                     {showComment ? (
                       <div className='m-2'>
                         <div className="d-flex justify-content-around mt-2">
-                          <div className="p-0">
-                             <Avatar src={detail && detail.img}/>
-                          </div>
+                          {/* <div className="p-0">
+                              <Avatar src={detail && detail.img} />
+                            </div> */}
                           <form className="col-10 header-search ms-3 d-flex align-items-center">
-                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
-                            <InputBase
-                                     onChange={(e) => setComments(e.target.value)}
-                                    sx={{ ml: 1, flex: 1, color: 'black'}}
-                                    placeholder="Write a comment.."
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                /> 
+                            <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
+                              <InputBase
+                                onChange={(e) => setComments(e.target.value)}
+                                sx={{ ml: 1, flex: 1, color: 'black' }}
+                                placeholder="Write a comment.."
+                                inputProps={{ 'aria-label': 'Search by memers' }}
+                              />
                             </div>
                             <IconButton  >
-                              <Send  />
+                              <Send />
                             </IconButton>
                           </form>
-                        </div> 
+                        </div>
+
                       </div>
                     ) : (
                       ""
@@ -140,100 +177,106 @@ function TrendingDetails() {
                       <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
                     ))
                   }
-                </div>
-              )) :
-                <div className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
-                  <Card   >
-                  <CardHeader
-                      avatar={
-                        <Avatar src={detail && detail.metadata.media[0].original.url} aria-label="recipe">
-
-                        </Avatar>
-                      }
-                      title={detail && detail.metadata.name} 
-                    />
-                    <CardMedia
-                      component="img"
-                      style={{objectFit:'fill'}}
-                      image={detail && detail.metadata.media[0].original.url}
-                      alt={ detail && detail.metadata.name}
-                      sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
-                    />
-                    <CardContent>
-                      {/* <Typography variant="body2" color="text.secondary">
-                    {e.description}
-                  </Typography> */}
-                    </CardContent>
-                    <CardActions disableSpacing>
-                    <div 
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        <FavoriteBorderIcon />
-                        <span className="d-none-xss">Likes</span>
-                      </div>
-
-                      <div
-                        onClick={handleShowComment}
-                        className="d-flex align-items-center"
-                        style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      >
-                        < ModeCommentOutlinedIcon />
-                        <span className="d-none-xss">Comment</span>
-                      </div>
-                       
-                      <IconButton
-                        sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                      >
-                        < ShareOutlinedIcon />
-                      </IconButton>
-                      <label>Share</label>
-                    </CardActions>
-                    <Divider flexItem orientation="horizontal" style={{border:'1px solid white' }} />
-                    {showComment ? (
-                      <div className='m-2'>
-                        <div className="d-flex justify-content-around mt-2">
-                          <div className="p-0">
-                             <Avatar src={detail && detail.metadata.media[0].original.url}/>
-                          </div>
-                          <form className="col-10 header-search ms-3 d-flex align-items-center">
-                            <div className="input-group" style={{ background: 'white',borderRadius:'14px' }}>
-                            <InputBase
-                                     onChange={(e) => setComments(e.target.value)}
-                                    sx={{ ml: 1, flex: 1, color: 'black'}}
-                                    placeholder="Write a comment.."
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                /> 
-                            </div>
-                            <IconButton  >
-                              <Send  />
-                            </IconButton>
-                          </form>
-                        </div> 
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                  </Card>
-                  {
-                    tags.map((e) => (
-                      <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                    ))
-                  }
-                </div>
+                </div> 
             }
             {
-              userPosts && userPosts.map((e) => {
+              detail !== undefined &&  <div key={detail.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
+              <Card   >
+                <CardHeader
+                  avatar={
+                    <Avatar src={detail != undefined && detail.__typename === "Comment"  ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url} aria-label="recipe">
+
+                    </Avatar>
+                  }
+                  title={detail != undefined && detail.__typename === "Comment"  ? detail.mainPost.metadata.name : detail.metadata.name}
+                />
+                <CardMedia
+                  component="img"
+                  style={{ objectFit: 'fill' }}
+                  image={detail != undefined && detail.__typename === "Comment"  ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
+                  alt={detail != undefined && detail.__typename === "Comment"  ? detail.mainPost.metadata.name : detail.metadata.name}
+                  sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
+                />
+                <CardContent>
+                </CardContent>
+                <CardActions disableSpacing>
+                  <div
+                    className="d-flex align-items-center"
+                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                  >
+                    <FavoriteBorderIcon />
+                    <span className="d-none-xss">Likes</span>
+                  </div>
+
+                  <div
+                    onClick={handleShowComment}
+                    className="d-flex align-items-center"
+                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                  >
+                    < ModeCommentOutlinedIcon />
+                    <span className="d-none-xss">Comment</span>
+                  </div>
+
+                  <IconButton
+                    sx={{ color: 'white', padding: '5px', margin: '10px' }}
+                  >
+                    < ShareOutlinedIcon />
+                  </IconButton>
+                  <label>Share</label>
+                </CardActions>
+                <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
+                {showComment ? (
+                  <div className='m-2'>
+                    <div className="d-flex justify-content-around mt-2">
+                      <div className="p-0">
+                        <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url} />
+                      </div>
+                      <form className="col-10 header-search ms-3 d-flex align-items-center">
+                        <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
+                          <InputBase
+                            onChange={(e) => setComments(e.target.value)}
+                            sx={{ ml: 1, flex: 1, color: 'black' }}
+                            placeholder="Write a comment.."
+                            inputProps={{ 'aria-label': 'Search by memers' }}
+                          />
+                        </div>
+                        <IconButton onClick={() => handleComment(detail)}  >
+                          <Send />
+                        </IconButton>
+                      </form>
+                    </div>
+                    {
+                      detail != undefined && detail.__typename === "Comment" && <div className="d-flex justify-content-around mt-2">
+                        <div className="p-0">
+                          <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url} />
+                        </div>
+                        <p>{detail != undefined && detail.__typename === "Comment" && detail.metadata.content}</p>
+                      </div>
+                    }
+                  </div>
+                ) : (
+                  ""
+                )}
+              </Card>
+              {
+                tags.map((e) => (
+                  <Chip key={e} label={e} style={{ margin: '5px 0' }} variant="outlined" />
+                ))
+              }
+            </div>
+            }
+            {
+              posts && posts.map((e) => {
                 if (e.id !== param.id) {
                   return (
-                    <div className='col-12 col-sm-4 col-md-4 col-lg-4'>
+                    <div key={e.id} className='col-12 col-sm-4 col-md-4 col-lg-4'>
                       <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
                         <CardMedia
-                          component="img" 
+                          component="img"
                           height="240"
-                          image={e.metadata.media[0].original.url}
-                          alt={e.metadata.name} 
-                          style={{objectFit:'fill'}}
+                          image={e.__typename === "Comment" ? e.mainPost.metadata.media[0].original.url : e.metadata.media[0].original.url}
+                          alt={e.__typename === "Comment" ? e.mainPost.metadata.name : e.metadata.name}
+                          style={{ objectFit: 'fill' }}
                         />
                         <CardContent>
                           <Typography variant="body2" color="text.secondary">
@@ -250,7 +293,7 @@ function TrendingDetails() {
                   )
                 }
                 return (
-                  <></>
+                  <><CircularProgress/></>
                 )
               })
             }

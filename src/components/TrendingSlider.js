@@ -57,7 +57,7 @@ export default function TrendingSlider() {
     const [style, setStyle] = useState(""); 
 
     const handleNavigate=(id)=>{ 
-        navigate(`/trendingDetails${id}`)
+        navigate(`/trendingDetails/${id}`)
     }
 
     const [story, setStory] = useState([]);
@@ -79,9 +79,7 @@ export default function TrendingSlider() {
         }
         getCreator()
     }, [])
-
-
-    console.log(userPosts,"userPosts");
+ 
 
     return (
         <div className="container mt-5">
@@ -93,8 +91,7 @@ export default function TrendingSlider() {
                     </div>
                     <Slider {...settings}>
 
-                        {userPosts && userPosts.map((item) => { 
-                            console.log(item,"item");
+                        {userPosts && userPosts.map((item) => {  
                             return (
                                 <ImageListItem
                                     key={item.id}
@@ -108,9 +105,9 @@ export default function TrendingSlider() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.metadata.media[0].original.url} `}
-                                        srcSet={`${item.metadata.media[0].original.url} `}
-                                        alt={item.metadata.name}
+                                        src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                        srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                        alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
                                         loading="lazy"
 
                                         width="100%" style={{ borderRadius: '20px', height: '200px', padding: '10px', cursor: 'pointer' ,objectFit:'fill'}}
@@ -144,9 +141,9 @@ export default function TrendingSlider() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.metadata.media[0].original.url} `}
-                                                    srcSet={`${item.metadata.media[0].original.url} `}
-                                                    alt={item.metadata.description}
+                                                src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                                srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                                alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
                                                 />
@@ -167,7 +164,7 @@ export default function TrendingSlider() {
                                             actionIcon={
                                                 <IconButton
                                                     sx={{ color: 'white', padding: '5px', margin: '10px 15px' }}
-                                                    aria-label={`star ${item.metadata.description}`}
+                                                    aria-label={`star ${ item.mainPost ? item.mainPost.metadata.description : item.metadata.description}`}
                                                 >
                                                     <LinkIcon />
                                                 </IconButton>

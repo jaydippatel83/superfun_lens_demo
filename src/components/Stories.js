@@ -67,9 +67,9 @@ function Stories() {
                                         onClick={()=>handleNavigate(item.id)}
                                     >
                                         <img
-                                            src={`${item.metadata.media[0].original.url} `}
-                                            srcSet={`${item.metadata.media[0].original.url} `}
-                                            alt={item.metadata.name}
+                                            src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                            srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                            alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
                                             loading="lazy"
                                             width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer',objectFit:'fill' }}
                                         />
@@ -102,9 +102,9 @@ function Stories() {
                                                 position="top"
                                                 actionIcon={
                                                     <img
-                                                        src={`${item.metadata.media[0].original.url} `}
-                                                        srcSet={`${item.metadata.media[0].original.url} `}
-                                                        alt={item.metadata.name}
+                                                        src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                                        srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                                        alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
                                                         loading="lazy"
                                                         width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px',objectFit:'fill' }}
                                                     />

@@ -356,7 +356,6 @@ export const getPublicationByLatest= async()=>{
         "sources": ["superfun"], 
      }
 
-     const result = await explorePublications(query);
-     console.log(result);
+     const result = await explorePublications(query); 
      return result;
 }

@@ -79,6 +79,9 @@ function MemeList() {
     const navigate = useNavigate(); 
     const [story, setStory] = useState([]);
 
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const {userPosts  } = lensAuthContext;
+
  
     const handleNavigate = (e) => { 
         navigate(`/${e.name}`)

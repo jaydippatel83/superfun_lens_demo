@@ -29,7 +29,7 @@ export const LensAuthContextProvider = (props) => {
   const [userAdd, setUserAdd] = useState("");
   const [profile, setProfile] = useState("");
   const [update, setUpdate] = useState(false);
-  const [userPosts, setUserPosts] = useState(false);
+  const [userPosts, setUserPosts] = useState([]);
 
 
   useEffect(() => {
@@ -63,14 +63,14 @@ export const LensAuthContextProvider = (props) => {
 
 
   async function getPosts() {
+    let array =[];
     const post = await posts(id); 
-    const data = await getPublicationByLatest();
-    console.log(data,"data by latest");
-    setUserPosts(data.data.explorePublications.items); 
-  }
-
-
-
+    const data = await getPublicationByLatest();  
+    data.data && data.data.explorePublications.items.map((e)=>{ 
+      array.push(e);
+    })
+    setUserPosts(array); 
+  } 
 
   const AUTHENTICATION = `
   mutation($request: SignedAuthChallenge!) { 
@@ -190,8 +190,7 @@ export const LensAuthContextProvider = (props) => {
     const challengeResponse = await generateChallenge(address);
     const signature = await signText(challengeResponse.data.challenge.text);
     const accessTokens = await authenticate(address, signature);
-    const profiles = await profileByAddress(address);
-    console.log(profiles, "profiles");
+    const profiles = await profileByAddress(address); 
     window.localStorage.setItem("profileId", profiles?.id);
     setUpdate(!update)
 
@@ -199,26 +198,7 @@ export const LensAuthContextProvider = (props) => {
 
     // const q = query(collection(db, "profiles"), where("handle", "==", profiles.handle)); 
     // const querySnapshot = await getDocs(q); 
-    const q = query(collection(db, "profiles"));
-
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((e) => { 
-
-      // if (e.data().id === profiles?.id) {
-      //   console.log("exist");
-      // } else if(e.data().id !== profiles?.id) {
-      //   const docRef = addDoc(collection(db, "profiles"), {
-      //     bio: profiles.bio,
-      //     coverPicture: profiles.coverPicture,
-      //     handle: profiles.handle,
-      //     name: profiles.name,
-      //     id: profiles.id,
-      //     metadata: profiles.metadata,
-      //     ownedBy: profiles.ownedBy,
-      //     photo: profiles.picture ? profiles.picture.original.url : null,
-      //   });
-      // }
-    })
+    const q = query(collection(db, "profiles")); 
      
     window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
     window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);

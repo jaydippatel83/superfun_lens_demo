@@ -69,8 +69,8 @@ root.render(
             <Route path="/stories" element={<StorieList />} />
             <Route path="/contest" element={<ContestList />} />
             <Route path="/:id" element={<Profile />} />
-            <Route path="/trendingDetails:id" element={<TrendingDetails />} />
-            <Route path="/contestDetails:id" element={<ContestDetails />} />
+            <Route path="/trendingDetails/:id" element={<TrendingDetails />} />
+            <Route path="/contestDetails/:id" element={<ContestDetails />} />
           </Routes>
           <Footer />
         </BrowserRouter>

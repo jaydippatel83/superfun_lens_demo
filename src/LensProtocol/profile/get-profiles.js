@@ -90,23 +90,10 @@ const getProfilesRequest = (request) => {
     },
     fetchPolicy: "network-only",
   });
-};
+}; 
 
-/*
-** You can request profiles in 3 differents ways: 
-**  - with handles. Example of request object:
-**       request: { handles: ["josh.dev"], limit: 1 }
-**   - with addresses. Example of request object:
-**       request: { ownedBy: ["0xD020E01C0c90Ab005A01482d34B808874345FD82"], limit: 10 }
-**   - with profileIds. Example of request object:
-**       request: { profileIds: ["0x01"], limit: 10 }
-**
-** Note how everything is plural, so you can pass multiple id/handle/address in the array. Example : ["0x01", "0x02"]
-*/
 async function getProfiles(request) {
-  const profiles = await getProfilesRequest(request);
-
-
+  const profiles = await getProfilesRequest(request); 
   return profiles.data;
 };
 

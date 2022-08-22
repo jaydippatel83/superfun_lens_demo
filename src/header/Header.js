@@ -243,7 +243,7 @@ export default function Header() {
                             open={open}
                         >
                             <DrawerHeader>
-                                <img alt='' style={{ cursor: 'pointer' }} onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                                <img alt='' style={{ cursor: 'pointer' }} onClick={navigateToHome} src='https://superfun.infura-ipfs.io/ipfs/QmZ52Ugz1Z3yuXVvMNiDfFacWUdDofAQBLifvfDagdVJem' />
                                 <IconButton onClick={handleDrawerClose}>
                                     {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
                                 </IconButton>
@@ -262,7 +262,21 @@ export default function Header() {
                                 ))}
                             </List>
                             <Divider />
-                            <List>
+                            <UploadModal />
+                            <Divider />
+                            {
+                                profile && <Button className='m-2' style={{ background: '#488E53', color: 'white', textTransform: 'capitalize' }} onClick={disconnectWallet}>
+                                    Disconnect
+                                </Button>
+                            }
+                            <Divider />
+
+                            {
+                                !profile && <Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }} onClick={login}>
+                                    Login
+                                </Button>
+                            }
+                            {/* <List>
                                 {['All mail', 'Trash', 'Spam'].map((text, index) => (
                                     <ListItem key={text} disablePadding>
                                         <ListItemButton>
@@ -273,16 +287,16 @@ export default function Header() {
                                         </ListItemButton>
                                     </ListItem>
                                 ))}
-                            </List>
+                            </List> */}
                         </Drawer>
 
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block' }, cursor: 'pointer' }}
+                            sx={{ display: { xs: 'none', sm: 'block',md: 'block', lg:'block', xl:'block' }, cursor: 'pointer' }}
                         >
-                            <img alt='' onClick={navigateToHome} src='assets/superfunLogo1.png' />
+                            <img alt='' onClick={navigateToHome} src='https://superfun.infura-ipfs.io/ipfs/QmZ52Ugz1Z3yuXVvMNiDfFacWUdDofAQBLifvfDagdVJem' />
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: 'auto' }}>
@@ -318,7 +332,7 @@ export default function Header() {
                                 </Button>
                             }
 
-<UpdateProfile />
+                             <UpdateProfile />
 
                             {/* < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button> */}
                         </Box> 
@@ -349,7 +363,7 @@ export default function Header() {
                 </AppBar>
 
                 {renderMobileMenu}
-{renderMenu}
+                 {renderMenu}
             </Box>
         </div>
     );

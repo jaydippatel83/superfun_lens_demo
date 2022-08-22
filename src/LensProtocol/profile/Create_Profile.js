@@ -64,8 +64,7 @@ const createProfile = async (handleInput) => {
 
   const topicId = utils.id(
     "ProfileCreated(uint256,address,address,string,string,address,bytes,string,uint256)"
-  );
-  console.log(topicId,"topicId");
+  ); 
 
   const profileCreatedLog = logs.find((l) => l.topics[0] === topicId);
 

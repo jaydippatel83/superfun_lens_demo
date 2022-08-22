@@ -49,22 +49,8 @@ export const createPost = async (postData) => {
         appId: 'superfun',
         animation_url: null,
     });
- 
-    // const aas = { "version": "1.0.0",
-    //  "metadata_id": "73a16764-771c-4c1c-82d7-b84244512eed", 
-    //  "description": "Testing post created by me ", 
-    //  "content": "Testing post created by me ",
-    //   "external_url": null, "image": null,
-    //    "imageMimeType": null, "name": "post by @",
-    //     "attributes": [],
-    //      "media": [{ "item": "https://ipfs.moralis.io:2053/ipfs/QmS6s5uLgHqWbuxDjRaHn9nTn2vri1ps3jZrRY6yrbWvmf", "type": "video/mp4" }], "animation_url": "https://ipfs.moralis.io:2053/ipfs/QmS6s5uLgHqWbuxDjRaHn9nTn2vri1ps3jZrRY6yrbWvmf", "appId": "pax423" }
- 
-
-    const ipfsResult = await uploadIpfs(ipfsData);
-
-    console.log(ipfsResult, "ipfsResult");
-    // https://superfun.infura-ipfs.io/ipfs/' + ipfsResult.path
-
+  
+    const ipfsResult = await uploadIpfs(ipfsData); 
     const createPostRequest = {
         profileId,
         contentURI: `https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`,
@@ -98,17 +84,12 @@ export const createPost = async (postData) => {
             s,
             deadline: typedData.value.deadline,
         },
-    });
-    console.log(tx.hash, "has");
+    }); 
 
 
-    const indexedResult = await pollUntilIndexed(tx.hash);
+    const indexedResult = await pollUntilIndexed(tx.hash); 
 
-    console.log('create post: profile has been indexed', indexedResult);
-
-    const logs = indexedResult.txReceipt.logs;
-
-    console.log('create post: logs', logs);
+    const logs = indexedResult.txReceipt.logs; 
 
     const topicId = utils.id(
         'PostCreated(uint256,uint256,string,address,bytes,address,bytes,uint256)'

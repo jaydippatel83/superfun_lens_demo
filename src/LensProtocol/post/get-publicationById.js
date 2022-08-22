@@ -1,12 +1,10 @@
-import { apolloClient } from '../services/Apollo_Client';
-import { gql } from '@apollo/client'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
 
-const GET_PUBLICATIONS = `
-  query($request: PublicationsQueryRequest!) {
-    publications(request: $request) {
-      items {
+import { gql } from '@apollo/client'
+import { apolloClient } from '../services/Apollo_Client'
+
+const GET_PUBLICATION = `
+  query($request: PublicationQueryRequest!) {
+    publication(request: $request) {
         __typename 
         ... on Post {
           ...PostFields
@@ -16,19 +14,15 @@ const GET_PUBLICATIONS = `
         }
         ... on Mirror {
           ...MirrorFields
-        }
-      }
-      pageInfo {
-        prev
-        next
-        totalCount
       }
     }
   }
+
   fragment MediaFields on Media {
     url
     mimeType
   }
+
   fragment ProfileFields on Profile {
     id
     name
@@ -39,7 +33,7 @@ const GET_PUBLICATIONS = `
       key
       value
     }
-    isFollowedByMe
+        isFollowedByMe
     isFollowing(who: null)
     followNftAddress
     metadata
@@ -99,18 +93,20 @@ const GET_PUBLICATIONS = `
         recipient
       }
       ... on ProfileFollowModuleSettings {
-        type
+       type
       }
       ... on RevertFollowModuleSettings {
-        type
+       type
       }
     }
   }
+
   fragment PublicationStatsFields on PublicationStats { 
     totalAmountOfMirrors
     totalAmountOfCollects
     totalAmountOfComments
   }
+
   fragment MetadataOutputFields on MetadataOutput {
     name
     description
@@ -126,18 +122,20 @@ const GET_PUBLICATIONS = `
       value
     }
   }
+
   fragment Erc20Fields on Erc20 {
     name
     symbol
     decimals
     address
   }
+
   fragment CollectModuleFields on CollectModule {
     __typename
     ... on FreeCollectModuleSettings {
-      type
-      followerOnly
-      contractAddress
+        type
+        followerOnly
+        contractAddress
     }
     ... on FeeCollectModuleSettings {
       type
@@ -191,6 +189,7 @@ const GET_PUBLICATIONS = `
       endTimestamp
     }
   }
+
   fragment PostFields on Post {
     id
     profile {
@@ -212,11 +211,12 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
-    reaction(request: null)
-    mirrors(by: null)
+        hidden
+        reaction(request: null)
+        mirrors(by: null)
     hasCollectedByMe
   }
+
   fragment MirrorBaseFields on Mirror {
     id
     profile {
@@ -238,10 +238,11 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
-    reaction(request: null)
+        hidden
+        reaction(request: null)
     hasCollectedByMe
   }
+
   fragment MirrorFields on Mirror {
     ...MirrorBaseFields
     mirrorOf {
@@ -253,6 +254,7 @@ const GET_PUBLICATIONS = `
      }
     }
   }
+
   fragment CommentBaseFields on Comment {
     id
     profile {
@@ -274,11 +276,12 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
-    hidden
-    reaction(request: null)
-    mirrors(by: null)
+        hidden
+        reaction(request: null)
+        mirrors(by: null)
     hasCollectedByMe
   }
+
   fragment CommentFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -298,6 +301,7 @@ const GET_PUBLICATIONS = `
       }
     }
   }
+
   fragment CommentMirrorOfFields on Comment {
     ...CommentBaseFields
     mainPost {
@@ -309,24 +313,20 @@ const GET_PUBLICATIONS = `
       }
     }
   }
-`;
+`
 
-const getPublicationsRequest = (getPublicationQuery) => {
+export const getPublication = (publicationId) => {
     return apolloClient.query({
-        query: gql(GET_PUBLICATIONS),
+        query: gql(GET_PUBLICATION),
         variables: {
-          request: getPublicationQuery,
+            request: {
+                publicationId
+            }
         },
-    });
-};
+    })
+}
 
-
-
-export const posts = async (profileId) => { 
-    const request = {
-    profileId,
-    publicationTypes: ['POST', 'COMMENT', 'MIRROR'],
-  };  
-    const result = await getPublicationsRequest(request);  
+export const getpublicationById = async (id) => {
+    const result = await getPublication(id); 
     return result;
-}; 
+}

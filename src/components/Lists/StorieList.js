@@ -8,8 +8,10 @@ import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'; 
 import { useTheme } from '@mui/system';
 import { LensAuthContext } from '../../context/LensContext';
+import { useNavigate } from 'react-router-dom';
 
 function StorieList() { 
+    const navigate = useNavigate();
     const lensAuthContext = React.useContext(LensAuthContext);
     const {userPosts  } = lensAuthContext;
     const theme = useTheme();
@@ -18,7 +20,9 @@ function StorieList() {
     const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
     const xsmall = useMediaQuery(theme.breakpoints.down("xs"));
 
-     
+    const handleNavigate=(e)=>{ 
+        navigate(`/trendingDetails/${e.id}`); 
+    }
     
     const [style, setStyle] = useState("");
 
@@ -33,8 +37,9 @@ function StorieList() {
                             <ImageList variant="masonry" cols={greaterThanMid && 4 || smallToMid && 3 || lessThanSmall && 2 || xsmall && 1}   gap={8}>  
                                 {userPosts && userPosts.map((item) => (  
                                     <ImageListItem
-                                    key={item.name}
+                                    key={item.id}
                                     style={{ cursor: 'pointer' }}
+                                    onClick={()=>handleNavigate(item)}
                                     onMouseEnter={e => {
                                         setStyle(item.id);
                                     }}
@@ -43,8 +48,8 @@ function StorieList() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
-                                        srcSet={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
+                                        srcSet={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                         alt={item.metadata.name}
                                         loading="lazy"
                                           style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
@@ -78,8 +83,8 @@ function StorieList() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                src={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
-                                                srcSet={`${item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                src={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                                     alt={item.metadata.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
