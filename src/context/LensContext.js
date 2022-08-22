@@ -179,8 +179,7 @@ export const LensAuthContextProvider = (props) => {
 
 
 
-  const login = async () => {
-
+  const login = async () => { 
     const address = await getAddress();
     const isTokenValid = await refresh();
     if (isTokenValid) {

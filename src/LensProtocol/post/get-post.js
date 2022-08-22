@@ -1,7 +1,5 @@
 import { apolloClient } from '../services/Apollo_Client';
-import { gql } from '@apollo/client'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
+import { gql } from '@apollo/client' 
 
 const GET_PUBLICATIONS = `
   query($request: PublicationsQueryRequest!) {

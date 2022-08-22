@@ -118,7 +118,7 @@ function TrendingList() {
 
                                     }
                                 </ImageListItem> 
-                                ))}; 
+                                ))}
 
                             </ImageList>
                         </Box>

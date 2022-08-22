@@ -6,13 +6,14 @@ import { useNavigate } from 'react-router-dom';
 import { LensAuthContext } from '../../context/LensContext';
 import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
+import { exploreProfile } from '../../LensProtocol/profile/explore-profiles';
 
 function MemeList() {
     const navigate = useNavigate();
     const [story, setStory] = useState([]);
 
     const lensAuthContext = React.useContext(LensAuthContext);
-    const { userPosts } = lensAuthContext;
+    const { userPosts, } = lensAuthContext;
 
 
     const handleNavigate = (e) => {
@@ -22,6 +23,9 @@ function MemeList() {
     useEffect(() => {
         async function getCreator() {
             var arry = [];
+
+            // const res = await exploreProfile();
+            // console.log(res,"res");
 
             const q = query(collection(db, "profiles"));
             const querySnapshot = await getDocs(q);

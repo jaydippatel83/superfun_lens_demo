@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Divider, IconButton, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, CircularProgress, Divider, IconButton, InputBase, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import Header from '../header/Header';
@@ -11,19 +11,27 @@ import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
 import { profileById } from '../context/query';
 import { posts } from '../LensProtocol/post/get-post';
+import { follow } from '../LensProtocol/follow/follow';
+import { toast } from 'react-toastify';
+import { LensAuthContext } from '../context/LensContext';
+import { findDOMNode } from 'react-dom';
 
 function Profile() {
-    const params = useParams(); 
+    const params = useParams();
     const [data, setData] = useState();
     const [show, setShow] = useState(false);
     const [detail, setDetail] = useState();
     const [showComment, setShowComment] = useState(false);
     const [comment, setComments] = React.useState([""]);
     const [post, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const lensAuthContext = React.useContext(LensAuthContext);
+    const {loginCreate } = lensAuthContext;
+
 
     const handleShowComment = () => {
         setShowComment(!showComment);
-    }; 
+    };
 
     const tags = [
         "#tuesday ",
@@ -43,17 +51,31 @@ function Profile() {
     }, [params])
 
 
-    useEffect(() => { 
-            async function getProfile() { 
-              if (params.id !== null) {
-                const user = await profileById(params.id); 
+    useEffect(() => {
+        async function getProfile() {
+            if (params.id !== null) {
+                const user = await profileById(params.id);
                 setData(user);
-              } 
-            };
-            getProfile(); 
-          }, [params])
+            }
+        };
+        getProfile();
+    }, [params,loading])
 
-  console.log(data,"data");
+    const handleFollow = async (id) => {
+        const fId = window.localStorage.getItem("profileId");
+        setLoading(!loading);
+        const data ={
+           id : id,
+           login: loginCreate,
+           followId: fId,
+        }
+        const res = await follow(data);
+        console.log(res, "res");
+        setLoading(!loading);
+        toast.success("Followed!");
+    }
+
+
     return (
         < >
             <Header />
@@ -64,36 +86,36 @@ function Profile() {
                     <div className='row mt-5'>
                         <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
                             {
-                                data &&  <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
-                                            <div className='text-center'>
-                                                <img src={data.picture != null ? data.picture.original.url : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
-                                                <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
-                                                <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
-                                                {/* <p>{e.description}</p> */}
-                                                <Button variant='outlined'>Follow</Button>
-                                            </div>
-                                            {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
+                                data && <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
+                                    <div className='text-center'>
+                                        <img src={data.picture != null ? data.picture.original.url : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
+                                        <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
+                                        <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
+                                        {/* <p>{e.description}</p> */}
+                                        <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress/> :"Follow"}</Button>
+                                    </div>
+                                    {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
 
-                                            <div className='d-flex justify-content-around text-left mt-4'>
-                                                <div className='p-0 m-0'>
-                                                    <p className='p-0 m-0'>Followers</p>
-                                                    <h4 className='p-0 m-0'>{data.stats.totalFollowers}</h4>
+                                    <div className='d-flex justify-content-around text-left mt-4'>
+                                        <div className='p-0 m-0'>
+                                            <p className='p-0 m-0'>Followers</p>
+                                            <h4 className='p-0 m-0'>{data.stats.totalFollowers}</h4>
 
-                                                </div>
-                                                <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
-                                                <div className='p-0 m-0'>
-                                                    <p className='p-0 m-0'>Following</p>
-                                                    <h4 className='p-0 m-0'>{data.stats.totalFollowing}</h4>
+                                        </div>
+                                        <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
+                                        <div className='p-0 m-0'>
+                                            <p className='p-0 m-0'>Following</p>
+                                            <h4 className='p-0 m-0'>{data.stats.totalFollowing}</h4>
 
-                                                </div>
-                                            </div>
-                                            {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
+                                        </div>
+                                    </div>
+                                    {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
 
-                                            <div className='d-flex justify-content-around text-left mt-4'>
-                                                <Button variant='outlined'>Hire Me</Button>
-                                                <Button variant='outlined'>Send Message</Button>
-                                            </div>
-                                        </Box> 
+                                    <div className='d-flex justify-content-around text-left mt-4'>
+                                        <Button variant='outlined'>Hire Me</Button>
+                                        <Button variant='outlined'>Send Message</Button>
+                                    </div>
+                                </Box>
                             }
                         </div>
 
@@ -115,13 +137,13 @@ function Profile() {
                                             />
                                             <CardMedia
                                                 component="img"
-                                                image={detail.__typename === "Comment" ?   detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
+                                                image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
                                                 alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                                                sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px',objectFit:'fill' } }}
+                                                sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px', objectFit: 'fill' } }}
                                             />
                                             <CardContent>
                                                 <Typography variant="body2" color="text.secondary">
-                                                    {detail.__typename === "Comment" ? detail.mainPost.metadata.description :  detail.metadata.description}
+                                                    {detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
