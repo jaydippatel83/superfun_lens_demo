@@ -162,7 +162,7 @@ function TrendingDetails() {
                             />
                           </div>
                           <IconButton  >
-                            <Send />
+                           {loading ? <CircularProgress/> : <Send />} 
                           </IconButton>
                         </form>
                       </div>
