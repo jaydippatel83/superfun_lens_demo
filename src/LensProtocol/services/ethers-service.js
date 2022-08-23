@@ -11,6 +11,7 @@ export const getSigner = () => {
 }
 
 export const getAddressFromSigner = () => {
+  
   return getSigner().address;
 }
 

@@ -15,6 +15,7 @@ import { follow } from '../LensProtocol/follow/follow';
 import { toast } from 'react-toastify';
 import { LensAuthContext } from '../context/LensContext';
 import { findDOMNode } from 'react-dom';
+import FollowModal from './modals/FollowModal';
 
 function Profile() {
     const params = useParams();
@@ -26,7 +27,22 @@ function Profile() {
     const [post, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const lensAuthContext = React.useContext(LensAuthContext);
-    const {loginCreate } = lensAuthContext;
+    const {login} = lensAuthContext;
+
+    const [update,setUpdate]= useState(false);
+    const [title,setTitle]= useState("");
+
+    const [open, setOpen] = React.useState(false);   
+
+    const handleClickOpen = (text) => {
+        setTitle(text)
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    }; 
+
 
 
     const handleShowComment = () => {
@@ -40,39 +56,45 @@ function Profile() {
         " #happy tuesday morning",
         " #happy tuesday good morning",
         " #good tuesday morning"
-    ]
-
+    ] 
     useEffect(() => {
         const getUserData = async () => {
             const dd = await posts(params.id);
             setPosts(dd.data.publications.items);
         }
         getUserData();
-    }, [params])
-
+    }, [params,update])
+ 
 
     useEffect(() => {
-        async function getProfile() {
-            if (params.id !== null) {
-                const user = await profileById(params.id);
-                setData(user);
-            }
-        };
         getProfile();
-    }, [params,loading])
+    }, [loading,update])
+
+    async function getProfile() {
+        if (params.id !== null) {
+            const user = await profileById(params.id);
+            setData(user);
+        }
+    };
+ 
 
     const handleFollow = async (id) => {
         const fId = window.localStorage.getItem("profileId");
-        setLoading(!loading);
+        setLoading(true);
         const data ={
            id : id,
-           login: loginCreate,
-           followId: fId,
+           login: login,
+           followId: fId 
         }
         const res = await follow(data);
         console.log(res, "res");
-        setLoading(!loading);
-        toast.success("Followed!");
+        if(res){ 
+            setLoading(false);
+            setUpdate(!update);
+            toast.success("Followed!");
+        }
+        await getProfile();
+       
     }
 
 
@@ -95,15 +117,15 @@ function Profile() {
                                         <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress/> :"Follow"}</Button>
                                     </div>
                                     {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
-
+                                 <FollowModal data={data} open={open} close={handleClose} title={title}/>
                                     <div className='d-flex justify-content-around text-left mt-4'>
-                                        <div className='p-0 m-0'>
+                                        <div className='p-0 m-0' onClick={()=>handleClickOpen("Followers")}>
                                             <p className='p-0 m-0'>Followers</p>
                                             <h4 className='p-0 m-0'>{data.stats.totalFollowers}</h4>
 
                                         </div>
                                         <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
-                                        <div className='p-0 m-0'>
+                                        <div className='p-0 m-0' onClick={()=>handleClickOpen("Following")}>
                                             <p className='p-0 m-0'>Following</p>
                                             <h4 className='p-0 m-0'>{data.stats.totalFollowing}</h4>
 

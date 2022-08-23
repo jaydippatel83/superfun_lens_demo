@@ -1,6 +1,6 @@
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, InputBase, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../header/Header';
 import Search from '../Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -15,7 +15,7 @@ import { toast } from 'react-toastify';
 import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
 import { posts } from '../../LensProtocol/post/get-post';
 import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
-
+ 
 const tags = [
   "#tuesday ",
   "#happy tuesday",
@@ -25,6 +25,7 @@ const tags = [
   " #good tuesday morning"
 ]
 function TrendingDetails() {
+  const navigate = useNavigate();
   const [data, setData] = useState();
   const [detail, setDetail] = useState();
   const [showComment, setShowComment] = useState(false);
@@ -57,7 +58,7 @@ function TrendingDetails() {
 
   useEffect(() => {
     get_posts();
-  }, [param.id,update])
+  }, [param.id,update,loading])
 
 
 
@@ -88,6 +89,11 @@ function TrendingDetails() {
 
   } 
 
+  const handleNav=(dd)=>{ 
+    navigate(`/${dd}`)
+  }
+ 
+
   return (
     <>
       <Header />
@@ -100,7 +106,9 @@ function TrendingDetails() {
               detail === undefined && data &&
               <div key={data.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                 <Card   >
+                  
                   <CardHeader
+                   onClick={()=> handleNav(data && data.__typename === "Comment" ? data.mainPost.profile.id : data.profile.id)}
                     avatar={
                       <Avatar src={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url} aria-label="recipe">
 
@@ -108,6 +116,7 @@ function TrendingDetails() {
                     }
                     title={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
                   />
+                  
                   <CardMedia
                     component="img"
                     image={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url}
@@ -183,6 +192,7 @@ function TrendingDetails() {
               detail !== undefined && <div key={detail.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                 <Card   >
                   <CardHeader
+                  onClick={()=> handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
                     avatar={
                       <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url} aria-label="recipe">
 

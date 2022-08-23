@@ -1,20 +1,17 @@
  
 import { loginSS } from '../login/user-login';
 import { lensHub } from '../post/lens-hub';
-import { getAddressFromSigner, signedTypeData, splitSignature } from '../services/ethers-service';
+import { pollUntilIndexed } from '../Reffresh/has-transaction-been-indexed';
+import { getAddress, getAddressFromSigner, signedTypeData, splitSignature } from '../services/ethers-service';
 import { createFollowTypedData } from './create-follow-typed-data';
  
 
-export const follow = async (profileId) => {
-    const address = getAddressFromSigner();
-    console.log('follow: address', address);
-  
-    await profileId.login(address);
-  
-    // hard coded to make the code example clear
+export const follow = async (profileId) => {  
+    await profileId.login(); 
+
     const followRequest = [
-      {
-         profile: profileId.id,
+      { 
+          profile: profileId.id, 
       } 
     ];
   
@@ -30,7 +27,7 @@ export const follow = async (profileId) => {
     const { v, r, s } = splitSignature(signature);
   
     const tx = await lensHub.followWithSig({
-      follower: getAddressFromSigner(),
+      follower: getAddress(),
       profileIds: typedData.value.profileIds,
       datas: typedData.value.datas,
       sig: {
@@ -40,6 +37,9 @@ export const follow = async (profileId) => {
         deadline: typedData.value.deadline,
       },
     });
-    console.log('follow: tx hash', tx.hash);
-    return tx.hash;
+    
+    const indexedResult = await pollUntilIndexed(tx.hash); 
+    console.log('follow: indexedResult', indexedResult);
+    const logs = indexedResult.txReceipt.logs; 
+    return logs;
   };
