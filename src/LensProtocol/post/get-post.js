@@ -322,7 +322,7 @@ const getPublicationsRequest = (getPublicationQuery) => {
 
 export const posts = async (profileId) => { 
     const request = {
-    profileId,
+    profileId  : profileId ? profileId : "0x40bf",
     publicationTypes: ['POST', 'COMMENT', 'MIRROR'],
     sources: ['superfun'], 
   };  

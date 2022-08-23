@@ -39,6 +39,7 @@ function Search() {
         <div className='container mt-5'>
             <div className='row'   >
                 <div className='col-12 text-center mb-3'>
+               
                     <Typography component="h5" sx={{ fontSize: 25, fontWeight: 'bold' }}>
                         Have a fun with <span style={{ color: '#F66A24' }}>Memes</span>,
                         {/* Super cool <span style={{ color: '#FFB511' }}>PFPs</span>, */}
