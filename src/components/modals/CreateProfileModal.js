@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import createProfile from "../../LensProtocol/profile/Create_Profile";
 import React, { useState } from "react";
-import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 import { profile } from "../../LensProtocol/profile/get-profile";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
@@ -98,7 +98,7 @@ export default function ProfileCreation() {
 
   return (
     <div>
-      < Button onClick={handleClickOpen} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>  Create Profile</Button>
+      < MenuItem onClick={handleClickOpen} className='m-2'  >  Create Profile</MenuItem>
 
       <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
         <DialogTitle>Create Profile</DialogTitle>

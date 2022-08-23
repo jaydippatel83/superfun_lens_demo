@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/system';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { CircularProgress, InputBase } from '@mui/material';
+import { CircularProgress, InputBase, MenuItem } from '@mui/material';
 import { YouTube } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
@@ -98,7 +98,7 @@ export default function UpdateProfile() {
 
     return (
         <div>
-            <Button className='m-2' style={{ background: '#F66A24', color: 'white', textTransform: 'capitalize' }} onClick={handleClickOpen}  >Edit Profile</ Button>
+            <MenuItem className='m-2' onClick={handleClickOpen}  >Edit Profile</ MenuItem>
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
                 <DialogTitle>Edit Profile</DialogTitle>
                 <DialogContent>

@@ -23,7 +23,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Avatar, Button } from '@mui/material';
+import { Avatar, Button, Tooltip } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import UploadModal from '../components/modals/UploadModal';
 import ProfileCreation from '../components/modals/CreateProfileModal';
@@ -71,10 +71,10 @@ export default function Header() {
 
     const { account, activateBrowserWallet, deactivate } = useEthers();
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
+
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const [open, setOpen] = React.useState(false);
     const [editopen, setEditOpen] = React.useState(false);
@@ -93,29 +93,22 @@ export default function Header() {
         setOpen(false);
     };
 
-    const handleProfileMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
     const handleMobileMenuClose = () => {
         setMobileMoreAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
-        handleMobileMenuClose();
+
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
     };
 
-    const handleMobileMenuOpen = (event) => {
-        setMobileMoreAnchorEl(event.currentTarget);
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
     };
-    // const handleNavigate =(e)=>{
-    //     navigate(`/${e}`);
-    // }
 
-   
 
-    
+
+
 
     const DrawerHeader = styled('div')(({ theme }) => ({
         display: 'flex',
@@ -127,97 +120,22 @@ export default function Header() {
     }));
 
 
-    const menuId = 'primary-search-account-menu';
-    const renderMenu = (
-        <Menu
-            anchorEl={anchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={menuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-        >
-            {/* <ProfileCreation /> */}
-            {/* <Blockies seed={profile.id} size={10} className="rounded-full" style={{borderRadius:'50%'}} /> */}
-            {/* <Avatar src={profile && profile.picture.original.url} /> */}
-            <MenuItem onClick={handleMenuClose} > {
-                profile && <p>{profile.handle}</p>
-            }</MenuItem>
-        </Menu>
-    );
-
-
-    const mobileMenuId = 'primary-search-account-menu-mobile';
-    const renderMobileMenu = (
-        <Menu
-            anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            id={mobileMenuId}
-            keepMounted
-            transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-            }}
-            open={isMobileMenuOpen}
-            onClose={handleMobileMenuClose}
-        >
-            <MenuItem>
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="error">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-
-            </MenuItem>
-            <MenuItem>
-                <IconButton
-                    size="large"
-                    aria-label="show 17 new notifications"
-                    color="inherit"
-                >
-                    <Badge badgeContent={17} color="error">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    size="large"
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                {
-                    profile && <p>{profile.handle}</p>
-                }
-            </MenuItem>
-        </Menu>
-    );
-
     const navigateToHome = () => {
         navigate('/');
     }
 
+    const handleClickNavigate=(path)=>{
+        navigate(`/${path}`);
+    }
+    
+ 
+ 
     return (
         <div className='container p-0 '>
             <Box sx={{ flexGrow: 1 }} >
                 <AppBar sx={{ padding: { xs: '0', md: '0 85px', lg: '0 4%', background: 'black' } }} color='primary' open={open}>
                     <Toolbar>
-                        
+
                         <IconButton
                             size="large"
                             edge="start"
@@ -252,51 +170,31 @@ export default function Header() {
                             </DrawerHeader>
                             <Divider />
                             <List>
-                                {['Memes', 'PFPs', 'Artists', 'Contests'].map((text, index) => (
-                                    <ListItem key={text} disablePadding>
-                                        <ListItemButton>
+                                {pages.map((text, index) => (
+                                    <ListItem key={text.name} disablePadding>
+                                        <ListItemButton onClick={()=>handleClickNavigate(text.path)}>
                                             <ListItemIcon>
                                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                             </ListItemIcon>
-                                            <ListItemText primary={text} />
+                                            <ListItemText primary={text.name} />
                                         </ListItemButton>
                                     </ListItem>
                                 ))}
                             </List>
-                            <Divider />
-                            <UploadModal />
-                            <Divider />
-                            {
-                                profile && <Button className='m-2' style={{ background: '#488E53', color: 'white', textTransform: 'capitalize' }} onClick={disconnectWallet}>
-                                    Disconnect
-                                </Button>
-                            }
-                            <Divider />
-
+                            <Divider /> 
                             {
                                 !profile && <Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }} onClick={login}>
                                     Login
                                 </Button>
                             }
-                            {/* <List>
-                                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                                    <ListItem key={text} disablePadding>
-                                        <ListItemButton>
-                                            <ListItemIcon>
-                                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                            </ListItemIcon>
-                                            <ListItemText primary={text} />
-                                        </ListItemButton>
-                                    </ListItem>
-                                ))}
-                            </List> */}
+                            
                         </Drawer>
 
                         <Typography
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ display: { xs: 'none', sm: 'block',md: 'block', lg:'block', xl:'block' }, cursor: 'pointer' }}
+                            sx={{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'block', xl: 'block' }, cursor: 'pointer' }}
                         >
                             <img alt='' onClick={navigateToHome} src='https://superfun.infura-ipfs.io/ipfs/QmZ52Ugz1Z3yuXVvMNiDfFacWUdDofAQBLifvfDagdVJem' />
                         </Typography>
@@ -305,67 +203,52 @@ export default function Header() {
                             {pages.map((page) => (
                                 <Link key={page.name} to={`/${page.path}`} underline="none" sx={{ my: 2, color: 'white', display: 'block', }}>{page.name}</Link>
                             ))}
-                            <UploadModal />
-                            {/* <Button
-                                type="button"
-                                className="mt-3 w-full inline-flex justify-center items-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
-                                onClick={async () => {
-                                    try {
-                                        await authenticate({ provider: "injected" });
-                                        window.localStorage.setItem("connectorId", "injected");
-                                    } catch (e) {
-                                        console.error(e);
-                                    }
-                                }}
-                            >
-                                <img src={Metamask} alt={"Metamask"} className="h-10 w-10" />
-                                <p className="mx-5">Metamask</p>
-                            </Button> */}
-
-                            {
-                                profile && <Button className='m-2' style={{ background: '#488E53', color: 'white', textTransform: 'capitalize' }} onClick={disconnectWallet}>
-                                    Disconnect
-                                </Button>
-                            }
-
+                            
                             {
                                 !profile && <Button className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }} onClick={login}>
                                     Login
                                 </Button>
                             }
 
-                             <UpdateProfile />
-
-                            {/* < Button onClick={connectWallet} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}>Login</Button> */}
-                        </Box> 
-
-                        <ProfileCreation/>
-
-                        {
-                            profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-                                {/* <Avatar src={profile && profile.picture.original.url} /> */}
-                                <p className='text-center m-1'>{profile.handle}</p>
-
                             </Box>
-                        }
-
-                        <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-                            <IconButton
-                                size="large"
-                                aria-label="show more"
-                                aria-controls={mobileMenuId}
-                                aria-haspopup="true"
-                                onClick={handleMobileMenuOpen}
-                                color="inherit"
+                        <UploadModal />  
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                <div onClick={handleOpenUserMenu} style={{ cursor: 'pointer' }} className="d-flex">
+                                    <Avatar alt="Jaydip patel" src="assets/bg.png" />
+                                    {
+                                        profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
+                                            <p className='text-center m-1'>{profile.handle}</p>
+                                        </Box>
+                                    }
+                                </div>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
                             >
-                                <MoreIcon />
-                            </IconButton>
-                        </Box>
+                                <UpdateProfile />
+                                <ProfileCreation />
+                                {
+                                    profile && <MenuItem className='m-2' onClick={disconnectWallet}> Disconnect </MenuItem>
+                                }
+
+                            </Menu>
+                        </Box> 
                     </Toolbar>
                 </AppBar>
-
-                {renderMobileMenu}
-                 {renderMenu}
             </Box>
         </div>
     );
