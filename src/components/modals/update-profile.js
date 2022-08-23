@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { styled } from '@mui/system';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import { InputBase } from '@mui/material';
+import { CircularProgress, InputBase } from '@mui/material';
 import { YouTube } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import Chip from '@mui/material/Chip';
@@ -23,6 +23,7 @@ import { v4 as uuidv4 } from 'uuid';
 // import { create as ipfsHttpClient } from "ipfs-http-client"; 
 import { create } from 'ipfs-http-client';  
 import { setProfileMetadata } from '../../LensProtocol/profile/update-profile/set-update-profile-metadata';
+import { toast } from 'react-toastify';
 
 const auth =
   "Basic " +
@@ -69,6 +70,7 @@ export default function UpdateProfile() {
      
  
     const handleUpload = async () => { 
+        setLoading(true);
         const updateData = {
             bio: bio,
             photo: file, 
@@ -78,20 +80,20 @@ export default function UpdateProfile() {
             address: userAdd
         } 
         const res = await setProfileMetadata(updateData); 
+        toast.success("Profile is Updated!");
         setUpdate(!update);
+        setLoading(false);
+        setOpen(false);
     }
  
 
    
 
-    const handleUploadImage = async (e) => {
-        setLoading(!loading);
+    const handleUploadImage = async (e) => { 
         const file = e.target.files[0]; 
         const ipfsResult = await client.add(file); 
         const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`;
-        setFile(imageURI); 
-        setLoading(!loading);
-
+        setFile(imageURI);  
     }
 
     return (
@@ -127,7 +129,7 @@ export default function UpdateProfile() {
                 </DialogContent>
                 <DialogActions>
                     <ColorButton onClick={handleClose}>Cancel</ColorButton>
-                    <ColorButton onClick={handleUpload}>{loading ? "Loading...": "Upload"}</ColorButton>
+                    <ColorButton onClick={handleUpload}>{loading ?  <CircularProgress/> : "Upload"}</ColorButton>
                 </DialogActions>
             </Dialog>
         </div>

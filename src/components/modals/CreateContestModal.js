@@ -36,7 +36,7 @@ export default function CreateContestModal() {
         < Button onClick={handleClickOpen} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button>
 
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-                <DialogTitle>Post</DialogTitle>
+                <DialogTitle>Create Contest</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <TextField className='mt-2' id="outlined-basic" label="Title" variant="outlined" fullWidth />

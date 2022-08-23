@@ -93,6 +93,7 @@ export default function UploadModal() {
         setTitle("");
         setLoading(false); 
         toast.success("Post is Successfully created!");
+        setOpen(false);
 
     }
  
@@ -111,7 +112,7 @@ export default function UploadModal() {
         <div>
             <Button className='m-2' style={{ background: '#F66A24', color: 'white', textTransform: 'capitalize' }} onClick={handleClickOpen}  >Post</ Button>
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
-                <DialogTitle>Post</DialogTitle>
+                <DialogTitle>Create Post</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
                         <TextField onChange={(e) => setTitle(e.target.value)} className='mt-2' id="outlined-basic" label="Title" variant="outlined" fullWidth />

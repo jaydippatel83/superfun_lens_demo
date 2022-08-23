@@ -13,6 +13,7 @@ import { db } from "../firebase/firebase";
 import Web3Modal from 'web3modal';
 import { posts } from "../LensProtocol/post/get-post";
 import { getPublicationByLatest } from "../LensProtocol/post/explore/explore-publications";
+import { toast } from "react-toastify";
 
 export const LensAuthContext = createContext(undefined);
 
@@ -190,6 +191,13 @@ export const LensAuthContextProvider = (props) => {
     const signature = await signText(challengeResponse.data.challenge.text);
     const accessTokens = await authenticate(address, signature);
     const profiles = await profileByAddress(address); 
+    if(profiles === undefined){
+      toast.error("Please create a Profile");
+      web3Modal.clearCachedProvider();
+      window.localStorage.removeItem("accessToken");
+      window.localStorage.removeItem("refreshToken");
+    }
+    console.log(profiles,"profiles");
     window.localStorage.setItem("profileId", profiles?.id);
     setUpdate(!update)
 

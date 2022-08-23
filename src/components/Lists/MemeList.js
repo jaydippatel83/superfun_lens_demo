@@ -69,13 +69,13 @@ function MemeList() {
                                             <div className='d-flex justify-content-around text-left mt-4'>
                                                 <div className='p-0 m-0'>
                                                     <p className='p-0 m-0'>Followers</p>
-                                                    <h4 className='p-0 m-0'>101</h4>
+                                                    <h4 className='p-0 m-0'>0</h4>
 
                                                 </div>
                                                 <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
                                                 <div className='p-0 m-0'>
                                                     <p className='p-0 m-0'>Following</p>
-                                                    <h4 className='p-0 m-0'>56</h4>
+                                                    <h4 className='p-0 m-0'>0</h4>
 
                                                 </div>
                                             </div>

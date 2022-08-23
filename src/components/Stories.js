@@ -35,7 +35,7 @@ function Stories() {
 
 
     const handleNavigate=(id)=>{ 
-        navigate(`/trendingDetails${id}`)
+        navigate(`/trendingDetails/${id}`)
     }
 
 
