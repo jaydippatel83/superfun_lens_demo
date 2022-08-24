@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
 import { posts } from '../../LensProtocol/post/get-post';
 import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
+import { addReaction } from '../../LensProtocol/reactions/add-reaction';
  
 const tags = [
   "#tuesday ",
@@ -38,7 +39,7 @@ function TrendingDetails() {
   const { profile, userAdd,
     update,
     setUpdate,
-    loginCreate } = lensAuthContext;
+    loginCreate ,login} = lensAuthContext;
 
   const param = useParams();
 
@@ -92,7 +93,22 @@ function TrendingDetails() {
   const handleNav=(dd)=>{ 
     navigate(`/${dd}`)
   }
+
+  const addReactions=async(data)=>{
+    console.log(data,"data");
+    const id = window.localStorage.getItem("profileId");
+    const dd ={
+      id:id,
+      address: userAdd,
+      login: login,
+      react: "UPVOTE",
+      publishId: data.id,
+    }
+   const res= await addReaction(dd);
+   console.log(res,"res");
+  }
  
+  console.log(data,"data");
 
   return (
     <>
@@ -132,6 +148,7 @@ function TrendingDetails() {
                     <div
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      onClick={()=>addReactions(data)}
                     >
                       <FavoriteBorderIcon />
                       <span className="d-none-xss">Likes</span>
