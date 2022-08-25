@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import { LensAuthContext } from '../context/LensContext';
 import { findDOMNode } from 'react-dom';
 import FollowModal from './modals/FollowModal';
+import moment from 'moment'
 
 function Profile() {
     const params = useParams();
@@ -96,8 +97,7 @@ function Profile() {
         await getProfile();
        
     }
-
-
+  
     return (
         < >
             <Header />
@@ -107,6 +107,11 @@ function Profile() {
                 <div className='container'>
                     <div className='row mt-5'>
                         <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
+                        {
+                        data == undefined  && <Box sx={{ display: 'flex',justifyContent:'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    }
                             {
                                 data && <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                     <div className='text-center'>
@@ -155,7 +160,7 @@ function Profile() {
                                                     </Avatar>
                                                 }
                                                 title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                                                subheader={detail.createdAt}
+                                                subheader={moment(detail.createdAt).format('LLL')}
                                             />
                                             <CardMedia
                                                 component="img"
@@ -164,14 +169,14 @@ function Profile() {
                                                 sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px', objectFit: 'fill' } }}
                                             />
                                             <CardContent>
-                                                <Typography variant="body2" color="text.secondary">
+                                                <Typography variant="body2" color="text.secondary" className='p-0'>
                                                     {detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
                                                 </Typography>
                                             </CardContent>
                                             <CardActions disableSpacing>
                                                 <div
                                                     className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                                                    style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                 >
                                                     <FavoriteBorderIcon />
                                                     <span className="d-none-xss">Likes</span>
@@ -180,13 +185,13 @@ function Profile() {
                                                 <div
                                                     onClick={handleShowComment}
                                                     className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                                                    style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                 >
                                                     < ModeCommentOutlinedIcon />
                                                     <span className="d-none-xss">Comment</span>
                                                 </div>
                                                 <IconButton
-                                                    sx={{ color: 'white', padding: '5px', margin: '10px' }}
+                                                    sx={{ color: 'white', padding: '2px', margin: '0 10px' }}
                                                 >
                                                     < ShareOutlinedIcon />
                                                 </IconButton>

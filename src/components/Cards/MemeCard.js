@@ -23,13 +23,13 @@ export default function MemeCard(props) {
                 alt={props.data.__typename === "Comment" ? props.data.mainPost.metadata.content : props.data.metadata.content }
                 style={{objectFit:'fill' }}
             />
-            <CardContent>
-                <Typography variant="body2" color="text.secondary">
+            <CardContent className='p-0'>
+                <Typography variant="body2" color="text.secondary" className='ml-2'>
                     {props.data.__typename === "Comment" ? props.data.mainPost.metadata.description : props.data.metadata.description}
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
+            <CardActions disableSpacing className='p-0'>
+                <IconButton aria-label="add to favorites" >
                     <FavoriteIcon />
                 </IconButton>
             </CardActions>

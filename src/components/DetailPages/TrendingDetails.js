@@ -16,7 +16,7 @@ import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-
 import { posts } from '../../LensProtocol/post/get-post';
 import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
 import { addReaction } from '../../LensProtocol/reactions/add-reaction';
- 
+
 const tags = [
   "#tuesday ",
   "#happy tuesday",
@@ -39,7 +39,7 @@ function TrendingDetails() {
   const { profile, userAdd,
     update,
     setUpdate,
-    loginCreate ,login} = lensAuthContext;
+    loginCreate, login } = lensAuthContext;
 
   const param = useParams();
 
@@ -59,7 +59,7 @@ function TrendingDetails() {
 
   useEffect(() => {
     get_posts();
-  }, [param.id,update,loading])
+  }, [param.id, update, loading])
 
 
 
@@ -88,28 +88,26 @@ function TrendingDetails() {
     setLoading(false);
     setUpdate(!update);
 
-  } 
+  }
 
-  const handleNav=(dd)=>{ 
+  const handleNav = (dd) => {
     navigate(`/${dd}`)
   }
 
-  const addReactions=async(data)=>{
-    console.log(data,"data");
+  const addReactions = async (data) => {
+    console.log(data, "data");
     const id = window.localStorage.getItem("profileId");
-    const dd ={
-      id:id,
+    const dd = {
+      id: id,
       address: userAdd,
       login: login,
       react: "UPVOTE",
       publishId: data.id,
     }
-   const res= await addReaction(dd);
-   console.log(res,"res");
+    const res = await addReaction(dd);
+    console.log(res, "res");
   }
  
-  console.log(data,"data");
-
   return (
     <>
       <Header />
@@ -122,33 +120,38 @@ function TrendingDetails() {
               detail === undefined && data &&
               <div key={data.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                 <Card   >
-                  
+
                   <CardHeader
-                   onClick={()=> handleNav(data && data.__typename === "Comment" ? data.mainPost.profile.id : data.profile.id)}
+                    onClick={() => handleNav(data && data.__typename === "Comment" ? data.mainPost.profile.id : data.profile.id)}
                     avatar={
-                      <Avatar src={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url} aria-label="recipe">
+                      <Avatar
+                        src={data && data.__typename === "Comment" ?
+                          data.mainPost.profile.picture != null  &&
+                          data.mainPost.profile.picture.original.url :
+                          data.profile.picture != null ?  data.profile.picture.original.url :
+                            'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }
                     title={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
                   />
-                  
+
                   <CardMedia
                     component="img"
                     image={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url}
                     alt={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
                     style={{ objectFit: 'fill' }}
                   />
-                  <CardContent>
-                    {/* <Typography variant="body2" color="text.secondary">
-                        {e.description}
-                      </Typography> */}
+                  <CardContent className=' '>
+                    <Typography variant="body2" color="text.secondary">
+                        {data && data.__typename === "Comment" ? data.mainPost.metadata.description : data.metadata.description}
+                      </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
                     <div
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      onClick={()=>addReactions(data)}
+                      onClick={() => addReactions(data)}
                     >
                       <FavoriteBorderIcon />
                       <span className="d-none-xss">Likes</span>
@@ -188,7 +191,7 @@ function TrendingDetails() {
                             />
                           </div>
                           <IconButton  >
-                           {loading ? <CircularProgress/> : <Send />} 
+                            {loading ? <CircularProgress /> : <Send />}
                           </IconButton>
                         </form>
                       </div>
@@ -209,9 +212,15 @@ function TrendingDetails() {
               detail !== undefined && <div key={detail.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                 <Card   >
                   <CardHeader
-                  onClick={()=> handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
+                    onClick={() => handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
                     avatar={
-                      <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url} aria-label="recipe">
+                      <Avatar
+                        src={detail != undefined &&
+                          detail.__typename === "Comment" ?
+                          detail.mainPost.profile.picture != null &&
+                          detail.mainPost.profile.picture.original.url :
+                          detail.profile.picture != null ? detail.profile.picture.original.url :
+                            'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }
@@ -224,7 +233,10 @@ function TrendingDetails() {
                     alt={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                     sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                   />
-                  <CardContent>
+                 <CardContent className=' '>
+                    <Typography variant="body2" color="text.secondary">
+                        {detail && detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
+                      </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
                     <div
@@ -285,7 +297,7 @@ function TrendingDetails() {
                             margin: '5px',
                             width: 'fit-content'
                           }}>{detail != undefined && detail.__typename === "Comment" && detail.metadata.content}</p>
-                        <Divider/>                        </div>
+                          <Divider />                        </div>
                       }
                     </div>
                   ) : (
@@ -313,11 +325,11 @@ function TrendingDetails() {
                           style={{ objectFit: 'fill' }}
                         />
                         <CardContent>
-                          <Typography variant="body2" color="text.secondary">
-
+                          <Typography variant="body2" color="text.secondary" className='mx-2'>
+                            {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing>
+                        <CardActions disableSpacing className='p-0'>
                           <IconButton aria-label="add to favorites">
                             <FavoriteBorderIcon />
                           </IconButton>

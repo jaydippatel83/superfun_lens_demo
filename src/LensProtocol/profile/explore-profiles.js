@@ -106,12 +106,8 @@ export const exploreProfiles = (exploreProfilesQueryRequest) => {
 
 export const exploreProfile = async () => { 
   const result = await exploreProfiles({
-    sortCriteria: 'LATEST_CREATED',
-    limit: 50,
-  });
-
-
-    console.log('explore: result', result.data);
+    sortCriteria: 'MOST_POSTS', 
+  }); 
 
     return result.data;
 };

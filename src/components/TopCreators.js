@@ -1,4 +1,4 @@
-import { Avatar, Button, Divider, Link } from '@mui/material'
+import { Avatar, Box, Button, CircularProgress, Divider, Link } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link as RouterLink } from "react-router-dom";
 import Slider from 'react-slick';
@@ -6,6 +6,7 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { db } from '../firebase/firebase';
 
 import Blockies from 'react-blockies'
+import { exploreProfile } from '../LensProtocol/profile/explore-profiles';
  
 function TopCreators() {
 
@@ -16,12 +17,15 @@ function TopCreators() {
         async function getCreator() {
         var arry = [];
 
+            const res = await exploreProfile(); 
+            setStory(res.exploreProfiles.items);
+
             const q = query(collection(db, "profiles")); 
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => { 
                 arry.push(doc.data())
             }); 
-        setStory(arry);
+        // setStory(arry);
 
         }
         getCreator()
@@ -91,9 +95,15 @@ function TopCreators() {
                         <h5>Top Memers</h5>
                         <Button component={RouterLink} to="/memers">View All</Button>
                     </div>
+                    {
+                        story.length == 0  && <Box sx={{ display: 'flex',justifyContent:'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    }
                     <Slider {...settings}>
                         {
                            story && story.map((e) => { 
+                            console.log(e,"ee");
                                 return (
                                     <div key={e.handle}>
                                         <Link
@@ -104,9 +114,9 @@ function TopCreators() {
                                             underline="hover"
                                             component={RouterLink}
                                         >
-                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.photo ? e.photo : "/assets/bg.png"})` }}>
+                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.picture != null ? e.picture.original.url : 'assets/bg.png'})` }}>
 
-                                                <Avatar src={e.photo ?  e.photo : "/assets/bg.png"} className="storyAvatar" />
+                                                <Avatar src={e.picture != null ? e.picture.original.url : 'assets/bg.png'} className="storyAvatar" />
                                                 
                                                 <h4>{e.handle}</h4>
                                             </div>

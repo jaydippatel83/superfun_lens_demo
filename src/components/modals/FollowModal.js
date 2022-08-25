@@ -71,7 +71,7 @@ export default function FollowModal(props) {
                                 return (
                                     <ListItem button key={e.profile.id}>
                                         <ListItemAvatar>
-                                            <Avatar   src={e.profile.picture != null ? e.profile.picture.original.url : 'assets/bg.png'}>
+                                            <Avatar   src={e.profile.picture != null ? e.profile.picture.original && e.profile.picture.original.url : 'assets/bg.png'}>
 
                                             </Avatar>
                                         </ListItemAvatar>

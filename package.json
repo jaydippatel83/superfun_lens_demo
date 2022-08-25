@@ -23,6 +23,7 @@
     "install": "^0.13.0",
     "ipfs-http-client": "^57.0.3",
     "jwt-decode": "^3.1.2",
+    "moment": "^2.29.4",
     "moralis": "^2.0.1",
     "npm": "^8.17.0",
     "omit-deep": "^0.3.0",
