@@ -1,4 +1,4 @@
-
+ 
 import { gql } from '@apollo/client'
 import { apolloClient } from '../services/Apollo_Client'
 
@@ -316,17 +316,17 @@ const GET_PUBLICATION = `
 `
 
 export const getPublication = (publicationId) => {
-    return apolloClient.query({
-        query: gql(GET_PUBLICATION),
-        variables: {
-            request: {
-                publicationId
-            }
-        },
-    })
+   return apolloClient.query({
+    query: gql(GET_PUBLICATION),
+    variables: {
+      request: {
+        publicationId
+      }
+    },
+  })
 }
 
-export const getpublicationById = async (id) => {
+export const getpublicationById= async(id)=>{
     const result = await getPublication(id); 
-    return result;
+    return result
 }

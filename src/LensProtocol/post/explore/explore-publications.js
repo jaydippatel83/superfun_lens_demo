@@ -354,6 +354,7 @@ export const getPublicationByLatest= async()=>{
         "sortCriteria": "LATEST", 
         "publicationTypes": ["POST", "COMMENT", "MIRROR"], 
         "sources": ["superfun"], 
+        "limit": 50,
      }
 
      const result = await explorePublications(query); 

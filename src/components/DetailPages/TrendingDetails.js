@@ -13,9 +13,10 @@ import { LensAuthContext } from '../../context/LensContext';
 import { createComment } from '../../LensProtocol/post/comments/create-comment';
 import { toast } from 'react-toastify';
 import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
-import { posts } from '../../LensProtocol/post/get-post';
-import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
+import { getComments, posts } from '../../LensProtocol/post/get-post';
+import {  getpublicationById } from '../../LensProtocol/post/get-publicationById';
 import { addReaction } from '../../LensProtocol/reactions/add-reaction';
+import { getLikes } from '../../LensProtocol/reactions/get-reactions';
 
 const tags = [
   "#tuesday ",
@@ -33,6 +34,7 @@ function TrendingDetails() {
   const [comment, setComments] = React.useState([""]);
   const [loading, setLoading] = useState(false);
   const lensAuthContext = React.useContext(LensAuthContext);
+  const [count , setCount] = useState();
 
   const [posts, setPosts] = useState([]);
 
@@ -45,10 +47,12 @@ function TrendingDetails() {
 
   async function get_posts() {
     try {
-      const pst = await getpublicationById(param.id);
+      const pst = await getpublicationById(param.id); 
+     
       setData(pst.data.publication);
       const d = await getPublicationByLatest();
       setPosts(d.data.explorePublications.items);
+      
 
     } catch (error) {
       console.log(error);
@@ -69,8 +73,9 @@ function TrendingDetails() {
   }
 
 
-  const handleShowComment = () => {
+  const handleShowComment = async() => {
     setShowComment(!showComment);
+    
   };
 
   const handleComment = async (data) => {
@@ -94,20 +99,42 @@ function TrendingDetails() {
     navigate(`/${dd}`)
   }
 
-  const addReactions = async (data) => {
-    console.log(data, "data");
+  const addReactions = async (data) => { 
     const id = window.localStorage.getItem("profileId");
+
     const dd = {
       id: id,
       address: userAdd,
-      login: login,
+      login: loginCreate,
       react: "UPVOTE",
-      publishId: data.id,
+      pId: data.profile.id,
+      publishId: data && data.__typename === "Comment" ? data.mainPost.id : data.id,
     }
-    const res = await addReaction(dd);
-    console.log(res, "res");
+    const res = await addReaction(dd); 
   }
+
+  useEffect(() => {
+    var array =[];
+    async function getLisked() {
+      const id = window.localStorage.getItem("profileId");
+      const res = {
+        pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id ,
+        pid2: id,
+      }
+
+      const like = await getLikes(res); 
+      like?.publications?.items?.map((e)=>{
+        if(e.reaction == "UPVOTE"){ 
+          array.push(e.reaction);
+        }
+      })
+      setCount(array)
+    }
+    getLisked();
+  }, [param,detail,data])
+
  
+
   return (
     <>
       <Header />
@@ -126,9 +153,9 @@ function TrendingDetails() {
                     avatar={
                       <Avatar
                         src={data && data.__typename === "Comment" ?
-                          data.mainPost.profile.picture != null  &&
+                          data.mainPost.profile.picture != null &&
                           data.mainPost.profile.picture.original.url :
-                          data.profile.picture != null ?  data.profile.picture.original.url :
+                          data.profile.picture != null ? data.profile.picture.original.url :
                             'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
@@ -144,8 +171,8 @@ function TrendingDetails() {
                   />
                   <CardContent className=' '>
                     <Typography variant="body2" color="text.secondary">
-                        {data && data.__typename === "Comment" ? data.mainPost.metadata.description : data.metadata.description}
-                      </Typography>
+                      {data && data.__typename === "Comment" ? data.mainPost.metadata.description : data.metadata.description}
+                    </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
                     <div
@@ -153,8 +180,8 @@ function TrendingDetails() {
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       onClick={() => addReactions(data)}
                     >
-                      <FavoriteBorderIcon />
-                      <span className="d-none-xss">Likes</span>
+                      <FavoriteBorderIcon /> {count && count.length} 
+                      <span className="d-none-xss m-1">Likes</span>
                     </div>
 
                     <div
@@ -162,8 +189,9 @@ function TrendingDetails() {
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                     >
-                      < ModeCommentOutlinedIcon />
-                      <span className="d-none-xss">Comment</span>
+                      < ModeCommentOutlinedIcon />  {data && data.__typename === "Comment" ? data.mainPost.stats.totalAmountOfComments : data.stats.totalAmountOfComments}
+
+                      <span className="d-none-xss m-2">Comment</span>
                     </div>
 
                     <IconButton
@@ -179,7 +207,7 @@ function TrendingDetails() {
                     <div className='m-2'>
                       <div className="d-flex justify-content-around mt-2">
                         <div className="p-0">
-                          <Avatar src={detail && detail.img} />
+                          <Avatar src={data && data.img} />
                         </div>
                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                           <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -190,11 +218,27 @@ function TrendingDetails() {
                               inputProps={{ 'aria-label': 'Search by memers' }}
                             />
                           </div>
-                          <IconButton  >
+                          <IconButton onClick={() => handleComment(data)} >
                             {loading ? <CircularProgress /> : <Send />}
                           </IconButton>
                         </form>
                       </div>
+
+                      {
+                        data != undefined && data.__typename === "Comment" && <div className="m-2">
+                          <div className="p-0 d-flex ">
+                            <Avatar src={data != undefined && data.__typename === "Comment" ? data?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                            <p className='mb-0 align-self-center ml-2'>{data != undefined && data.__typename === "Comment" ? data.profile.handle : data.profile.handle}</p>
+                          </div>
+                          <p style={{
+                            padding: '10px',
+                            background: '#000',
+                            borderRadius: '14px',
+                            margin: '5px',
+                            width: 'fit-content'
+                          }}>{data != undefined && data.__typename === "Comment" && data.metadata.content}</p>
+                          <Divider />                        </div>
+                      }
 
                     </div>
                   ) : (
@@ -233,18 +277,19 @@ function TrendingDetails() {
                     alt={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                     sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
                   />
-                 <CardContent className=' '>
+                  <CardContent className=' '>
                     <Typography variant="body2" color="text.secondary">
-                        {detail && detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
-                      </Typography>
+                      {detail && detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
+                    </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
                     <div
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      onClick={() => addReactions(detail)}
                     >
-                      <FavoriteBorderIcon />
-                      <span className="d-none-xss">Likes</span>
+                      <FavoriteBorderIcon /> {count && count.length} 
+                      <span className="d-none-xss m-1">Likes</span>
                     </div>
 
                     <div
@@ -252,8 +297,8 @@ function TrendingDetails() {
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                     >
-                      < ModeCommentOutlinedIcon />
-                      <span className="d-none-xss">Comment</span>
+                      < ModeCommentOutlinedIcon /> {detail && detail.__typename === "Comment" ? detail.mainPost.stats.totalAmountOfComments : detail.stats.totalAmountOfComments}
+                      <span className="d-none-xss m-2">Comment</span>
                     </div>
 
                     <IconButton
@@ -268,7 +313,7 @@ function TrendingDetails() {
                     <div className='m-2'>
                       <div className="d-flex justify-content-around mt-2">
                         <div className="p-0">
-                          <Avatar src={profile.picture != null ? profile.picture.original.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                          <Avatar src={profile?.picture != null ? profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                         </div>
                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                           <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -287,7 +332,7 @@ function TrendingDetails() {
                       {
                         detail != undefined && detail.__typename === "Comment" && <div className="m-2">
                           <div className="p-0 d-flex ">
-                            <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.profile.picture.original.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                            <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                             <p className='mb-0 align-self-center ml-2'>{detail != undefined && detail.__typename === "Comment" ? detail.profile.handle : detail.profile.handle}</p>
                           </div>
                           <p style={{

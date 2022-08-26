@@ -102,8 +102,7 @@ function TopCreators() {
                     }
                     <Slider {...settings}>
                         {
-                           story && story.map((e) => { 
-                            console.log(e,"ee");
+                           story && story.map((e) => {  
                                 return (
                                     <div key={e.handle}>
                                         <Link

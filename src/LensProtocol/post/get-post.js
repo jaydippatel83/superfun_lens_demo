@@ -328,4 +328,14 @@ export const posts = async (profileId) => {
   };  
     const result = await getPublicationsRequest(request);  
     return result;
-}; 
+};  
+
+export const getComments = async (profileId) => { 
+  const request = {
+    commentsOf: profileId,
+  sources: ['superfun'], 
+};  
+  const result = await getPublicationsRequest(request);  
+  console.log(result,"comments");
+  return result;
+};

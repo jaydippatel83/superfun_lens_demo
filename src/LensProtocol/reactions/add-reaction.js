@@ -8,8 +8,7 @@ const ADD_REACTION = `
   mutation($request: ReactionRequest!) { 
    addReaction(request: $request)
  }
-`;
-
+`; 
 
 const REMOVE_REACTION = `
   mutation($request: ReactionRequest!) { 
@@ -19,19 +18,16 @@ const REMOVE_REACTION = `
 
  
 
-const addReactionRequest = (profileId, reaction, publicationId) => {
+const addReactionRequest = (request) => {
+    console.log(request,"profileId, reaction, publicationId");
     return apolloClient.mutate({
         mutation: gql(ADD_REACTION),
         variables: {
-            request: {
-                profileId,
-                reaction,
-                publicationId,
-            },
+            request: request,
         },
     });
 };
-
+ 
 export const addReaction = async (data) => {
     const profileId = data.id;
     if (!profileId) {
@@ -39,14 +35,18 @@ export const addReaction = async (data) => {
     }
 
     const address = getAddress();
-    console.log('add reaction: address', address);
+    console.log('add reaction: address', data.address);
 
-    await data.login(address);
+    await data.login(data.address);
 
-    await addReactionRequest(profileId, data.react, data.publishId);
+    const request = { profileId: profileId, reaction: "UPVOTE", publicationId: data.publishId }; 
+
+  const rr=  await addReactionRequest(request);
     toast.success("Success");
-    console.log('add reaction: sucess');
+    console.log('add reaction: sucess',rr);
 }
+
+ 
 
 const removeReactionRequest = (
     profileId,
@@ -66,6 +66,7 @@ const removeReactionRequest = (
 };
 
 export const removeReaction = async (data) => {
+    console.log(data,"data call");
     const profileId = data.id;
     if (!profileId) {
         throw new Error('Must define PROFILE_ID in the .env to run this');
@@ -76,7 +77,7 @@ export const removeReaction = async (data) => {
 
     await data.login(data.address);
 
-    await removeReactionRequest(profileId, 'UPVOTE', data.publishId);
+   const dd= await removeReactionRequest(profileId, 'UPVOTE', data.publishId);
     toast.success("Success");
-    console.log('remove reaction: sucess');
+    console.log('remove reaction: sucess',dd);
 };

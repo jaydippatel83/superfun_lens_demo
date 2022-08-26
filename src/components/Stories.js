@@ -39,7 +39,7 @@ function Stories() {
         navigate(`/trendingDetails/${id}`)
     }
 
-
+console.log(userPosts,"userPosts");
 
     return (
 

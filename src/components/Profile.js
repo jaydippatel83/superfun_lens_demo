@@ -17,6 +17,7 @@ import { LensAuthContext } from '../context/LensContext';
 import { findDOMNode } from 'react-dom';
 import FollowModal from './modals/FollowModal';
 import moment from 'moment'
+import { createComment } from '../LensProtocol/post/comments/create-comment';
 
 function Profile() {
     const params = useParams();
@@ -28,12 +29,13 @@ function Profile() {
     const [post, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const lensAuthContext = React.useContext(LensAuthContext);
-    const {login} = lensAuthContext;
+    const { login, loginCreate, userAdd } = lensAuthContext;
+    const [loadingc, setLoadingC] = useState(false);
 
-    const [update,setUpdate]= useState(false);
-    const [title,setTitle]= useState("");
+    const [update, setUpdate] = useState(false);
+    const [title, setTitle] = useState("");
 
-    const [open, setOpen] = React.useState(false);   
+    const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = (text) => {
         setTitle(text)
@@ -42,7 +44,7 @@ function Profile() {
 
     const handleClose = () => {
         setOpen(false);
-    }; 
+    };
 
 
 
@@ -57,19 +59,19 @@ function Profile() {
         " #happy tuesday morning",
         " #happy tuesday good morning",
         " #good tuesday morning"
-    ] 
+    ]
     useEffect(() => {
         const getUserData = async () => {
             const dd = await posts(params.id);
             setPosts(dd.data.publications.items);
         }
         getUserData();
-    }, [params,update])
- 
+    }, [params, update])
+
 
     useEffect(() => {
         getProfile();
-    }, [loading,update])
+    }, [loading, update])
 
     async function getProfile() {
         if (params.id !== null) {
@@ -77,27 +79,43 @@ function Profile() {
             setData(user);
         }
     };
- 
+
 
     const handleFollow = async (id) => {
         const fId = window.localStorage.getItem("profileId");
         setLoading(true);
-        const data ={
-           id : id,
-           login: login,
-           followId: fId 
+        const data = {
+            id: id,
+            login: login,
+            followId: fId
         }
         const res = await follow(data);
         console.log(res, "res");
-        if(res){ 
+        if (res) {
             setLoading(false);
             setUpdate(!update);
             toast.success("Followed!");
         }
         await getProfile();
-       
     }
-  
+
+    const handleComment = async (data) => {
+        const id = window.localStorage.getItem("profileId");
+        setLoadingC(true);
+        const obj = {
+            address: userAdd,
+            comment: comment,
+            login: loginCreate,
+            profileId: id,
+            publishId: data.id
+        }
+        const result = await createComment(obj);
+        toast.success("Success!!")
+        setLoadingC(false);
+        setUpdate(!update);
+
+    }
+
     return (
         < >
             <Header />
@@ -107,11 +125,11 @@ function Profile() {
                 <div className='container'>
                     <div className='row mt-5'>
                         <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
-                        {
-                        data == undefined  && <Box sx={{ display: 'flex',justifyContent:'center' }}>
-                            <CircularProgress />
-                        </Box>
-                    }
+                            {
+                                data == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                                    <CircularProgress />
+                                </Box>
+                            }
                             {
                                 data && <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                     <div className='text-center'>
@@ -119,18 +137,18 @@ function Profile() {
                                         <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
                                         <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
                                         {/* <p>{e.description}</p> */}
-                                        <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress/> :"Follow"}</Button>
+                                        <Button variant='outlined' onClick={() => handleFollow(data.id)}>{loading ? <CircularProgress /> : "Follow"}</Button>
                                     </div>
                                     {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
-                                 <FollowModal data={data} open={open} close={handleClose} title={title}/>
+                                    <FollowModal data={data} open={open} close={handleClose} title={title} />
                                     <div className='d-flex justify-content-around text-left mt-4'>
-                                        <div className='p-0 m-0' onClick={()=>handleClickOpen("Followers")}>
+                                        <div className='p-0 m-0' onClick={() => handleClickOpen("Followers")}>
                                             <p className='p-0 m-0'>Followers</p>
                                             <h4 className='p-0 m-0'>{data.stats.totalFollowers}</h4>
 
                                         </div>
                                         <Divider flexItem orientation="vertical" style={{ border: '1px solid white', margin: '0 10px' }} />
-                                        <div className='p-0 m-0' onClick={()=>handleClickOpen("Following")}>
+                                        <div className='p-0 m-0' onClick={() => handleClickOpen("Following")}>
                                             <p className='p-0 m-0'>Following</p>
                                             <h4 className='p-0 m-0'>{data.stats.totalFollowing}</h4>
 
@@ -155,10 +173,15 @@ function Profile() {
                                         <Card   >
                                             <CardHeader
                                                 avatar={
-                                                    <Avatar src={detail.profile.picture != null ? detail.profile.picture.original.url : 'assets/bg.png'} aria-label="recipe">
-
-                                                    </Avatar>
-                                                }
+                                                    <Avatar
+                                                    src={  detail.__typename === "Comment" ?
+                                                      detail.mainPost.profile.picture != null &&
+                                                      detail.mainPost.profile.picture.original.url :
+                                                      detail.profile.picture != null ? detail.profile.picture.original.url :
+                                                        'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                            
+                                                  </Avatar>
+                                                } 
                                                 title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                 subheader={moment(detail.createdAt).format('LLL')}
                                             />
@@ -213,11 +236,26 @@ function Profile() {
                                                                     inputProps={{ 'aria-label': 'Search by memers' }}
                                                                 />
                                                             </div>
-                                                            <IconButton  >
-                                                                <Send />
+                                                            <IconButton onClick={() => handleComment(detail)} >
+                                                                {loadingc ? <CircularProgress /> : <Send />}
                                                             </IconButton>
                                                         </form>
                                                     </div>
+                                                    {
+                                                        detail != undefined && detail.__typename === "Comment" && <div className="m-2">
+                                                            <div className="p-0 d-flex ">
+                                                                <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.profile.picture.original.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                                                <p className='mb-0 align-self-center ml-2'>{detail != undefined && detail.__typename === "Comment" ? detail.profile.handle : detail.profile.handle}</p>
+                                                            </div>
+                                                            <p style={{
+                                                                padding: '10px',
+                                                                background: '#000',
+                                                                borderRadius: '14px',
+                                                                margin: '5px',
+                                                                width: 'fit-content'
+                                                            }}>{detail != undefined && detail.__typename === "Comment" && detail.metadata.content}</p>
+                                                            <Divider />                        </div>
+                                                    }
                                                 </div>
                                             ) : (
                                                 ""
