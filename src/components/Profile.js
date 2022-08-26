@@ -18,6 +18,8 @@ import { findDOMNode } from 'react-dom';
 import FollowModal from './modals/FollowModal';
 import moment from 'moment'
 import { createComment } from '../LensProtocol/post/comments/create-comment';
+import { getLikes } from '../LensProtocol/reactions/get-reactions';
+import { addReaction } from '../LensProtocol/reactions/add-reaction';
 
 function Profile() {
     const params = useParams();
@@ -37,6 +39,7 @@ function Profile() {
 
     const [open, setOpen] = React.useState(false);
     const [displayCmt, setDisplayCmt] = useState([]);
+    const [count, setCount] = useState();
 
     const handleClickOpen = (text) => {
         setTitle(text)
@@ -120,6 +123,42 @@ function Profile() {
         setUpdate(!update);
 
     }
+
+    const addReactions = async (data) => {
+        const id = window.localStorage.getItem("profileId");
+    
+        const dd = {
+          id: id,
+          address: userAdd,
+          login: loginCreate,
+          react: "UPVOTE",
+          pId: data.profile.id,
+          publishId: data && data.id,
+        }
+        const res = await addReaction(dd);
+        setUpdate(!update);
+      }
+
+
+  useEffect(() => {
+    var array = [];
+    async function getLisked() {
+      const id = window.localStorage.getItem("profileId");
+      const res = {
+        pid:   detail != undefined && detail?.profile?.id,
+        pid2: id,
+      }
+
+      const like = await getLikes(res);
+      like?.publications?.items?.map((e) => {
+        if (e.reaction == "UPVOTE") {
+          array.push(e.reaction);
+        }
+      })
+      setCount(array)
+    }
+    getLisked();
+  }, [ detail,update])
 
     return (
         < >
@@ -205,9 +244,10 @@ function Profile() {
                                                 <div
                                                     className="d-flex align-items-center"
                                                     style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
+                                                    onClick={() => addReactions(detail)}
                                                 >
-                                                    <FavoriteBorderIcon />
-                                                    <span className="d-none-xss">Likes</span>
+                                                    <FavoriteBorderIcon /> {count && count.length}
+                                                    <span className="d-none-xss m-2">Likes</span>
                                                 </div>
 
                                                 <div
@@ -216,7 +256,7 @@ function Profile() {
                                                     style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                 >
                                                     < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
-                                                    <span className="d-none-xss">Comment</span>
+                                                    <span className="d-none-xss m-2">Comment</span>
                                                 </div>
                                                 <IconButton
                                                     sx={{ color: 'white', padding: '2px', margin: '0 10px' }}

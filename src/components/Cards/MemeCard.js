@@ -24,15 +24,15 @@ export default function MemeCard(props) {
                 style={{objectFit:'fill' }}
             />
             <CardContent className='p-0'>
-                <Typography variant="body2" color="text.secondary" className='ml-2'>
+                <Typography variant="body2" color="text.secondary" className='mx-2'>
                     {props.data.__typename === "Comment" ? props.data.mainPost.metadata.description : props.data.metadata.description}
                 </Typography>
             </CardContent>
-            <CardActions disableSpacing className='p-0'>
+            {/* <CardActions disableSpacing className='p-0'>
                 <IconButton aria-label="add to favorites" >
                     <FavoriteIcon />
                 </IconButton>
-            </CardActions>
+            </CardActions> */}
         </Card>
     )
 }

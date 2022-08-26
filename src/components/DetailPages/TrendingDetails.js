@@ -383,11 +383,11 @@ function TrendingDetails() {
                             {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
                           </Typography>
                         </CardContent>
-                        <CardActions disableSpacing className='p-0'>
+                        {/* <CardActions disableSpacing className='p-0'>
                           <IconButton aria-label="add to favorites">
                             <FavoriteBorderIcon />
                           </IconButton>
-                        </CardActions>
+                        </CardActions> */}
                       </Card>
                     </div>
                   )
