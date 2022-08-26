@@ -14,7 +14,7 @@ import { createComment } from '../../LensProtocol/post/comments/create-comment';
 import { toast } from 'react-toastify';
 import { getPublicationByLatest } from '../../LensProtocol/post/explore/explore-publications';
 import { getComments, posts } from '../../LensProtocol/post/get-post';
-import {  getpublicationById } from '../../LensProtocol/post/get-publicationById';
+import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
 import { addReaction } from '../../LensProtocol/reactions/add-reaction';
 import { getLikes } from '../../LensProtocol/reactions/get-reactions';
 
@@ -34,9 +34,10 @@ function TrendingDetails() {
   const [comment, setComments] = React.useState([""]);
   const [loading, setLoading] = useState(false);
   const lensAuthContext = React.useContext(LensAuthContext);
-  const [count , setCount] = useState();
+  const [count, setCount] = useState();
 
   const [posts, setPosts] = useState([]);
+  const [displayCmt, setDisplayCmt] = useState([]);
 
   const { profile, userAdd,
     update,
@@ -47,12 +48,15 @@ function TrendingDetails() {
 
   async function get_posts() {
     try {
-      const pst = await getpublicationById(param.id); 
-     
+      const pst = await getpublicationById(param.id);
+
       setData(pst.data.publication);
+      const ids = detail != undefined ? detail.id : param.id;
+      const cmt = await getComments(ids);
+      setDisplayCmt(cmt); 
       const d = await getPublicationByLatest();
       setPosts(d.data.explorePublications.items);
-      
+
 
     } catch (error) {
       console.log(error);
@@ -63,7 +67,7 @@ function TrendingDetails() {
 
   useEffect(() => {
     get_posts();
-  }, [param.id, update, loading])
+  }, [param.id, update, loading, data, detail])
 
 
 
@@ -73,9 +77,9 @@ function TrendingDetails() {
   }
 
 
-  const handleShowComment = async() => {
+  const handleShowComment = async () => {
     setShowComment(!showComment);
-    
+
   };
 
   const handleComment = async (data) => {
@@ -86,7 +90,8 @@ function TrendingDetails() {
       comment: comment,
       login: loginCreate,
       profileId: id,
-      publishId: data.id
+      publishId: data.id,
+      user: profile.handle
     }
     const result = await createComment(obj);
     toast.success("Success!!")
@@ -99,7 +104,7 @@ function TrendingDetails() {
     navigate(`/${dd}`)
   }
 
-  const addReactions = async (data) => { 
+  const addReactions = async (data) => {
     const id = window.localStorage.getItem("profileId");
 
     const dd = {
@@ -108,32 +113,32 @@ function TrendingDetails() {
       login: loginCreate,
       react: "UPVOTE",
       pId: data.profile.id,
-      publishId: data && data.__typename === "Comment" ? data.mainPost.id : data.id,
+      publishId: data && data.id,
     }
-    const res = await addReaction(dd); 
+    const res = await addReaction(dd);
   }
 
   useEffect(() => {
-    var array =[];
+    var array = [];
     async function getLisked() {
       const id = window.localStorage.getItem("profileId");
       const res = {
-        pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id ,
+        pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id,
         pid2: id,
       }
 
-      const like = await getLikes(res); 
-      like?.publications?.items?.map((e)=>{
-        if(e.reaction == "UPVOTE"){ 
+      const like = await getLikes(res);
+      like?.publications?.items?.map((e) => {
+        if (e.reaction == "UPVOTE") {
           array.push(e.reaction);
         }
       })
       setCount(array)
     }
     getLisked();
-  }, [param,detail,data])
+  }, [param, detail, data])
 
- 
+
 
   return (
     <>
@@ -180,7 +185,7 @@ function TrendingDetails() {
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       onClick={() => addReactions(data)}
                     >
-                      <FavoriteBorderIcon /> {count && count.length} 
+                      <FavoriteBorderIcon /> {count && count.length}
                       <span className="d-none-xss m-1">Likes</span>
                     </div>
 
@@ -189,7 +194,7 @@ function TrendingDetails() {
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                     >
-                      < ModeCommentOutlinedIcon />  {data && data.__typename === "Comment" ? data.mainPost.stats.totalAmountOfComments : data.stats.totalAmountOfComments}
+                      < ModeCommentOutlinedIcon />  {data && data.stats.totalAmountOfComments}
 
                       <span className="d-none-xss m-2">Comment</span>
                     </div>
@@ -207,7 +212,7 @@ function TrendingDetails() {
                     <div className='m-2'>
                       <div className="d-flex justify-content-around mt-2">
                         <div className="p-0">
-                          <Avatar src={data && data.img} />
+                          <Avatar src={data ? data.img : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
                         </div>
                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                           <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -225,19 +230,24 @@ function TrendingDetails() {
                       </div>
 
                       {
-                        data != undefined && data.__typename === "Comment" && <div className="m-2">
-                          <div className="p-0 d-flex ">
-                            <Avatar src={data != undefined && data.__typename === "Comment" ? data?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                            <p className='mb-0 align-self-center ml-2'>{data != undefined && data.__typename === "Comment" ? data.profile.handle : data.profile.handle}</p>
-                          </div>
-                          <p style={{
-                            padding: '10px',
-                            background: '#000',
-                            borderRadius: '14px',
-                            margin: '5px',
-                            width: 'fit-content'
-                          }}>{data != undefined && data.__typename === "Comment" && data.metadata.content}</p>
-                          <Divider />                        </div>
+                        data !== undefined && displayCmt && displayCmt.map((e) => {
+                          return (
+                            <div  style={{margin:'10px'}} key={e.id}>
+                              <Divider />    
+                              <div className="p-0 d-flex " style={{padding:'5px'}}>
+                                <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
+                              </div>
+                              <p style={{
+                                padding: '10px',
+                                background: '#000',
+                                borderRadius: '14px',
+                                margin: '5px',
+                                width: 'fit-content'
+                              }}>{e.__typename === "Comment" && e.metadata.content}</p>
+                              <Divider />                        </div>
+                          )
+                        })
                       }
 
                     </div>
@@ -288,7 +298,7 @@ function TrendingDetails() {
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       onClick={() => addReactions(detail)}
                     >
-                      <FavoriteBorderIcon /> {count && count.length} 
+                      <FavoriteBorderIcon /> {count && count.length}
                       <span className="d-none-xss m-1">Likes</span>
                     </div>
 
@@ -297,7 +307,7 @@ function TrendingDetails() {
                       className="d-flex align-items-center"
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                     >
-                      < ModeCommentOutlinedIcon /> {detail && detail.__typename === "Comment" ? detail.mainPost.stats.totalAmountOfComments : detail.stats.totalAmountOfComments}
+                      < ModeCommentOutlinedIcon /> {detail && detail.stats.totalAmountOfComments}
                       <span className="d-none-xss m-2">Comment</span>
                     </div>
 
@@ -330,19 +340,23 @@ function TrendingDetails() {
                         </form>
                       </div>
                       {
-                        detail != undefined && detail.__typename === "Comment" && <div className="m-2">
-                          <div className="p-0 d-flex ">
-                            <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                            <p className='mb-0 align-self-center ml-2'>{detail != undefined && detail.__typename === "Comment" ? detail.profile.handle : detail.profile.handle}</p>
-                          </div>
-                          <p style={{
-                            padding: '10px',
-                            background: '#000',
-                            borderRadius: '14px',
-                            margin: '5px',
-                            width: 'fit-content'
-                          }}>{detail != undefined && detail.__typename === "Comment" && detail.metadata.content}</p>
-                          <Divider />                        </div>
+                        detail !== undefined && displayCmt && displayCmt.map((e) => {
+                          return (
+                            <div  style={{margin:'20px'}} key={e.id}>
+                              <div className="p-0 d-flex " style={{padding:'10px'}}>
+                                <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
+                              </div>
+                              <p style={{
+                                padding: '10px',
+                                background: '#000',
+                                borderRadius: '14px',
+                                margin: '5px',
+                                width: 'fit-content'
+                              }}>{e.__typename === "Comment" && e.metadata.content}</p>
+                              <Divider />                        </div>
+                          )
+                        })
                       }
                     </div>
                   ) : (

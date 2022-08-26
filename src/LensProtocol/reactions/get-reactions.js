@@ -34,11 +34,11 @@ export const getReactiionReq = (data) => {
         mutation: gql(GET_REACTIONS),
         variables: {
             publicationsRequest: {
-                "profileId": data.pid,
+                "profileId": data.pid ? data.pid : "0x40bf",
                 "publicationTypes": ["POST", "COMMENT", "MIRROR"],
             },
             reactionRequest: {
-                "profileId": data.pid2
+                "profileId": data.pid2 ? data.pid2 : "0x40bf"
             },
         }
     })
