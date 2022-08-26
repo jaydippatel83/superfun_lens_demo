@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Send } from '@mui/icons-material';
 import { profileById } from '../context/query';
-import { posts } from '../LensProtocol/post/get-post';
+import { getComments, posts } from '../LensProtocol/post/get-post';
 import { follow } from '../LensProtocol/follow/follow';
 import { toast } from 'react-toastify';
 import { LensAuthContext } from '../context/LensContext';
@@ -29,13 +29,14 @@ function Profile() {
     const [post, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const lensAuthContext = React.useContext(LensAuthContext);
-    const { login, loginCreate, userAdd } = lensAuthContext;
+    const { login, loginCreate, userAdd, profile } = lensAuthContext;
     const [loadingc, setLoadingC] = useState(false);
 
     const [update, setUpdate] = useState(false);
     const [title, setTitle] = useState("");
 
     const [open, setOpen] = React.useState(false);
+    const [displayCmt, setDisplayCmt] = useState([]);
 
     const handleClickOpen = (text) => {
         setTitle(text)
@@ -64,6 +65,9 @@ function Profile() {
         const getUserData = async () => {
             const dd = await posts(params.id);
             setPosts(dd.data.publications.items);
+            const ids = detail != undefined && detail.id;
+            const cmt = await getComments(ids);
+            setDisplayCmt(cmt);
         }
         getUserData();
     }, [params, update])
@@ -107,7 +111,8 @@ function Profile() {
             comment: comment,
             login: loginCreate,
             profileId: id,
-            publishId: data.id
+            publishId: data.id,
+            user: profile.handle
         }
         const result = await createComment(obj);
         toast.success("Success!!")
@@ -174,14 +179,14 @@ function Profile() {
                                             <CardHeader
                                                 avatar={
                                                     <Avatar
-                                                    src={  detail.__typename === "Comment" ?
-                                                      detail.mainPost.profile.picture != null &&
-                                                      detail.mainPost.profile.picture.original.url :
-                                                      detail.profile.picture != null ? detail.profile.picture.original.url :
-                                                        'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
-                            
-                                                  </Avatar>
-                                                } 
+                                                        src={detail.__typename === "Comment" ?
+                                                            detail.mainPost.profile.picture != null &&
+                                                            detail.mainPost.profile.picture.original.url :
+                                                            detail.profile.picture != null ? detail.profile.picture.original.url :
+                                                                'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+
+                                                    </Avatar>
+                                                }
                                                 title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                 subheader={moment(detail.createdAt).format('LLL')}
                                             />
@@ -210,7 +215,7 @@ function Profile() {
                                                     className="d-flex align-items-center"
                                                     style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                 >
-                                                    < ModeCommentOutlinedIcon />
+                                                    < ModeCommentOutlinedIcon /> {detail && detail.stats.totalAmountOfComments}
                                                     <span className="d-none-xss">Comment</span>
                                                 </div>
                                                 <IconButton
@@ -225,7 +230,7 @@ function Profile() {
                                                 <div className='m-2'>
                                                     <div className="d-flex justify-content-around mt-2">
                                                         <div className="p-0">
-                                                            <Avatar src={detail && detail.img} />
+                                                            <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF" } />
                                                         </div>
                                                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                                                             <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -242,19 +247,23 @@ function Profile() {
                                                         </form>
                                                     </div>
                                                     {
-                                                        detail != undefined && detail.__typename === "Comment" && <div className="m-2">
-                                                            <div className="p-0 d-flex ">
-                                                                <Avatar src={detail != undefined && detail.__typename === "Comment" ? detail.profile.picture.original.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                                                                <p className='mb-0 align-self-center ml-2'>{detail != undefined && detail.__typename === "Comment" ? detail.profile.handle : detail.profile.handle}</p>
-                                                            </div>
-                                                            <p style={{
-                                                                padding: '10px',
-                                                                background: '#000',
-                                                                borderRadius: '14px',
-                                                                margin: '5px',
-                                                                width: 'fit-content'
-                                                            }}>{detail != undefined && detail.__typename === "Comment" && detail.metadata.content}</p>
-                                                            <Divider />                        </div>
+                                                        detail !== undefined && displayCmt && displayCmt.map((e) => {
+                                                            return (
+                                                                <div style={{ margin: '20px' }} key={e.id}>
+                                                                    <div className="p-0 d-flex " style={{ padding: '10px' }}>
+                                                                        <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                                                        <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
+                                                                    </div>
+                                                                    <p style={{
+                                                                        padding: '10px',
+                                                                        background: '#000',
+                                                                        borderRadius: '14px',
+                                                                        margin: '5px',
+                                                                        width: 'fit-content'
+                                                                    }}>{e.__typename === "Comment" && e.metadata.content}</p>
+                                                                    <Divider />                        </div>
+                                                            )
+                                                        })
                                                     }
                                                 </div>
                                             ) : (

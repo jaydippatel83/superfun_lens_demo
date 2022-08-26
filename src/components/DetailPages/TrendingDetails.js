@@ -157,11 +157,9 @@ function TrendingDetails() {
                     onClick={() => handleNav(data && data.__typename === "Comment" ? data.mainPost.profile.id : data.profile.id)}
                     avatar={
                       <Avatar
-                        src={data && data.__typename === "Comment" ?
-                          data.mainPost.profile.picture != null &&
-                          data.mainPost.profile.picture.original.url :
-                          data.profile.picture != null ? data.profile.picture.original.url :
-                            'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                        src={data != undefined && 
+                          data?.profile?.picture != null ?
+                          data?.profile?.picture?.original?.url :  'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }
@@ -269,12 +267,9 @@ function TrendingDetails() {
                     onClick={() => handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
                     avatar={
                       <Avatar
-                        src={detail != undefined &&
-                          detail.__typename === "Comment" ?
-                          detail.mainPost.profile.picture != null &&
-                          detail.mainPost.profile.picture.original.url :
-                          detail.profile.picture != null ? detail.profile.picture.original.url :
-                            'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                        src={detail != undefined && 
+                          detail?.profile?.picture != null ?
+                          detail?.profile?.picture?.original?.url :  'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }

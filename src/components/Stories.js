@@ -38,8 +38,7 @@ function Stories() {
     const handleNavigate = (id) => {
         navigate(`/trendingDetails/${id}`)
     }
-
-console.log(userPosts,"userPosts");
+ 
 
     return (
 

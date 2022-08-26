@@ -352,7 +352,7 @@ export const explorePublications = (explorePublicationQueryRequest) => {
 export const getPublicationByLatest= async()=>{
     const query =  {
         "sortCriteria": "LATEST", 
-        "publicationTypes": ['POST'],  
+        "publicationTypes": ['POST', 'COMMENT', 'MIRROR'],  
         "sources": ["superfun"], 
         "limit": 50,
      }

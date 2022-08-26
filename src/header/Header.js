@@ -215,7 +215,7 @@ export default function Header() {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <div onClick={handleOpenUserMenu} style={{ cursor: 'pointer' }} className="d-flex">
-                                    <Avatar alt="Jaydip patel" src="assets/bg.png" />
+                                    <Avatar alt={profile.handle} src={profile.picture != null ? profile?.picture?.original?.url :"assets/bg.png"} />
                                     {
                                         profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
                                             <p className='text-center m-1'>{profile.handle}</p>
