@@ -64,13 +64,13 @@ function Profile() {
     useEffect(() => {
         const getUserData = async () => {
             const dd = await posts(params.id);
-            setPosts(dd.data.publications.items);
+            setPosts(dd.data.publications.items); 
             const ids = detail != undefined && detail.id;
             const cmt = await getComments(ids);
             setDisplayCmt(cmt);
         }
         getUserData();
-    }, [params, update])
+    }, [params, update,detail])
 
 
     useEffect(() => {
@@ -215,7 +215,7 @@ function Profile() {
                                                     className="d-flex align-items-center"
                                                     style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                 >
-                                                    < ModeCommentOutlinedIcon /> {detail && detail.stats.totalAmountOfComments}
+                                                    < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
                                                     <span className="d-none-xss">Comment</span>
                                                 </div>
                                                 <IconButton
