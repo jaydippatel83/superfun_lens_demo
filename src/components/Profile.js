@@ -20,6 +20,8 @@ import moment from 'moment'
 import { createComment } from '../LensProtocol/post/comments/create-comment';
 import { getLikes } from '../LensProtocol/reactions/get-reactions';
 import { addReaction } from '../LensProtocol/reactions/add-reaction';
+import MirrorComponent from './publications/MirrorComponent';
+import CollectComponent from './publications/CollectComponent';
 
 function Profile() {
     const params = useParams();
@@ -49,9 +51,6 @@ function Profile() {
     const handleClose = () => {
         setOpen(false);
     };
-
-
-
     const handleShowComment = () => {
         setShowComment(!showComment);
     };
@@ -67,13 +66,13 @@ function Profile() {
     useEffect(() => {
         const getUserData = async () => {
             const dd = await posts(params.id);
-            setPosts(dd.data.publications.items); 
+            setPosts(dd.data.publications.items);
             const ids = detail != undefined && detail.id;
             const cmt = await getComments(ids);
             setDisplayCmt(cmt);
         }
         getUserData();
-    }, [params, update,detail])
+    }, [params, update, detail])
 
 
     useEffect(() => {
@@ -126,39 +125,39 @@ function Profile() {
 
     const addReactions = async (data) => {
         const id = window.localStorage.getItem("profileId");
-    
+
         const dd = {
-          id: id,
-          address: userAdd,
-          login: loginCreate,
-          react: "UPVOTE",
-          pId: data.profile.id,
-          publishId: data && data.id,
+            id: id,
+            address: userAdd,
+            login: loginCreate,
+            react: "UPVOTE",
+            pId: data.profile.id,
+            publishId: data && data.id,
         }
         const res = await addReaction(dd);
         setUpdate(!update);
-      }
-
-
-  useEffect(() => {
-    var array = [];
-    async function getLisked() {
-      const id = window.localStorage.getItem("profileId");
-      const res = {
-        pid:   detail != undefined && detail?.profile?.id,
-        pid2: id,
-      }
-
-      const like = await getLikes(res);
-      like?.publications?.items?.map((e) => {
-        if (e.reaction == "UPVOTE") {
-          array.push(e.reaction);
-        }
-      })
-      setCount(array)
     }
-    getLisked();
-  }, [ detail,update])
+
+
+    useEffect(() => {
+        var array = [];
+        async function getLisked() {
+            const id = window.localStorage.getItem("profileId");
+            const res = {
+                pid: detail != undefined && detail?.profile?.id,
+                pid2: id,
+            }
+
+            const like = await getLikes(res);
+            like?.publications?.items?.map((e) => {
+                if (e.reaction == "UPVOTE") {
+                    array.push(e.reaction);
+                }
+            })
+            setCount(array)
+        }
+        getLisked();
+    }, [detail, update])
 
     return (
         < >
@@ -258,19 +257,15 @@ function Profile() {
                                                     < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
                                                     <span className="d-none-xss m-2">Comment</span>
                                                 </div>
-                                                <IconButton
-                                                    sx={{ color: 'white', padding: '2px', margin: '0 10px' }}
-                                                >
-                                                    < ShareOutlinedIcon />
-                                                </IconButton>
-                                                <label>Share</label>
+                                                <MirrorComponent data={detail !== undefined && detail} />
+                                                <CollectComponent data={detail !== undefined && detail} />
                                             </CardActions>
                                             <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                                             {showComment ? (
                                                 <div className='m-2'>
                                                     <div className="d-flex justify-content-around mt-2">
                                                         <div className="p-0">
-                                                            <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF" } />
+                                                            <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
                                                         </div>
                                                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                                                             <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
@@ -330,7 +325,7 @@ function Profile() {
                                                 <MemeCard data={e} setDetail={setDetail} setShow={setShow} />
                                             </div>
                                         )
-                                    }) : <h1>No publications is created!</h1>
+                                    }) : <h4>No publications is Available!</h4>
                                 }
                             </div>
                         </div>

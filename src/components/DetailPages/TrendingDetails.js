@@ -17,6 +17,8 @@ import { getComments, posts } from '../../LensProtocol/post/get-post';
 import { getpublicationById } from '../../LensProtocol/post/get-publicationById';
 import { addReaction } from '../../LensProtocol/reactions/add-reaction';
 import { getLikes } from '../../LensProtocol/reactions/get-reactions';
+import MirrorComponent from '../publications/MirrorComponent';
+import CollectComponent from '../publications/CollectComponent';
 
 const tags = [
   "#tuesday ",
@@ -38,11 +40,8 @@ function TrendingDetails() {
 
   const [posts, setPosts] = useState([]);
   const [displayCmt, setDisplayCmt] = useState([]);
-
-  const { profile, userAdd,
-    update,
-    setUpdate,
-    loginCreate, login } = lensAuthContext;
+  const [update, setUpdate] = useState(false);
+  const { profile, userAdd, loginCreate, login } = lensAuthContext;
 
   const param = useParams();
 
@@ -116,6 +115,7 @@ function TrendingDetails() {
       publishId: data && data.id,
     }
     const res = await addReaction(dd);
+    setUpdate(!update);
   }
 
   useEffect(() => {
@@ -136,7 +136,7 @@ function TrendingDetails() {
       setCount(array)
     }
     getLisked();
-  }, [param, detail, data])
+  }, [detail, data,update])
 
 
 
@@ -195,14 +195,9 @@ function TrendingDetails() {
                       < ModeCommentOutlinedIcon />  {data && data.stats.totalAmountOfComments}
 
                       <span className="d-none-xss m-2">Comment</span>
-                    </div>
-
-                    <IconButton
-                      sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                    >
-                      < ShareOutlinedIcon />
-                    </IconButton>
-                    <label>Share</label>
+                    </div> 
+                     <MirrorComponent data={data} update={update}  setUpdate={setUpdate}/> 
+                     <CollectComponent data={data} update={update}  setUpdate={setUpdate}/>
                   </CardActions>
 
                   <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
@@ -306,12 +301,8 @@ function TrendingDetails() {
                       <span className="d-none-xss m-2">Comment</span>
                     </div>
 
-                    <IconButton
-                      sx={{ color: 'white', padding: '5px', margin: '10px' }}
-                    >
-                      < ShareOutlinedIcon />
-                    </IconButton>
-                    <label>Share</label>
+                    <MirrorComponent data={detail} update={update}  setUpdate={setUpdate}/> 
+                    <CollectComponent data={detail} update={update}  setUpdate={setUpdate}/>
                   </CardActions>
                   <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                   {showComment ? (
