@@ -6,9 +6,11 @@ import { createCommentTypedData } from './create-comment-typed-data';
 import { v4 as uuidv4 } from 'uuid'; 
 import { BigNumber, utils } from 'ethers';
 import { pollUntilIndexed } from '../../Reffresh/has-transaction-been-indexed';
+import { toast } from 'react-toastify';
 
 export const createComment = async (postData) => {
-    const profileId = postData.profileId;
+    try {
+      const profileId = postData.profileId;
     if (!profileId) {
       throw new Error('Must define PROFILE_ID in the .env to run this');
     }
@@ -111,4 +113,7 @@ export const createComment = async (postData) => {
     );
   
     return result.data;
+    } catch (error) {
+      toast.error(error);
+    }
   };

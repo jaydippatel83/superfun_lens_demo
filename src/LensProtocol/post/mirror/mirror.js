@@ -13,6 +13,7 @@ export const createMirror = async (data) => {
       throw new Error('Must define PROFILE_ID in the .env to run this');
     } 
   
+   try {
     await data.login(data.address);
    
     const createMirrorRequest = {
@@ -55,4 +56,7 @@ export const createMirror = async (data) => {
     toast.success('Post has been mirrored!');
   
     return result.data;
+   } catch (error) {
+    toast.error(error);
+   }
   };

@@ -256,9 +256,9 @@ function Profile() {
                                                 >
                                                     < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
                                                     <span className="d-none-xss m-2">Comment</span>
-                                                </div>
-                                                <MirrorComponent data={detail !== undefined && detail} />
-                                                <CollectComponent data={detail !== undefined && detail} />
+                                                </div> 
+                                                <MirrorComponent data={detail !== undefined && detail} update={update}  setUpdate={setUpdate}/> 
+                                                <CollectComponent data={detail !== undefined && detail} update={update}  setUpdate={setUpdate}/>
                                             </CardActions>
                                             <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                                             {showComment ? (
