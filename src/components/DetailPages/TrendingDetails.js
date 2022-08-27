@@ -19,6 +19,7 @@ import { addReaction } from '../../LensProtocol/reactions/add-reaction';
 import { getLikes } from '../../LensProtocol/reactions/get-reactions';
 import MirrorComponent from '../publications/MirrorComponent';
 import CollectComponent from '../publications/CollectComponent';
+import { whoCollected } from '../../LensProtocol/post/collect/collect';
 
 const tags = [
   "#tuesday ",
@@ -42,6 +43,7 @@ function TrendingDetails() {
   const [displayCmt, setDisplayCmt] = useState([]);
   const [update, setUpdate] = useState(false);
   const { profile, userAdd, loginCreate, login } = lensAuthContext;
+  const [postCollect, setPostCollect] = useState([]);
 
   const param = useParams();
 
@@ -54,8 +56,7 @@ function TrendingDetails() {
       const cmt = await getComments(ids);
       setDisplayCmt(cmt); 
       const d = await getPublicationByLatest();
-      setPosts(d.data.explorePublications.items);
-
+      setPosts(d.data.explorePublications.items); 
 
     } catch (error) {
       console.log(error);
@@ -126,6 +127,11 @@ function TrendingDetails() {
         pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id,
         pid2: id,
       }
+     const cId= detail === undefined ?  data?.id :  detail !== undefined &&  detail.id;
+     console.log(cId,"cId");
+      const collect = await whoCollected(cId);
+      setPostCollect(collect.whoCollectedPublication.items);
+      console.log(collect.whoCollectedPublication.items,"collect");
 
       const like = await getLikes(res);
       like?.publications?.items?.map((e) => {
@@ -136,7 +142,8 @@ function TrendingDetails() {
       setCount(array)
     }
     getLisked();
-  }, [detail, data,update])
+  }, [detail, data,update]) 
+ 
 
 
 
