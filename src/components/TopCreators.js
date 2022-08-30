@@ -7,6 +7,7 @@ import { db } from '../firebase/firebase';
 
 import Blockies from 'react-blockies'
 import { exploreProfile } from '../LensProtocol/profile/explore-profiles';
+import { getPublicationByUser } from '../LensProtocol/post/explore/explore-publications';
  
 function TopCreators() {
 
@@ -16,10 +17,20 @@ function TopCreators() {
     useEffect(() => {
         async function getCreator() {
         var arry = [];
+        var user = [];
 
             const res = await exploreProfile(); 
-            setStory(res.exploreProfiles.items);
-
+            // setStory(res.exploreProfiles.items);
+            const dd= await getPublicationByUser(); 
+            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{
+                console.log(e,"eee");
+                if(e.__typename == "Comment"){
+                    user.push(e.mainPost.profile);
+                }else{
+                    user.push(e.profile);
+                }
+            })
+            setStory(user)
             const q = query(collection(db, "profiles")); 
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => { 
@@ -31,7 +42,7 @@ function TopCreators() {
         getCreator()
     }, [])
  
-
+console.log(story,"story");
 
     var settings = {
         dots: true,
@@ -102,7 +113,7 @@ function TopCreators() {
                     }
                     <Slider {...settings}>
                         {
-                           story && story.map((e) => {  
+                           story && story.filter((x,i,a)=> a.indexOf(x)==i).map((e) => {  
                                 return (
                                     <div key={e.handle}>
                                         <Link

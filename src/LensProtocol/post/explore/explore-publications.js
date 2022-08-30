@@ -360,3 +360,15 @@ export const getPublicationByLatest= async()=>{
      const result = await explorePublications(query); 
      return result;
 }
+
+export const getPublicationByUser= async()=>{
+  const query =  {
+      "sortCriteria": "LATEST", 
+      "publicationTypes": ['POST','COMMENT', 'MIRROR'],  
+      "sources": ["superfun"], 
+      "limit": 50,
+   }
+
+   const result = await explorePublications(query); 
+   return result;
+}
