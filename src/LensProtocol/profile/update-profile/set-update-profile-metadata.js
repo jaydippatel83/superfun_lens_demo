@@ -5,13 +5,15 @@ import { getAddressFromSigner, signedTypeData, splitSignature } from '../../serv
 import { createSetProfileMetadataTypedData } from './create-set-profile-metadata-typed-data';
 import { v4 as uuidv4 } from 'uuid';
 import { pollUntilIndexed } from '../../Reffresh/has-transaction-been-indexed';
+import { toast } from 'react-toastify';
 
 
-export const setProfileMetadata = async (data) => {
-    
+export const setProfileMetadata = async (data) => { 
+  try {
     const profileId = data.profileId;
     if (!profileId) {
-      throw new Error('Must define PROFILE_ID in the .env to run this');
+      toast.error('Please login first!');
+      return;
     }
   
      
@@ -78,6 +80,9 @@ export const setProfileMetadata = async (data) => {
     console.log('create profile metadata: logs', logs);
   
     return result.data;
+  } catch (error) {
+    toast.error(error);
+  }
   };
   
  

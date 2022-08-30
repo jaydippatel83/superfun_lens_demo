@@ -29,11 +29,12 @@ const addReactionRequest = (request) => {
 };
  
 export const addReaction = async (data) => {
+   try {
     const profileId = data.id;
     if (!profileId) {
-        throw new Error('Must define PROFILE_ID in the .env to run this');
-    }
-
+        toast.error('Please login first!');
+        return;
+      }
     const address = getAddress();
     console.log('add reaction: address', data.address);
 
@@ -42,8 +43,10 @@ export const addReaction = async (data) => {
     const request = { profileId: profileId, reaction: "UPVOTE", publicationId: data.publishId }; 
 
   const rr=  await addReactionRequest(request);
-    toast.success("Success");
-    console.log('add reaction: sucess',rr);
+    toast.success("Like"); 
+   } catch (error) {
+    toast.error(error);
+   }
 }
 
  

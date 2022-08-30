@@ -52,8 +52,7 @@ export const LensAuthContextProvider = (props) => {
   useEffect(() => {
     async function getProfile() {
       if (id !== null) {
-        const user = await profileById(id);
-       
+        const user = await profileById(id); 
         setProfile(user);
       }
 
@@ -161,9 +160,7 @@ export const LensAuthContextProvider = (props) => {
         console.error(e);
         return false;
       }
-    }
-
-    //If both "if" failed, we return false to request a new challenge in login()
+    } 
     return false;
   };
 
@@ -181,7 +178,8 @@ export const LensAuthContextProvider = (props) => {
 
 
   const login = async () => { 
-    const address = await getAddress();
+    try {
+      const address = await getAddress();
     const isTokenValid = await refresh();
     if (isTokenValid) {
       console.log("login: already logged in");
@@ -196,25 +194,19 @@ export const LensAuthContextProvider = (props) => {
       web3Modal.clearCachedProvider();
       window.localStorage.removeItem("accessToken");
       window.localStorage.removeItem("refreshToken");
-    }
-    console.log(profiles,"profiles");
+    } 
     window.localStorage.setItem("profileId", profiles?.id);
-    setUpdate(!update)
-
-   
-
-    // const q = query(collection(db, "profiles"), where("handle", "==", profiles.handle)); 
-    // const querySnapshot = await getDocs(q); 
-    const q = query(collection(db, "profiles")); 
-     
+    setUpdate(!update)  
     window.localStorage.setItem("accessToken", accessTokens.data.authenticate.accessToken);
     window.localStorage.setItem("refreshToken", accessTokens.data.authenticate.refreshToken);
+    } catch (error) {
+      toast.error(error);
+    }
 
   };
 
 
-  const loginCreate = async () => {
-
+  const loginCreate = async () => { 
     const address = await getAddress();
     const isTokenValid = await refresh();
     if (isTokenValid) {

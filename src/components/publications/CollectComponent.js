@@ -1,9 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import React, { useState } from 'react'
-import { LensAuthContext } from '../../context/LensContext';
-import { whoCollected } from '../../LensProtocol/post/collect/collect'; 
-import { collect } from '../../LensProtocol/post/collect/create-collect';
-import { hasCollected } from '../../LensProtocol/post/collect/has-collected';
+import { LensAuthContext } from '../../context/LensContext'; 
+import { collect } from '../../LensProtocol/post/collect/create-collect'; 
 
 function CollectComponent(props) {
     const lensAuthContext = React.useContext(LensAuthContext);

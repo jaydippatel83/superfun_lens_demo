@@ -42,7 +42,7 @@ function ClipList() {
     return (
         <>
             <Header />
-            <div style={{ marginTop: '100px' }}>
+            <div className='footer-position' style={{ marginTop: '100px' }}>
                 <Search />
                 <div className='container'>
                     <div className='row mt-5'>

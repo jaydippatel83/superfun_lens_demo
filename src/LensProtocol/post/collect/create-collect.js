@@ -10,6 +10,11 @@ export const collect = async (data) => {
         publicationId: data.id
     };
 
+    if (!data.address) {
+        toast.error('Please login first!');
+        return;
+      }
+
     const lg = await data.login(data.address); 
     try {
         const result = await createCollectTypedData(collectRequest); 

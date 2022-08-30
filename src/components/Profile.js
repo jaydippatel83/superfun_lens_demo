@@ -22,6 +22,7 @@ import { getLikes } from '../LensProtocol/reactions/get-reactions';
 import { addReaction } from '../LensProtocol/reactions/add-reaction';
 import MirrorComponent from './publications/MirrorComponent';
 import CollectComponent from './publications/CollectComponent';
+import { getTimelineData } from '../LensProtocol/profile/update-profile/timeline';
 
 function Profile() {
     const params = useParams();
@@ -68,11 +69,13 @@ function Profile() {
             const dd = await posts(params.id);
             setPosts(dd.data.publications.items);
             const ids = detail != undefined && detail.id;
+            // console.log(detail,"ids");
             const cmt = await getComments(ids);
+            // console.log(cmt,"cmt");
             setDisplayCmt(cmt);
         }
         getUserData();
-    }, [params, update, detail])
+    }, [params, update, detail,loading])
 
 
     useEffect(() => {
@@ -80,8 +83,15 @@ function Profile() {
     }, [loading, update])
 
     async function getProfile() {
+        const fId = window.localStorage.getItem("profileId");
+      
         if (params.id !== null) {
-            const user = await profileById(params.id);
+            const user = await profileById(params.id); 
+            // const obj = {
+            //     id:user.id, 
+            //     login: login,
+            // }
+            // const usr = await getTimelineData(obj);
             setData(user);
         }
     };
@@ -107,25 +117,33 @@ function Profile() {
 
     const handleComment = async (data) => {
         const id = window.localStorage.getItem("profileId");
-        setLoadingC(true);
-        const obj = {
-            address: userAdd,
-            comment: comment,
-            login: loginCreate,
-            profileId: id,
-            publishId: data.id,
-            user: profile.handle
+      try {
+        if(id != undefined){ 
+            setLoadingC(true);
+            const obj = {
+                address: userAdd,
+                comment: comment,
+                login: loginCreate,
+                profileId: id,
+                publishId: data.id,
+                user: profile.handle
+            }
+            const result = await createComment(obj);
+            toast.success("Success!!")
+            setLoadingC(false);
+            setUpdate(!update);
         }
-        const result = await createComment(obj);
-        toast.success("Success!!")
+      } catch (error) {
+        toast.error(error);
         setLoadingC(false);
-        setUpdate(!update);
+            setUpdate(!update);
+      }
 
     }
 
     const addReactions = async (data) => {
-        const id = window.localStorage.getItem("profileId");
-
+       try {
+        const id = window.localStorage.getItem("profileId"); 
         const dd = {
             id: id,
             address: userAdd,
@@ -136,6 +154,9 @@ function Profile() {
         }
         const res = await addReaction(dd);
         setUpdate(!update);
+       } catch (error) {
+        toast.error(error)
+       }
     }
 
 
@@ -163,7 +184,7 @@ function Profile() {
         < >
             <Header />
 
-            <Box sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
+            <Box className='footer-position' sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
                 <Search />
                 <div className='container'>
                     <div className='row mt-5'>
@@ -256,9 +277,9 @@ function Profile() {
                                                 >
                                                     < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
                                                     <span className="d-none-xss m-2">Comment</span>
-                                                </div> 
-                                                <MirrorComponent data={detail !== undefined && detail} update={update}  setUpdate={setUpdate}/> 
-                                                <CollectComponent data={detail !== undefined && detail} update={update}  setUpdate={setUpdate}/>
+                                                </div>
+                                                <MirrorComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
+                                                <CollectComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
                                             </CardActions>
                                             <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                                             {showComment ? (

@@ -71,7 +71,7 @@ export default function FollowModal(props) {
                                 return (
                                     <ListItem button key={e.profile.id}>
                                         <ListItemAvatar>
-                                            <Avatar   src={e.profile.picture != null ? e.profile.picture.original && e.profile.picture.original.url : 'assets/bg.png'}>
+                                            <Avatar   src={e.profile.picture != null ? e.profile.picture.original && e.profile.picture.original.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'}>
 
                                             </Avatar>
                                         </ListItemAvatar>
@@ -86,7 +86,7 @@ export default function FollowModal(props) {
                                 return (
                                     <ListItem button >
                                         <ListItemAvatar>
-                                            <Avatar   src={e.defaultProfile != null ? e.defaultProfile : 'assets/bg.png'}>
+                                            <Avatar   src={e.defaultProfile != null ? e.defaultProfile : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'}>
 
                                             </Avatar>
                                         </ListItemAvatar>

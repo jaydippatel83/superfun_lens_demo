@@ -18,7 +18,7 @@ import MemeList from './components/Lists/MemeList';
 import Footer from './header/Footer';
 import { LensAuthContextProvider } from './context/LensContext'; 
 import { ToastContainer, toast } from 'react-toastify';
-  import 'react-toastify/dist/ReactToastify.css';
+  import 'react-toastify/dist/ReactToastify.css'; 
 
 
 let darkTheme = createTheme({
@@ -68,7 +68,7 @@ root.render(
             <Route path="/trending" element={<TrendingList />} />
             <Route path="/stories" element={<StorieList />} />
             <Route path="/contest" element={<ContestList />} />
-            <Route path="/:id" element={<Profile />} />
+            <Route path="/:id" element={<Profile />} /> 
             <Route path="/trendingDetails/:id" element={<TrendingDetails />} />
             <Route path="/contestDetails/:id" element={<ContestDetails />} />
           </Routes>

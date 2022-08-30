@@ -11,10 +11,10 @@ import { toast } from 'react-toastify';
 export const createComment = async (postData) => {
     try {
       const profileId = postData.profileId;
-    if (!profileId) {
-      throw new Error('Must define PROFILE_ID in the .env to run this');
-    }
-  
+      if (!profileId) {
+        toast.error('Please login first!');
+        return;
+      }
     
   
     await postData.login(postData.address);

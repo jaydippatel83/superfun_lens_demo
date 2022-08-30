@@ -96,7 +96,7 @@ function ProfileDetails() {
   return (
     <>
       <Header />
-      <Box sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
+      <Box className='footer-position' sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
         <Search />
         <div className='container'>
           {/* <div className='row mt-5'> */}

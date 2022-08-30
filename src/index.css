@@ -102,3 +102,12 @@ button {
   text-transform: capitalize !important;
   font-weight: 500;
 }
+
+.MuiBox-root.css-nv1v7g, .footer-position{
+  min-height: calc(100vh - 34px);
+}
+.footer-size{
+  position: relative;
+  left: 0;
+  bottom: 0
+}

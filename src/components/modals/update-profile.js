@@ -54,7 +54,7 @@ export default function UpdateProfile() {
     const { profile, loginCreate, disconnectWallet, update, setUpdate,userAdd } = lensAuthContext;
     const [open, setOpen] = React.useState(false);
     const [name, setName] = React.useState("");
-    const [bio, setBio] = React.useState([]);
+    const [bio, setBio] = React.useState("");
     const [file, setFile] = React.useState("");
     const [loading, setLoading] = React.useState(false);
 

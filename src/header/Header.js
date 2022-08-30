@@ -218,7 +218,7 @@ export default function Header() {
                                     <Avatar alt={profile.handle} src={profile.picture != null ? profile?.picture?.original?.url :"assets/bg.png"} />
                                     {
                                         profile && <Box sx={{ display: { xs: 'flex', md: 'flex' } }}>
-                                            <p className='text-center m-1'>{profile.handle}</p>
+                                            <p className='text-center m-1'>{profile.name != null ?  profile.name : profile.handle}</p>
                                         </Box>
                                     }
                                 </div>

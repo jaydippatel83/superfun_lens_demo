@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 function Footer() {
     return (
-        <div className='container-fluid' style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
+        <div className='container-fluid footer-size' style={{ background: 'rgba(255, 255, 255, 0.1)' }}>
             <div className='row'>
                 <div className='col'>
                     <div className='d-flex justify-content-between' style={{ height: '60px' }}>

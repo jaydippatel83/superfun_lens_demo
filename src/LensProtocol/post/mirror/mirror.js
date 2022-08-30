@@ -10,8 +10,9 @@ import { BigNumber, utils } from 'ethers';
 export const createMirror = async (data) => {
     const profileId = data.profileId;
     if (!profileId) {
-      throw new Error('Must define PROFILE_ID in the .env to run this');
-    } 
+      toast.error('Please login first!');
+      return;
+    }
   
    try {
     await data.login(data.address);

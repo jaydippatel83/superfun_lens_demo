@@ -16,7 +16,10 @@ export const createPost = async (postData) => {
     try {
         const profileId = window.localStorage.getItem("profileId"); 
         // hard coded to make the code example clear
-    
+        if (!profileId) {
+            toast.error('Please login first!');
+            return;
+          }
     
         const address = await getAddress();
     

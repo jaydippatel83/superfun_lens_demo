@@ -19,7 +19,7 @@ import { addReaction } from '../../LensProtocol/reactions/add-reaction';
 import { getLikes } from '../../LensProtocol/reactions/get-reactions';
 import MirrorComponent from '../publications/MirrorComponent';
 import CollectComponent from '../publications/CollectComponent';
-import { whoCollected } from '../../LensProtocol/post/collect/collect';
+import { whoCollected } from '../../LensProtocol/post/collect/collect'; 
 
 const tags = [
   "#tuesday ",
@@ -49,17 +49,15 @@ function TrendingDetails() {
 
   async function get_posts() {
     try {
-      const pst = await getpublicationById(param.id);
-
+      const pst = await getpublicationById(param.id); 
       setData(pst.data.publication);
       const ids = detail != undefined ? detail.id : param.id;
       const cmt = await getComments(ids);
       setDisplayCmt(cmt); 
       const d = await getPublicationByLatest();
-      setPosts(d.data.explorePublications.items); 
-
+      setPosts(d.data.explorePublications.items);  
     } catch (error) {
-      console.log(error);
+     toast.error(error);
     }
 
   }
@@ -67,10 +65,7 @@ function TrendingDetails() {
 
   useEffect(() => {
     get_posts();
-  }, [param.id, update, loading, data, detail])
-
-
-
+  }, [param.id, update, loading, data, detail]) 
 
   const handleNavigate = (data) => {
     setDetail(data);
@@ -93,8 +88,7 @@ function TrendingDetails() {
       publishId: data.id,
       user: profile.handle
     }
-    const result = await createComment(obj);
-    toast.success("Success!!")
+    const result = await createComment(obj); 
     setLoading(false);
     setUpdate(!update);
 
@@ -127,11 +121,9 @@ function TrendingDetails() {
         pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id,
         pid2: id,
       }
-     const cId= detail === undefined ?  data?.id :  detail !== undefined &&  detail.id;
-     console.log(cId,"cId");
-      const collect = await whoCollected(cId);
-      setPostCollect(collect.whoCollectedPublication.items);
-      console.log(collect.whoCollectedPublication.items,"collect");
+     const cId= detail === undefined ?  data?.id :  detail !== undefined &&  detail.id; 
+      // const collect = await whoCollected(cId);
+      // setPostCollect(collect.whoCollectedPublication.items); 
 
       const like = await getLikes(res);
       like?.publications?.items?.map((e) => {
@@ -143,6 +135,7 @@ function TrendingDetails() {
     }
     getLisked();
   }, [detail, data,update]) 
+
  
 
 
@@ -150,7 +143,7 @@ function TrendingDetails() {
   return (
     <>
       <Header />
-      <Box sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
+      <Box className='footer-position' sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
         <Search />
         <div className='container'>
           {/* <div className='row mt-5'> */}
@@ -326,9 +319,9 @@ function TrendingDetails() {
                               placeholder="Write a comment.."
                               inputProps={{ 'aria-label': 'Search by memers' }}
                             />
-                          </div>
-                          <IconButton onClick={() => handleComment(detail)}  >
-                            <Send />
+                          </div> 
+                          <IconButton onClick={() => handleComment(detail)} >
+                            {loading ? <CircularProgress /> : <Send />}
                           </IconButton>
                         </form>
                       </div>

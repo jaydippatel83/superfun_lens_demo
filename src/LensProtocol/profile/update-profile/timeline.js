@@ -1,9 +1,11 @@
-import { apolloClient } from '../services/Apollo_Client';
-import { gql } from '@apollo/client' 
+ 
+import { gql } from '@apollo/client'
+import { apolloClient } from '../../services/Apollo_Client'
+import { getAddress } from '../../services/ethers-service';
 
-const GET_PUBLICATIONS = `
-  query($request: PublicationsQueryRequest!) {
-    publications(request: $request) {
+const GET_TIMELINE = `
+  query($request: TimelineRequest!) {
+    timeline(request: $request) {
       items {
         __typename 
         ... on Post {
@@ -25,6 +27,8 @@ const GET_PUBLICATIONS = `
   }
   fragment MediaFields on Media {
     url
+    width
+    height
     mimeType
   }
   fragment ProfileFields on Profile {
@@ -54,6 +58,12 @@ const GET_PUBLICATIONS = `
         original {
           ...MediaFields
         }
+        small {
+          ...MediaFields
+        }
+        medium {
+          ...MediaFields
+        }
       }
     }
     coverPicture {
@@ -65,6 +75,12 @@ const GET_PUBLICATIONS = `
       }
       ... on MediaSet {
         original {
+          ...MediaFields
+        }
+        small {
+         ...MediaFields
+        }
+        medium {
           ...MediaFields
         }
       }
@@ -115,6 +131,12 @@ const GET_PUBLICATIONS = `
     content
     media {
       original {
+        ...MediaFields
+      }
+      small {
+        ...MediaFields
+      }
+      medium {
         ...MediaFields
       }
     }
@@ -210,6 +232,9 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
+    collectedBy {
+      ...WalletFields
+    }
     hidden
     reaction(request: null)
     mirrors(by: null)
@@ -272,6 +297,9 @@ const GET_PUBLICATIONS = `
       }
     }
     appId
+    collectedBy {
+      ...WalletFields
+    }
     hidden
     reaction(request: null)
     mirrors(by: null)
@@ -307,54 +335,30 @@ const GET_PUBLICATIONS = `
       }
     }
   }
+	fragment WalletFields on Wallet {
+   address,
+   defaultProfile {
+    ...ProfileFields
+   }
+	}
 `;
 
-const getPublicationsRequest = (getPublicationQuery) => {
-    return apolloClient.query({
-        query: gql(GET_PUBLICATIONS),
-        variables: {
-          request: getPublicationQuery,
-        },
-    });
-};
+ 
+export const getTimeline = (profileId) => {
+   return apolloClient.query({
+    query: gql(GET_TIMELINE),
+    variables: {
+      request: {
+        profileId
+      }
+    },
+  })
+}
 
-
-
-export const posts = async (profileId) => { 
-    const request = {
-    profileId  : profileId ? profileId : "0x40bf",
-    publicationTypes: ['POST'],
-    sources: ['superfun'], 
-  };  
-    const result = await getPublicationsRequest(request);  
-    return result;
-};  
-
-export const postsByComment = async (profileId) => { 
-  const request = {
-  profileId  : profileId ? profileId : "0x40bf",
-  publicationTypes: [ 'COMMENT'],
-  sources: ['superfun'], 
-};  
-  const result = await getPublicationsRequest(request);  
-  return result;
-};
-
-export const postsByMirror = async (profileId) => { 
-  const request = {
-  profileId  : profileId ? profileId : "0x40bf",
-  publicationTypes: ['MIRROR'],
-  sources: ['superfun'], 
-};  
-  const result = await getPublicationsRequest(request);  
-  return result;
-};
-
-export const getComments = async (profileId) => { 
-  const request = {
-    commentsOf:profileId ? profileId : "0x09a3-0x04",
-    sources: ['superfun'], 
-  };  
-  const result = await getPublicationsRequest(request);  
-  return result.data.publications.items;
-};
+export const getTimelineData= async(data)=>{ 
+  console.log(data,"data");
+  await data.login(data.address); 
+  const result = await getTimeline(data.id);
+  console.log('ping: result', result.data); 
+  return result.data; 
+}
