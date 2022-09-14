@@ -43,6 +43,7 @@ export const addReaction = async (data) => {
     const request = { profileId: profileId, reaction: "UPVOTE", publicationId: data.publishId }; 
 
   const rr=  await addReactionRequest(request);
+  console.log(rr,"rr");
     toast.success("Like"); 
    } catch (error) {
     toast.error(error);
@@ -68,8 +69,7 @@ const removeReactionRequest = (
     });
 };
 
-export const removeReaction = async (data) => {
-    console.log(data,"data call");
+export const removeReaction = async (data) => { 
     const profileId = data.id;
     if (!profileId) {
         throw new Error('Must define PROFILE_ID in the .env to run this');

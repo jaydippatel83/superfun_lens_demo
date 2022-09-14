@@ -23,6 +23,8 @@ import { addReaction } from '../LensProtocol/reactions/add-reaction';
 import MirrorComponent from './publications/MirrorComponent';
 import CollectComponent from './publications/CollectComponent';
 import { getTimelineData } from '../LensProtocol/profile/update-profile/timeline';
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
+import { db } from '../firebase/firebase';
 
 function Profile() {
     const params = useParams();
@@ -36,6 +38,7 @@ function Profile() {
     const lensAuthContext = React.useContext(LensAuthContext);
     const { login, loginCreate, userAdd, profile } = lensAuthContext;
     const [loadingc, setLoadingC] = useState(false);
+    const [likeUp, setLikeUp] = useState(false);
 
     const [update, setUpdate] = useState(false);
     const [title, setTitle] = useState("");
@@ -80,7 +83,24 @@ function Profile() {
 
     useEffect(() => {
         getProfile();
-    }, [loading, update])
+        getLikeUp();
+    }, [loading, update,likeUp])
+
+
+
+    async function getLikeUp() {
+        // const id = detail == undefined ? data.id && data.id : detail.id;
+        const cId = detail !== undefined && detail.id;
+        const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          setCount(0);
+        }
+        querySnapshot.forEach((data) => { 
+          setCount(data.data().Likes);
+        })
+      }
+    
 
     async function getProfile() {
         const fId = window.localStorage.getItem("profileId");
@@ -105,8 +125,7 @@ function Profile() {
             login: login,
             followId: fId
         }
-        const res = await follow(data);
-        console.log(res, "res");
+        const res = await follow(data); 
         if (res) {
             setLoading(false);
             setUpdate(!update);
@@ -141,22 +160,82 @@ function Profile() {
 
     }
 
-    const addReactions = async (data) => {
-       try {
-        const id = window.localStorage.getItem("profileId"); 
-        const dd = {
-            id: id,
-            address: userAdd,
-            login: loginCreate,
-            react: "UPVOTE",
-            pId: data.profile.id,
-            publishId: data && data.id,
+    // const addReactions = async (data) => {
+    //    try {
+    //     const id = window.localStorage.getItem("profileId"); 
+    //     const dd = {
+    //         id: id,
+    //         address: userAdd,
+    //         login: loginCreate,
+    //         react: "UPVOTE",
+    //         pId: data.profile.id,
+    //         publishId: data && data.id,
+    //     }
+    //     const res = await addReaction(dd);
+    //     setUpdate(!update);
+    //    } catch (error) {
+    //     toast.error(error)
+    //    }
+    // }
+
+    async function getLikeUp() {
+        // const id = detail == undefined ? data.id && data.id : detail.id;
+        const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
+        const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+          setCount(0);
         }
-        const res = await addReaction(dd);
-        setUpdate(!update);
-       } catch (error) {
-        toast.error(error)
-       }
+        querySnapshot.forEach((data) => { 
+          setCount(data.data().Likes);
+        })
+      }
+
+    const addReactions = async (data) => {
+        const id = window.localStorage.getItem("profileId");
+        const q = query(collection(db, "Reactions"), where("PublicationId", "==", detail.id));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty === true) {
+          const docRef = await addDoc(collection(db, "Reactions"), {
+            Likes: 1,
+            LikesBy: arrayUnion(id),
+            PublicationId: data.id
+          });
+          setLikeUp(!likeUp);
+        } else {
+          querySnapshot.forEach(async (react) => {
+            const nycRef = doc(db, 'Reactions', react.id); 
+            react.data().LikesBy.map(async (e) => {
+              if (e === id) { 
+                await updateDoc(nycRef, {
+                  Likes: react.data().Likes - 1,
+                  LikesBy: arrayRemove(id),
+                })
+                setLikeUp(!likeUp);
+              } else if (e !== id) {
+                await updateDoc(nycRef, {
+                  Likes: react.data().Likes + 1,
+                  LikesBy: arrayUnion(id)
+                })
+                setLikeUp(!likeUp);
+              } else {
+                await updateDoc(nycRef, {
+                  Likes: react.data().Likes,
+                  LikesBy: react.data().LikesBy
+                })
+                setLikeUp(!likeUp);
+              }
+            })
+    
+            if (react.data().LikesBy.length === 0) {
+              await updateDoc(nycRef, {
+                Likes: react.data().Likes + 1,
+                LikesBy: arrayUnion(id)
+              })
+              setLikeUp(!likeUp);
+            }
+          });
+        }
     }
 
 
@@ -175,7 +254,7 @@ function Profile() {
                     array.push(e.reaction);
                 }
             })
-            setCount(array)
+            // setCount(array)
         }
         getLisked();
     }, [detail, update])
@@ -266,7 +345,7 @@ function Profile() {
                                                     style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
                                                     onClick={() => addReactions(detail)}
                                                 >
-                                                    <FavoriteBorderIcon /> {count && count.length}
+                                                    <FavoriteBorderIcon /> {count}
                                                     <span className="d-none-xss m-2">Likes</span>
                                                 </div>
 
@@ -343,7 +422,7 @@ function Profile() {
                                     post.length !== 0 ? post.map((e) => {
                                         return (
                                             <div className='col-12 col-sm-6 col-md-6 col-lg-4'>
-                                                <MemeCard data={e} setDetail={setDetail} setShow={setShow} />
+                                                <MemeCard data={e} setDetail={setDetail} setShow={setShow} setLikeUp={setLikeUp} likeUp={likeUp} />
                                             </div>
                                         )
                                     }) : <h4>No publications is Available!</h4>

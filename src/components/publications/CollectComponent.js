@@ -17,8 +17,7 @@ function CollectComponent(props) {
       login:login,
       address:userAdd
     }
-   const res = await collect(obj); 
-   console.log(res,"res");
+   const res = await collect(obj);  
    setLoading(false);
    props.setUpdate(!props.update);
   }

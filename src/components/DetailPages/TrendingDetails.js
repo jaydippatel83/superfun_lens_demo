@@ -19,7 +19,9 @@ import { addReaction } from '../../LensProtocol/reactions/add-reaction';
 import { getLikes } from '../../LensProtocol/reactions/get-reactions';
 import MirrorComponent from '../publications/MirrorComponent';
 import CollectComponent from '../publications/CollectComponent';
-import { whoCollected } from '../../LensProtocol/post/collect/collect'; 
+import { whoCollected } from '../../LensProtocol/post/collect/collect';
+import { addDoc, collection, doc, getDocs, query, runTransaction, setDoc, where, writeBatch, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { db } from '../../firebase/firebase';
 
 const tags = [
   "#tuesday ",
@@ -37,27 +39,30 @@ function TrendingDetails() {
   const [comment, setComments] = React.useState([""]);
   const [loading, setLoading] = useState(false);
   const lensAuthContext = React.useContext(LensAuthContext);
-  const [count, setCount] = useState();
+  const [count, setCount] = useState(0);
 
   const [posts, setPosts] = useState([]);
   const [displayCmt, setDisplayCmt] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [likeUp, setLikeUp] = useState(false);
   const { profile, userAdd, loginCreate, login } = lensAuthContext;
   const [postCollect, setPostCollect] = useState([]);
 
   const param = useParams();
 
+  const fireReactions = doc(collection(db, "Reactions"));
+
   async function get_posts() {
     try {
-      const pst = await getpublicationById(param.id); 
+      const pst = await getpublicationById(param.id);
       setData(pst.data.publication);
       const ids = detail != undefined ? detail.id : param.id;
-      const cmt = await getComments(ids);
-      setDisplayCmt(cmt); 
+      const cmt = await getComments(ids); 
+      setDisplayCmt(cmt);
       const d = await getPublicationByLatest();
-      setPosts(d.data.explorePublications.items);  
+      setPosts(d.data.explorePublications.items);
     } catch (error) {
-     toast.error(error);
+      toast.error(error);
     }
 
   }
@@ -65,10 +70,25 @@ function TrendingDetails() {
 
   useEffect(() => {
     get_posts();
-  }, [param.id, update, loading, data, detail]) 
+    getLikeUp();
+  }, [param.id, update, data, detail, likeUp])
 
   const handleNavigate = (data) => {
     setDetail(data);
+    setLikeUp(!likeUp);
+  }
+
+  async function getLikeUp() {
+    // const id = detail == undefined ? data.id && data.id : detail.id;
+    const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
+    const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty) {
+      setCount(0);
+    }
+    querySnapshot.forEach((data) => { 
+      setCount(data.data().Likes);
+    })
   }
 
 
@@ -88,7 +108,7 @@ function TrendingDetails() {
       publishId: data.id,
       user: profile.handle
     }
-    const result = await createComment(obj); 
+    const result = await createComment(obj);
     setLoading(false);
     setUpdate(!update);
 
@@ -100,6 +120,50 @@ function TrendingDetails() {
 
   const addReactions = async (data) => {
     const id = window.localStorage.getItem("profileId");
+    const q = query(collection(db, "Reactions"), where("PublicationId", "==", data.id));
+    const querySnapshot = await getDocs(q);
+    if (querySnapshot.empty === true) {
+      const docRef = await addDoc(collection(db, "Reactions"), {
+        Likes: 1,
+        LikesBy: arrayUnion(id),
+        PublicationId: data.id
+      });
+      setLikeUp(!likeUp);
+    } else {
+      querySnapshot.forEach(async (react) => {
+        const nycRef = doc(db, 'Reactions', react.id); 
+        react.data().LikesBy.map(async (e) => {
+          if (e === id) { 
+            await updateDoc(nycRef, {
+              Likes: react.data().Likes - 1,
+              LikesBy: arrayRemove(id),
+            })
+            setLikeUp(!likeUp);
+          } else if (e !== id) {
+            await updateDoc(nycRef, {
+              Likes: react.data().Likes + 1,
+              LikesBy: arrayUnion(id)
+            })
+            setLikeUp(!likeUp);
+          } else {
+            await updateDoc(nycRef, {
+              Likes: react.data().Likes,
+              LikesBy: react.data().LikesBy
+            })
+            setLikeUp(!likeUp);
+          }
+        })
+
+        if (react.data().LikesBy.length === 0) {
+          await updateDoc(nycRef, {
+            Likes: react.data().Likes + 1,
+            LikesBy: arrayUnion(id)
+          })
+          setLikeUp(!likeUp);
+        }
+      });
+    }
+
 
     const dd = {
       id: id,
@@ -109,8 +173,10 @@ function TrendingDetails() {
       pId: data.profile.id,
       publishId: data && data.id,
     }
-    const res = await addReaction(dd);
-    setUpdate(!update);
+
+
+    // const res = await addReaction(dd);
+    // setUpdate(!update);
   }
 
   useEffect(() => {
@@ -121,7 +187,7 @@ function TrendingDetails() {
         pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id,
         pid2: id,
       }
-     const cId= detail === undefined ?  data?.id :  detail !== undefined &&  detail.id; 
+      const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
       // const collect = await whoCollected(cId);
       // setPostCollect(collect.whoCollectedPublication.items); 
 
@@ -131,13 +197,10 @@ function TrendingDetails() {
           array.push(e.reaction);
         }
       })
-      setCount(array)
+      // setCount(array)
     }
     getLisked();
-  }, [detail, data,update]) 
-
- 
-
+  }, [detail, data, update, loading, likeUp])
 
 
   return (
@@ -157,9 +220,9 @@ function TrendingDetails() {
                     onClick={() => handleNav(data && data.__typename === "Comment" ? data.mainPost.profile.id : data.profile.id)}
                     avatar={
                       <Avatar
-                        src={data != undefined && 
+                        src={data != undefined &&
                           data?.profile?.picture != null ?
-                          data?.profile?.picture?.original?.url :  'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                          data?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }
@@ -183,7 +246,7 @@ function TrendingDetails() {
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       onClick={() => addReactions(data)}
                     >
-                      <FavoriteBorderIcon /> {count && count.length}
+                      <FavoriteBorderIcon /> {count}
                       <span className="d-none-xss m-1">Likes</span>
                     </div>
 
@@ -195,9 +258,9 @@ function TrendingDetails() {
                       < ModeCommentOutlinedIcon />  {data && data.stats.totalAmountOfComments}
 
                       <span className="d-none-xss m-2">Comment</span>
-                    </div> 
-                     <MirrorComponent data={data} update={update}  setUpdate={setUpdate}/> 
-                     <CollectComponent data={data} update={update}  setUpdate={setUpdate}/>
+                    </div>
+                    <MirrorComponent data={data} update={update} setUpdate={setUpdate} />
+                    <CollectComponent data={data} update={update} setUpdate={setUpdate} />
                   </CardActions>
 
                   <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
@@ -225,9 +288,9 @@ function TrendingDetails() {
                       {
                         data !== undefined && displayCmt && displayCmt.map((e) => {
                           return (
-                            <div  style={{margin:'10px'}} key={e.id}>
-                              <Divider />    
-                              <div className="p-0 d-flex " style={{padding:'5px'}}>
+                            <div style={{ margin: '10px' }} key={e.id}>
+                              <Divider />
+                              <div className="p-0 d-flex " style={{ padding: '5px' }}>
                                 <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                                 <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
                               </div>
@@ -262,9 +325,9 @@ function TrendingDetails() {
                     onClick={() => handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
                     avatar={
                       <Avatar
-                        src={detail != undefined && 
+                        src={detail != undefined &&
                           detail?.profile?.picture != null ?
-                          detail?.profile?.picture?.original?.url :  'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                          detail?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                       </Avatar>
                     }
@@ -288,7 +351,7 @@ function TrendingDetails() {
                       style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
                       onClick={() => addReactions(detail)}
                     >
-                      <FavoriteBorderIcon /> {count && count.length}
+                      <FavoriteBorderIcon /> {count}
                       <span className="d-none-xss m-1">Likes</span>
                     </div>
 
@@ -301,8 +364,8 @@ function TrendingDetails() {
                       <span className="d-none-xss m-2">Comment</span>
                     </div>
 
-                    <MirrorComponent data={detail} update={update}  setUpdate={setUpdate}/> 
-                    <CollectComponent data={detail} update={update}  setUpdate={setUpdate}/>
+                    <MirrorComponent data={detail} update={update} setUpdate={setUpdate} />
+                    <CollectComponent data={detail} update={update} setUpdate={setUpdate} />
                   </CardActions>
                   <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                   {showComment ? (
@@ -319,7 +382,7 @@ function TrendingDetails() {
                               placeholder="Write a comment.."
                               inputProps={{ 'aria-label': 'Search by memers' }}
                             />
-                          </div> 
+                          </div>
                           <IconButton onClick={() => handleComment(detail)} >
                             {loading ? <CircularProgress /> : <Send />}
                           </IconButton>
@@ -328,8 +391,8 @@ function TrendingDetails() {
                       {
                         detail !== undefined && displayCmt && displayCmt.map((e) => {
                           return (
-                            <div  style={{margin:'20px'}} key={e.id}>
-                              <div className="p-0 d-flex " style={{padding:'10px'}}>
+                            <div style={{ margin: '20px' }} key={e.id}>
+                              <div className="p-0 d-flex " style={{ padding: '10px' }}>
                                 <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
                                 <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
                               </div>

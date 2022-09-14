@@ -91,8 +91,7 @@ export default function ProfileCreation() {
       toast.success("profile created!!!")
       setIsLoading(false);
     }
-    setOpen(false);
-    console.log("create profile: profile has been indexed", result);
+    setOpen(false); 
     return true;
   };
 

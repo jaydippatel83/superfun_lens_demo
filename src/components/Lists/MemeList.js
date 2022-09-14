@@ -37,8 +37,7 @@ function MemeList() {
             // setStory(res.exploreProfiles.items);
 
             const dd= await getPublicationByUser(); 
-            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{
-                console.log(e,"eee");
+            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{ 
                 if(e.__typename == "Comment"){
                     user.push(e.mainPost.profile);
                 }else{

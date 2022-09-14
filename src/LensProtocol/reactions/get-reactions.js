@@ -45,6 +45,6 @@ export const getReactiionReq = (data) => {
 }
 
 export const getLikes = async (data) => { 
-    const res = await getReactiionReq(data); 
+    const res = await getReactiionReq(data);  
     return res.data;
 }

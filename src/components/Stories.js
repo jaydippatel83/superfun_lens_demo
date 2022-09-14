@@ -53,7 +53,7 @@ function Stories() {
 
 
                 {
-                    userPosts && userPosts.map((item, i) => {
+                    userPosts && userPosts.map((item, i) => { 
                         return (
                             <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
                                 <ImageListItem

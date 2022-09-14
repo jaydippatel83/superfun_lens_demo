@@ -12,6 +12,7 @@ export default function MemeCard(props) {
     const handleNavigate = ( data) => {
         props.setDetail(data);
         props.setShow(true);
+        props.setLikeUp(!props.likeUp);
     }
 
     return (
