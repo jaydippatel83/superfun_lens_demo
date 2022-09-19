@@ -35,15 +35,13 @@ export const addReaction = async (data) => {
         toast.error('Please login first!');
         return;
       }
-    const address = getAddress();
-    console.log('add reaction: address', data.address);
+    const address = getAddress(); 
 
     await data.login(data.address);
 
     const request = { profileId: profileId, reaction: "UPVOTE", publicationId: data.publishId }; 
 
-  const rr=  await addReactionRequest(request);
-  console.log(rr,"rr");
+  const rr=  await addReactionRequest(request); 
     toast.success("Like"); 
    } catch (error) {
     toast.error(error);
@@ -75,12 +73,10 @@ export const removeReaction = async (data) => {
         throw new Error('Must define PROFILE_ID in the .env to run this');
     }
 
-    const address = getAddress();
-    console.log('remove reaction: address', address);
+    const address = getAddress(); 
 
     await data.login(data.address);
 
    const dd= await removeReactionRequest(profileId, 'UPVOTE', data.publishId);
-    toast.success("Success");
-    console.log('remove reaction: sucess',dd);
+    toast.success("Success"); 
 };

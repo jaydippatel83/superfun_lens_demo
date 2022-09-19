@@ -30,8 +30,7 @@ export const hasCollected = async () => {
         walletAddress: '0x109eCbC12836F7Dd63255254fa973d21425819aE',
         publicationIds: ['0x0f-0x01'],
     }
-    const result = await hasCollectedRequest(res);
-    console.log(result,"res");
+    const result = await hasCollectedRequest(res); 
 
     return result.data;
 }; 

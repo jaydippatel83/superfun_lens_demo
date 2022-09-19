@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, Input, InputBase, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../header/Header';
@@ -36,7 +36,7 @@ function TrendingDetails() {
   const [data, setData] = useState();
   const [detail, setDetail] = useState();
   const [showComment, setShowComment] = useState(false);
-  const [comment, setComments] = React.useState([""]);
+  const [comment, setComments] = React.useState("");
   const [loading, setLoading] = useState(false);
   const lensAuthContext = React.useContext(LensAuthContext);
   const [count, setCount] = useState(0);
@@ -45,20 +45,16 @@ function TrendingDetails() {
   const [displayCmt, setDisplayCmt] = useState([]);
   const [update, setUpdate] = useState(false);
   const [likeUp, setLikeUp] = useState(false);
+  const [commUp, setCommUp] = useState(false);
   const { profile, userAdd, loginCreate, login } = lensAuthContext;
   const [postCollect, setPostCollect] = useState([]);
 
   const param = useParams();
 
-  const fireReactions = doc(collection(db, "Reactions"));
-
   async function get_posts() {
     try {
       const pst = await getpublicationById(param.id);
       setData(pst.data.publication);
-      const ids = detail != undefined ? detail.id : param.id;
-      const cmt = await getComments(ids); 
-      setDisplayCmt(cmt);
       const d = await getPublicationByLatest();
       setPosts(d.data.explorePublications.items);
     } catch (error) {
@@ -69,9 +65,12 @@ function TrendingDetails() {
 
 
   useEffect(() => {
-    get_posts();
-    getLikeUp();
-  }, [param.id, update, data, detail, likeUp])
+    setTimeout(() => {
+      getComm();
+      get_posts();
+      getLikeUp();
+    }, 1000);
+  }, [param.id, update, data, detail, likeUp, commUp])
 
   const handleNavigate = (data) => {
     setDetail(data);
@@ -80,39 +79,78 @@ function TrendingDetails() {
 
   async function getLikeUp() {
     // const id = detail == undefined ? data.id && data.id : detail.id;
-    const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
+    const cId = detail === undefined ? data?.id : detail.id; 
     const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
       setCount(0);
     }
-    querySnapshot.forEach((data) => { 
+    querySnapshot.forEach((data) => {
       setCount(data.data().Likes);
     })
   }
 
 
-  const handleShowComment = async () => {
+  const handleShowComment = () => {
     setShowComment(!showComment);
-
   };
 
-  const handleComment = async (data) => {
-    const id = window.localStorage.getItem("profileId");
-    setLoading(true);
-    const obj = {
-      address: userAdd,
-      comment: comment,
-      login: loginCreate,
-      profileId: id,
-      publishId: data.id,
-      user: profile.handle
-    }
-    const result = await createComment(obj);
-    setLoading(false);
-    setUpdate(!update);
 
+
+  async function getComm() {
+
+    // const pst = await getpublicationById(detail != undefined ? detail.id : param.id); 
+
+    const ids = detail != undefined ? detail.id : param.id; 
+    let arr= [];
+    const cmt = await getComments(ids);
+    cmt && cmt.map((com) => {
+      let obj = {
+        typename: com?.__typename,
+        avtar:com?.profile?.picture?.original?.url,
+        name: com?.profile?.handle,
+        comment:com?.metadata?.content
+      }
+      arr.push(obj);
+    })
+ 
+    setDisplayCmt(arr);
   }
+
+  const handleComment = async (data) => {
+    try {
+      let arr = [...displayCmt];
+      const id = window.localStorage.getItem("profileId");
+      setLoading(true);
+      const obj = {
+        address: userAdd,
+        comment: comment,
+        login: loginCreate,
+        profileId: id,
+        publishId: data.id,
+        user: profile.handle
+      }
+      const result = await createComment(obj);
+      if (result) {
+        let obj = {
+          typename: "Comment",
+          avtar:profile?.picture?.original?.url,
+          name: profile?.handle,
+          comment:comment
+        }
+        arr[arr.length] = obj; 
+        setComments("");
+        setDisplayCmt(arr)
+        // setCommUp(!commUp);
+        setLoading(false);
+       
+      }
+    } catch (error) {
+      console.log(error, "errr-----")
+    }
+  }
+ 
+
 
   const handleNav = (dd) => {
     navigate(`/${dd}`)
@@ -131,9 +169,9 @@ function TrendingDetails() {
       setLikeUp(!likeUp);
     } else {
       querySnapshot.forEach(async (react) => {
-        const nycRef = doc(db, 'Reactions', react.id); 
+        const nycRef = doc(db, 'Reactions', react.id);
         react.data().LikesBy.map(async (e) => {
-          if (e === id) { 
+          if (e === id) {
             await updateDoc(nycRef, {
               Likes: react.data().Likes - 1,
               LikesBy: arrayRemove(id),
@@ -163,44 +201,9 @@ function TrendingDetails() {
         }
       });
     }
-
-
-    const dd = {
-      id: id,
-      address: userAdd,
-      login: loginCreate,
-      react: "UPVOTE",
-      pId: data.profile.id,
-      publishId: data && data.id,
-    }
-
-
-    // const res = await addReaction(dd);
-    // setUpdate(!update);
   }
 
-  useEffect(() => {
-    var array = [];
-    async function getLisked() {
-      const id = window.localStorage.getItem("profileId");
-      const res = {
-        pid: data && data?.mainPost?.profile?.id ? data?.mainPost?.profile?.id : detail && detail?.mainPost?.profile?.id ? detail?.mainPost?.profile?.id : detail?.profile?.id,
-        pid2: id,
-      }
-      const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
-      // const collect = await whoCollected(cId);
-      // setPostCollect(collect.whoCollectedPublication.items); 
 
-      const like = await getLikes(res);
-      like?.publications?.items?.map((e) => {
-        if (e.reaction == "UPVOTE") {
-          array.push(e.reaction);
-        }
-      })
-      // setCount(array)
-    }
-    getLisked();
-  }, [detail, data, update, loading, likeUp])
 
 
   return (
@@ -272,11 +275,12 @@ function TrendingDetails() {
                         </div>
                         <form className="col-10 header-search ms-3 d-flex align-items-center">
                           <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
-                            <InputBase
+                            <Input
                               onChange={(e) => setComments(e.target.value)}
                               sx={{ ml: 1, flex: 1, color: 'black' }}
                               placeholder="Write a comment.."
-                              inputProps={{ 'aria-label': 'Search by memers' }}
+
+                              value={comment}
                             />
                           </div>
                           <IconButton onClick={() => handleComment(data)} >
@@ -291,8 +295,8 @@ function TrendingDetails() {
                             <div style={{ margin: '10px' }} key={e.id}>
                               <Divider />
                               <div className="p-0 d-flex " style={{ padding: '5px' }}>
-                                <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                                <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
+                                <Avatar src={e.typename === "Comment" ? e.avtar : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                <p className='mb-0 align-self-center ml-2'>{e.typename === "Comment" ? e.name : e.name}</p>
                               </div>
                               <p style={{
                                 padding: '10px',
@@ -300,7 +304,7 @@ function TrendingDetails() {
                                 borderRadius: '14px',
                                 margin: '5px',
                                 width: 'fit-content'
-                              }}>{e.__typename === "Comment" && e.metadata.content}</p>
+                              }}>{e.typename === "Comment" && e.comment}</p>
                               <Divider />                        </div>
                           )
                         })

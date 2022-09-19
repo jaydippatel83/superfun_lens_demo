@@ -27,8 +27,7 @@ const authLink = new ApolloLink((operation, forward) => {
 
 export const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink),
-  onError: ({ networkError, graphQLErrors }) => {
-    console.log('graphQLErrors', graphQLErrors)
+  onError: ({ networkError, graphQLErrors }) => { 
     console.log('networkError', networkError)
   },
   cache: new InMemoryCache(),

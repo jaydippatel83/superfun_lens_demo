@@ -51,7 +51,7 @@ function App() {
       <TopCreators/>
       <Search/>
       <TrendingSlider/>
-      <ArtistSlider/> 
+      {/* <ArtistSlider/>  */}
       <Stories/>
     </>
   );

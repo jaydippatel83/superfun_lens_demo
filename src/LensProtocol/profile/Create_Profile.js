@@ -57,10 +57,8 @@ const createProfile = async (handleInput) => {
       alert(`Error when creating a profile: ${createProfileResult?.data.createProfile.reason}`);
       return false;
     }
-
-    console.log("create profile: poll until indexed", createProfileResult.data.createProfile.txHash);
-    const result = await pollUntilIndexed(createProfileResult.data.createProfile.txHash)
-    console.log("create profile: profile has been indexed", result);
+ 
+    const result = await pollUntilIndexed(createProfileResult.data.createProfile.txHash) 
 
     const logs = result.txReceipt.logs;
 
@@ -72,8 +70,7 @@ const createProfile = async (handleInput) => {
 
     let profileCreatedEventLog = profileCreatedLog.topics;
 
-    const profileId = utils.defaultAbiCoder.decode(["uint256"], profileCreatedEventLog[1])[0];
-    console.log(profileId, "profileId");
+    const profileId = utils.defaultAbiCoder.decode(["uint256"], profileCreatedEventLog[1])[0]; 
 
     window.localStorage.setItem("profileId", BigNumber.from(profileId).toHexString());
 

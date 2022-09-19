@@ -95,22 +95,13 @@ export const createPost = async (postData) => {
     
         const topicId = utils.id(
             'PostCreated(uint256,uint256,string,address,bytes,address,bytes,uint256)'
-        );
-        console.log('topicid we care about', topicId);
+        ); 
     
-        const profileCreatedLog = logs.find((l) => l.topics[0] === topicId);
-        console.log('create post: created log', profileCreatedLog);
+        const profileCreatedLog = logs.find((l) => l.topics[0] === topicId); 
     
-        let profileCreatedEventLog = profileCreatedLog.topics;
-        console.log('create post: created event logs', profileCreatedEventLog);
+        let profileCreatedEventLog = profileCreatedLog.topics; 
     
-        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];
-    
-        console.log('create post: contract publication id', BigNumber.from(publicationId).toHexString());
-        console.log(
-            'create post: internal publication id',
-            profileId + '-' + BigNumber.from(publicationId).toHexString()
-        );
+        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0]; 
     
         return result.data;
     } catch (error) {

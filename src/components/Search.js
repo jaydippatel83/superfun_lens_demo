@@ -60,8 +60,8 @@ function Search() {
                         <span style={{ color: '#0078BF' }}> Hire Memers. </span>
                     </Typography>
                 </div>
-                <CssBaseline />
-                <div className={`${classes} ${sticky === 'is-sticky' ? 'col-10 ' : 'col-9'}`}
+                {/* <CssBaseline /> */}
+                {/* <div className={`${classes} ${sticky === 'is-sticky' ? 'col-10 ' : 'col-9'}`}
                     style={{ backgroundColor: 'rgba(255, 255, 255,0.1)', borderRadius: '4px', padding: '10px 10px 0 10px' }}>
                     <div >
                         <Paper
@@ -107,7 +107,7 @@ function Search() {
 
                     </List>
 
-                </div>
+                </div> */}
             </div>
         </div>
     )

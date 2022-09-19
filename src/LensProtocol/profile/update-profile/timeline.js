@@ -355,10 +355,8 @@ export const getTimeline = (profileId) => {
   })
 }
 
-export const getTimelineData= async(data)=>{ 
-  console.log(data,"data");
+export const getTimelineData= async(data)=>{  
   await data.login(data.address); 
-  const result = await getTimeline(data.id);
-  console.log('ping: result', result.data); 
+  const result = await getTimeline(data.id); 
   return result.data; 
 }

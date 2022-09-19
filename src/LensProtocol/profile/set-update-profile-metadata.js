@@ -26,8 +26,7 @@ export const setProfileMetadata = async () => {
       s,
       deadline: typedData.value.deadline,
     },
-  });
-  console.log(tx.hash);
+  }); 
   // 0x64464dc0de5aac614a82dfd946fc0e17105ff6ed177b7d677ddb88ec772c52d3
   // you can look at how to know when its been indexed here: 
   //   - https://docs.lens.dev/docs/has-transaction-been-indexed

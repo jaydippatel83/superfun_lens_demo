@@ -140,8 +140,7 @@ export const LensAuthContextProvider = (props) => {
 
     let decodedRefresh = jwt_decode(refreshToken);
     let decodedAccess = jwt_decode(accessToken);
-
-    console.log("JWT", decodedAccess, decodedRefresh);
+ 
     //Check if the accessToken is expired or not
     if (decodedAccess.exp > Date.now() / 1000) {
       return true;

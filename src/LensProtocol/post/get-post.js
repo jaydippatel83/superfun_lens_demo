@@ -356,5 +356,7 @@ export const getComments = async (profileId) => {
     sources: ['superfun'], 
   };  
   const result = await getPublicationsRequest(request);  
+  console.log(result, "create-comment.js")
+
   return result.data.publications.items;
 };

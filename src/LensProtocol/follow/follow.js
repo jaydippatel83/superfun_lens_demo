@@ -15,14 +15,11 @@ export const follow = async (profileId) => {
       } 
     ];
   
-    const result = await createFollowTypedData(followRequest);
-    console.log('follow: result', result);
+    const result = await createFollowTypedData(followRequest); 
   
-    const typedData = result.data.createFollowTypedData.typedData;
-    console.log('follow: typedData', typedData);
+    const typedData = result.data.createFollowTypedData.typedData; 
   
-    const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-    console.log('follow: signature', signature);
+    const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value); 
   
     const { v, r, s } = splitSignature(signature);
   

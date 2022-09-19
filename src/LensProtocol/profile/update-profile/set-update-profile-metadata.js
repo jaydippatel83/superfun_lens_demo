@@ -35,8 +35,7 @@ export const setProfileMetadata = async (data) => {
     });
 
   
-    const ipfsResult = await uploadIpfs(ipfsData);
-    console.log('create profile: ipfs result', ipfsResult);
+    const ipfsResult = await uploadIpfs(ipfsData); 
   
     // hard coded to make the code example clear
     const createProfileMetadataRequest = {
@@ -47,14 +46,11 @@ export const setProfileMetadata = async (data) => {
     const result = await createSetProfileMetadataTypedData(
       createProfileMetadataRequest.profileId,
       createProfileMetadataRequest.metadata
-    );
-    console.log('create profile: createSetProfileMetadataTypedData', result);
+    ); 
   
-    const typedData = result.data.createSetProfileMetadataTypedData.typedData;
-    console.log('create profile: typedData', typedData);
+    const typedData = result.data.createSetProfileMetadataTypedData.typedData; 
   
-    const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
-    console.log('create profile: signature', signature);
+    const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value); 
   
     const { v, r, s } = splitSignature(signature);
   
@@ -67,17 +63,10 @@ export const setProfileMetadata = async (data) => {
         s,
         deadline: typedData.value.deadline,
       },
-    });
-    console.log('create profile metadata: tx hash', tx.hash);
+    });  
+    const indexedResult = await pollUntilIndexed(tx.hash); 
   
-    console.log('create profile metadata: poll until indexed');
-    const indexedResult = await pollUntilIndexed(tx.hash);
-  
-    console.log('create profile metadata: profile has been indexed', result);
-  
-    const logs = indexedResult.txReceipt.logs;
-  
-    console.log('create profile metadata: logs', logs);
+    const logs = indexedResult.txReceipt.logs; 
   
     return result.data;
   } catch (error) {
