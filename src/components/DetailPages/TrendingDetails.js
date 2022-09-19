@@ -73,8 +73,9 @@ function TrendingDetails() {
   }, [param.id, update, data, detail, likeUp, commUp])
 
   const handleNavigate = (data) => {
-    setDetail(data);
-    setLikeUp(!likeUp);
+    navigate(`/trendingDetails/${data.id}`); 
+    // setDetail(data);
+    // setLikeUp(!likeUp);
   }
 
   async function getLikeUp() {
@@ -97,13 +98,10 @@ function TrendingDetails() {
 
 
 
-  async function getComm() {
-
-    // const pst = await getpublicationById(detail != undefined ? detail.id : param.id); 
-
-    const ids = detail != undefined ? detail.id : param.id; 
+  async function getComm() { 
+     
     let arr= [];
-    const cmt = await getComments(ids);
+    const cmt = await getComments( param.id);
     cmt && cmt.map((com) => {
       let obj = {
         typename: com?.__typename,
@@ -153,7 +151,7 @@ function TrendingDetails() {
 
 
   const handleNav = (dd) => {
-    navigate(`/${dd}`)
+    navigate(`/profile/${dd}`)
   }
 
   const addReactions = async (data) => {
@@ -214,8 +212,9 @@ function TrendingDetails() {
         <div className='container'>
           {/* <div className='row mt-5'> */}
           <div className='row mt-5'>
+            
             {
-              detail === undefined && data &&
+            data &&
               <div key={data.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
                 <Card   >
 
@@ -321,108 +320,7 @@ function TrendingDetails() {
                   ))
                 }
               </div>
-            }
-            {
-              detail !== undefined && <div key={detail.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
-                <Card   >
-                  <CardHeader
-                    onClick={() => handleNav(detail != undefined && detail.__typename === "Comment" ? detail.mainPost.profile.id : detail.profile.id)}
-                    avatar={
-                      <Avatar
-                        src={detail != undefined &&
-                          detail?.profile?.picture != null ?
-                          detail?.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
-
-                      </Avatar>
-                    }
-                    title={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                  />
-                  <CardMedia
-                    component="img"
-                    style={{ objectFit: 'fill' }}
-                    image={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
-                    alt={detail != undefined && detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                    sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px' } }}
-                  />
-                  <CardContent className=' '>
-                    <Typography variant="body2" color="text.secondary">
-                      {detail && detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
-                    </Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <div
-                      className="d-flex align-items-center"
-                      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                      onClick={() => addReactions(detail)}
-                    >
-                      <FavoriteBorderIcon /> {count}
-                      <span className="d-none-xss m-1">Likes</span>
-                    </div>
-
-                    <div
-                      onClick={handleShowComment}
-                      className="d-flex align-items-center"
-                      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
-                    >
-                      < ModeCommentOutlinedIcon /> {detail && detail.stats.totalAmountOfComments}
-                      <span className="d-none-xss m-2">Comment</span>
-                    </div>
-
-                    <MirrorComponent data={detail} update={update} setUpdate={setUpdate} />
-                    <CollectComponent data={detail} update={update} setUpdate={setUpdate} />
-                  </CardActions>
-                  <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
-                  {showComment ? (
-                    <div className='m-2'>
-                      <div className="d-flex justify-content-around mt-2">
-                        <div className="p-0">
-                          <Avatar src={profile?.picture != null ? profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                        </div>
-                        <form className="col-10 header-search ms-3 d-flex align-items-center">
-                          <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
-                            <InputBase
-                              onChange={(e) => setComments(e.target.value)}
-                              sx={{ ml: 1, flex: 1, color: 'black' }}
-                              placeholder="Write a comment.."
-                              inputProps={{ 'aria-label': 'Search by memers' }}
-                            />
-                          </div>
-                          <IconButton onClick={() => handleComment(detail)} >
-                            {loading ? <CircularProgress /> : <Send />}
-                          </IconButton>
-                        </form>
-                      </div>
-                      {
-                        detail !== undefined && displayCmt && displayCmt.map((e) => {
-                          return (
-                            <div style={{ margin: '20px' }} key={e.id}>
-                              <div className="p-0 d-flex " style={{ padding: '10px' }}>
-                                <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                                <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
-                              </div>
-                              <p style={{
-                                padding: '10px',
-                                background: '#000',
-                                borderRadius: '14px',
-                                margin: '5px',
-                                width: 'fit-content'
-                              }}>{e.__typename === "Comment" && e.metadata.content}</p>
-                              <Divider />                        </div>
-                          )
-                        })
-                      }
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                </Card>
-                {
-                  tags.map((e) => (
-                    <Chip key={e} label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                  ))
-                }
-              </div>
-            }
+            } 
             {
               posts && posts.map((e) => {
                 if (e.id !== param.id) {
@@ -440,12 +338,7 @@ function TrendingDetails() {
                           <Typography variant="body2" color="text.secondary" className='mx-2'>
                             {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
                           </Typography>
-                        </CardContent>
-                        {/* <CardActions disableSpacing className='p-0'>
-                          <IconButton aria-label="add to favorites">
-                            <FavoriteBorderIcon />
-                          </IconButton>
-                        </CardActions> */}
+                        </CardContent> 
                       </Card>
                     </div>
                   )

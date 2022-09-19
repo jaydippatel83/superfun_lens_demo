@@ -78,13 +78,13 @@ function Profile() {
             setDisplayCmt(cmt);
         }
         getUserData();
-    }, [params, update, detail,loading])
+    }, [params.id, update, detail,loading])
 
 
     useEffect(() => {
         getProfile();
         getLikeUp();
-    }, [loading, update,likeUp])
+    }, [loading, update,likeUp,params.id])
 
 
 
@@ -276,7 +276,7 @@ function Profile() {
                             {
                                 data && <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px' }}>
                                     <div className='text-center'>
-                                        <img src={data.picture != null ? data.picture.original.url : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
+                                        <img src={data.picture != null ? data.picture.original.url : '/assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt="" />
                                         <h5 className='pt-4' style={{ fontWeight: '600' }}>{data.handle}</h5>
                                         <h6 className='' style={{ fontWeight: '600' }}>{`@${data.handle.trim().toLowerCase()}`}</h6>
                                         {/* <p>{e.description}</p> */}
@@ -299,10 +299,10 @@ function Profile() {
                                     </div>
                                     {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
 
-                                    <div className='d-flex justify-content-around text-left mt-4'>
+                                    {/* <div className='d-flex justify-content-around text-left mt-4'>
                                         <Button variant='outlined'>Hire Me</Button>
                                         <Button variant='outlined'>Send Message</Button>
-                                    </div>
+                                    </div> */}
                                 </Box>
                             }
                         </div>

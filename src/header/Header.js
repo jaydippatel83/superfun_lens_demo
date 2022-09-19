@@ -109,7 +109,7 @@ export default function Header() {
         setAnchorElUser(null);
     };
     const handleNavigate =(id)=>{
-        navigate(`/${id}`)
+        navigate(`/profile/${id}`)
     }
 
 
@@ -224,7 +224,7 @@ export default function Header() {
                                     onChange={(e) => handleSearch(e.target.value)}
                                 /> 
                             </div>
-                            <List   style={{position:'absolute',top:'60px', background:'black'}}>
+                            <List   style={{position:'absolute',top:'60px', background:'black',maxHeight:'400px', overflowY:'scroll'}}>
                             {
                                 searchData && searchData.map((e) => {
                                     return (

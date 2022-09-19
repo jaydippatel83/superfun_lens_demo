@@ -355,8 +355,7 @@ export const getComments = async (profileId) => {
     commentsOf:profileId ? profileId : "0x09a3-0x04",
     sources: ['superfun'], 
   };  
-  const result = await getPublicationsRequest(request);  
-  console.log(result, "create-comment.js")
+  const result = await getPublicationsRequest(request);   
 
   return result.data.publications.items;
 };

@@ -114,7 +114,7 @@ function TopCreators() {
                                 return (
                                     <div key={e.handle}>
                                         <Link
-                                            to={`/${e.id}`}
+                                            to={`/profile/${e.id}`}
                                             state={{ Profile: e }}
                                             params={{ e }}
                                             color="inherit"

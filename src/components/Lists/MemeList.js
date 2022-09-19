@@ -25,7 +25,7 @@ function MemeList() {
 
 
     const handleNavigate = (e) => {
-        navigate(`/${e.id}`)
+        navigate(`/profile/${e.id}`)
     }
 
     useEffect(() => {
@@ -94,10 +94,10 @@ function MemeList() {
                                             </div>
                                             {/* <Divider flexItem orientation="horizontal" style={{border:'1px solid white',margin :'10px 10px'}} /> */}
 
-                                            <div className='d-flex justify-content-around text-left mt-4'>
+                                            {/* <div className='d-flex justify-content-around text-left mt-4'>
                                                 <Button variant='outlined'>Hire Me</Button>
                                                 <Button variant='outlined'>Send Message</Button>
-                                            </div>
+                                            </div> */}
                                         </Box>
                                     </div>
                                 )

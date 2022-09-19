@@ -33,7 +33,7 @@ export default function CreateContestModal() {
 
     return (
         <div>
-        < Button onClick={handleClickOpen} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button>
+            < Button onClick={handleClickOpen} className='m-2' style={{ background: '#488E72', color: 'white', textTransform: 'capitalize' }}><AddIcon /> Create Contest</Button>
 
             <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
                 <DialogTitle>Create Contest</DialogTitle>
@@ -42,29 +42,29 @@ export default function CreateContestModal() {
                         <TextField className='mt-2' id="outlined-basic" label="Title" variant="outlined" fullWidth />
                     </DialogContentText>
 
-                    <div className="flex items-center mt-2" style={{border:'1px solid black', borderRadius:'6px'}}> 
-                        <input type="file" name="file" id="file" className="input-file d-none"  />
+                    <div className="flex items-center mt-2" style={{ border: '1px solid black', borderRadius: '6px' }}>
+                        <input type="file" name="file" id="file" className="input-file d-none" />
                         <label
                             htmlFor="file"
-                            style={{width:'100%', cursor:'pointer'}}
+                            style={{ width: '100%', cursor: 'pointer' }}
                             className="rounded-3 text-center    js-labelFile p-2 my-2 w-20  "
                         >
-                             <CloudUploadIcon/>
+                            <CloudUploadIcon />
                             <p className="js-fileName">
                                 Upload Meme(PNG, JPG, GIF, MP4.)
                             </p>
                         </label>
                     </div>
 
-                    <div className="input-group my-2" style={{ background: 'white',borderRadius:'6px' }}>
-                                <InputBase
-                                    sx={{ ml: 1, flex: 1, color: 'black', }}
-                                    placeholder="Video URL link  "
-                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                />
-                                <ColorButton sx={{ p: '12px' }}  endIcon={<YouTube  />}>
-                                </ColorButton>
-                            </div>
+                    <div className="input-group my-2" style={{ background: 'white', borderRadius: '6px' }}>
+                        <InputBase
+                            sx={{ ml: 1, flex: 1, color: 'black', }}
+                            placeholder="Video URL link  "
+                            inputProps={{ 'aria-label': 'Search by memers' }}
+                        />
+                        <ColorButton sx={{ p: '12px' }} endIcon={<YouTube />}>
+                        </ColorButton>
+                    </div>
 
                     <TextField className='my-2' id="outlined-basic" label="Add Tags" variant="outlined" fullWidth placeholder='#crypto #gif #meme' />
                 </DialogContent>
