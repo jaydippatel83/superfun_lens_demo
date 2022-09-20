@@ -86,7 +86,7 @@ export default function UploadModal() {
             login: login,
             name: profile.handle
         } 
-        const res = await createPost(postData); 
+        const res = await createPost(postData);  
         setUpdate(!update);
         setFile("");
         setTags([]);
@@ -104,6 +104,7 @@ export default function UploadModal() {
         const file = e.target.files[0]; 
         const ipfsResult = await client.add(file); 
         const imageURI =`https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`;  
+        console.log(imageURI,"imageURI");
         setFile(imageURI); 
 
     }

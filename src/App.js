@@ -6,7 +6,7 @@ import Header from './header/Header';
 import Stories from './components/Stories';
 import TopCreators from './components/TopCreators';
 import Search from './components/Search';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 function App() {
 
@@ -46,14 +46,14 @@ function App() {
 
 
   return (
-    <>
+    <div className='footer-position' style={{ marginTop: '100px' }}>
       <Header />
       <TopCreators/>
-      <Search/>
+      {/* <Search/> */}
       <TrendingSlider/>
       {/* <ArtistSlider/>  */}
       <Stories/>
-    </>
+    </div>
   );
 }
 

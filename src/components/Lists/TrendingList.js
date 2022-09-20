@@ -32,7 +32,7 @@ function TrendingList() {
         <>
             <Header />
             <div className='footer-position' style={{ marginTop: '100px' }}>
-                <Search />
+                {/* <Search /> */}
                 <div className='container'>
                     <div className='row'>
                         <Box sx={{ width: '100%', height: 'auto', overflowY: 'scroll',marginTop:'3%' }}>

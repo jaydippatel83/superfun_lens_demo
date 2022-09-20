@@ -193,6 +193,7 @@ export const LensAuthContextProvider = (props) => {
       web3Modal.clearCachedProvider();
       window.localStorage.removeItem("accessToken");
       window.localStorage.removeItem("refreshToken");
+      window.localStorage.removeItem("profileId");
     } 
     window.localStorage.setItem("profileId", profiles?.id);
     setUpdate(!update)  

@@ -78,13 +78,13 @@ function Profile() {
             setDisplayCmt(cmt);
         }
         getUserData();
-    }, [params.id, update, detail,loading])
+    }, [params.id, update, detail, loading])
 
 
     useEffect(() => {
         getProfile();
         getLikeUp();
-    }, [loading, update,likeUp,params.id])
+    }, [loading, update, likeUp, params.id])
 
 
 
@@ -94,19 +94,19 @@ function Profile() {
         const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-          setCount(0);
+            setCount(0);
         }
-        querySnapshot.forEach((data) => { 
-          setCount(data.data().Likes);
+        querySnapshot.forEach((data) => {
+            setCount(data.data().Likes);
         })
-      }
-    
+    }
+
 
     async function getProfile() {
         const fId = window.localStorage.getItem("profileId");
-      
+
         if (params.id !== null) {
-            const user = await profileById(params.id); 
+            const user = await profileById(params.id);
             // const obj = {
             //     id:user.id, 
             //     login: login,
@@ -125,7 +125,7 @@ function Profile() {
             login: login,
             followId: fId
         }
-        const res = await follow(data); 
+        const res = await follow(data);
         if (res) {
             setLoading(false);
             setUpdate(!update);
@@ -136,27 +136,27 @@ function Profile() {
 
     const handleComment = async (data) => {
         const id = window.localStorage.getItem("profileId");
-      try {
-        if(id != undefined){ 
-            setLoadingC(true);
-            const obj = {
-                address: userAdd,
-                comment: comment,
-                login: loginCreate,
-                profileId: id,
-                publishId: data.id,
-                user: profile.handle
+        try {
+            if (id != undefined) {
+                setLoadingC(true);
+                const obj = {
+                    address: userAdd,
+                    comment: comment,
+                    login: loginCreate,
+                    profileId: id,
+                    publishId: data.id,
+                    user: profile.handle
+                }
+                const result = await createComment(obj);
+                toast.success("Success!!")
+                setLoadingC(false);
+                setUpdate(!update);
             }
-            const result = await createComment(obj);
-            toast.success("Success!!")
+        } catch (error) {
+            toast.error(error);
             setLoadingC(false);
             setUpdate(!update);
         }
-      } catch (error) {
-        toast.error(error);
-        setLoadingC(false);
-            setUpdate(!update);
-      }
 
     }
 
@@ -184,57 +184,57 @@ function Profile() {
         const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-          setCount(0);
+            setCount(0);
         }
-        querySnapshot.forEach((data) => { 
-          setCount(data.data().Likes);
+        querySnapshot.forEach((data) => {
+            setCount(data.data().Likes);
         })
-      }
+    }
 
     const addReactions = async (data) => {
         const id = window.localStorage.getItem("profileId");
         const q = query(collection(db, "Reactions"), where("PublicationId", "==", detail.id));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty === true) {
-          const docRef = await addDoc(collection(db, "Reactions"), {
-            Likes: 1,
-            LikesBy: arrayUnion(id),
-            PublicationId: data.id
-          });
-          setLikeUp(!likeUp);
+            const docRef = await addDoc(collection(db, "Reactions"), {
+                Likes: 1,
+                LikesBy: arrayUnion(id),
+                PublicationId: data.id
+            });
+            setLikeUp(!likeUp);
         } else {
-          querySnapshot.forEach(async (react) => {
-            const nycRef = doc(db, 'Reactions', react.id); 
-            react.data().LikesBy.map(async (e) => {
-              if (e === id) { 
-                await updateDoc(nycRef, {
-                  Likes: react.data().Likes - 1,
-                  LikesBy: arrayRemove(id),
+            querySnapshot.forEach(async (react) => {
+                const nycRef = doc(db, 'Reactions', react.id);
+                react.data().LikesBy.map(async (e) => {
+                    if (e === id) {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes - 1,
+                            LikesBy: arrayRemove(id),
+                        })
+                        setLikeUp(!likeUp);
+                    } else if (e !== id) {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes + 1,
+                            LikesBy: arrayUnion(id)
+                        })
+                        setLikeUp(!likeUp);
+                    } else {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes,
+                            LikesBy: react.data().LikesBy
+                        })
+                        setLikeUp(!likeUp);
+                    }
                 })
-                setLikeUp(!likeUp);
-              } else if (e !== id) {
-                await updateDoc(nycRef, {
-                  Likes: react.data().Likes + 1,
-                  LikesBy: arrayUnion(id)
-                })
-                setLikeUp(!likeUp);
-              } else {
-                await updateDoc(nycRef, {
-                  Likes: react.data().Likes,
-                  LikesBy: react.data().LikesBy
-                })
-                setLikeUp(!likeUp);
-              }
-            })
-    
-            if (react.data().LikesBy.length === 0) {
-              await updateDoc(nycRef, {
-                Likes: react.data().Likes + 1,
-                LikesBy: arrayUnion(id)
-              })
-              setLikeUp(!likeUp);
-            }
-          });
+
+                if (react.data().LikesBy.length === 0) {
+                    await updateDoc(nycRef, {
+                        Likes: react.data().Likes + 1,
+                        LikesBy: arrayUnion(id)
+                    })
+                    setLikeUp(!likeUp);
+                }
+            });
         }
     }
 
@@ -267,7 +267,7 @@ function Profile() {
                 <Search />
                 <div className='container'>
                     <div className='row mt-5'>
-                        <div className='col-12 col-sm-12 col-md-4 col-lg-4'>
+                        <div className='col-12 col-sm-12 col-md-5 col-lg-5'>
                             {
                                 data == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                                     <CircularProgress />
@@ -307,7 +307,7 @@ function Profile() {
                             }
                         </div>
 
-                        <div className='col-12 col-sm-12 col-md-8 col-lg-8'>
+                        <div className='col-12 col-sm-12 col-md-7 col-lg-7' style={{ overflow: 'scroll', maxHeight: "100vh" }}>
                             {
                                 show && <div className='row'>
                                     <div className='col-12 ' style={{ margin: '10px 0' }}>
@@ -327,12 +327,13 @@ function Profile() {
                                                 }
                                                 title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
                                                 subheader={moment(detail.createdAt).format('LLL')}
+
                                             />
                                             <CardMedia
                                                 component="img"
                                                 image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
                                                 alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                                                sx={{ height: { xs: '200px', sm: '250px', md: '300px', lg: '450px', objectFit: 'fill' } }}
+                                                sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
                                             />
                                             <CardContent>
                                                 <Typography variant="body2" color="text.secondary" className='p-0'>
@@ -342,7 +343,7 @@ function Profile() {
                                             <CardActions disableSpacing>
                                                 <div
                                                     className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
+                                                    style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
                                                     onClick={() => addReactions(detail)}
                                                 >
                                                     <FavoriteBorderIcon /> {count}
@@ -352,7 +353,7 @@ function Profile() {
                                                 <div
                                                     onClick={handleShowComment}
                                                     className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '2px', margin: '0 10px', cursor: 'pointer' }}
+                                                    style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
                                                 >
                                                     < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
                                                     <span className="d-none-xss m-2">Comment</span>
@@ -362,7 +363,7 @@ function Profile() {
                                             </CardActions>
                                             <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                                             {showComment ? (
-                                                <div className='m-2'>
+                                                <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                                                     <div className="d-flex justify-content-around mt-2">
                                                         <div className="p-0">
                                                             <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
@@ -408,9 +409,9 @@ function Profile() {
 
                                         <div className='col-12 ' style={{ margin: '10px 0' }}>
                                             {
-                                                tags.map((e) => (
-                                                    <Chip label={e} style={{ margin: '3px 0' }} variant="outlined" />
-                                                ))
+                                                detail?.metadata?.description !== detail?.metadata?.content ? detail.metadata.description.map((e) => (
+                                                    <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
+                                                )) : <></>
                                             }
                                         </div>
 

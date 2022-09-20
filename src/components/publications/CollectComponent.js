@@ -26,11 +26,11 @@ function CollectComponent(props) {
     <div
       onClick={handleCollect}
       className="d-flex align-items-center"
-      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+      style={{ color: 'white', padding: '5px', margin: '0 5px', cursor: 'pointer' }}
     >
        {loading ? <CircularProgress /> : ""} 
       <img src='https://superfun.infura-ipfs.io/ipfs/QmWimuRCtxvPhruxxZRBpbWoTXK6HDvLZkrcEPvaqyqegy' alt='bg' width="20"/>  {props.data && props.data?.stats?.totalAmountOfCollects}
-      <span className="d-none-xss m-2">Collects</span>
+      <span className="d-none-xss m-1">Collects</span>
     </div>
   )
 }

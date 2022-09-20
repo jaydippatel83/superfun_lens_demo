@@ -46,11 +46,11 @@ function MirrorComponent(props) {
     <div
       onClick={handleCreateMirror}
       className="d-flex align-items-center"
-      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+      style={{ color: 'white', padding: '5px', margin: '0 5px', cursor: 'pointer' }}
     > 
       {loading ? <CircularProgress /> : ""}
       < SwapHorizSharpIcon /> {props.data && props.data?.stats?.totalAmountOfMirrors}
-      <span className="d-none-xss m-2">Mirrors</span>
+      <span className="d-none-xss m-1">Mirrors</span>
     </div>
   )
 }

@@ -76,7 +76,7 @@ export default function TrendingSlider() {
                     }
                     <Slider {...settings}>
 
-                        {userPosts && userPosts.slice(0, 12).map((item) => {
+                        {userPosts && userPosts.slice(0, 12).map((item) => { 
                             return (
                                 <ImageListItem
                                     key={item.id}
@@ -126,9 +126,8 @@ export default function TrendingSlider() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.mainPost ? item.mainPost.profile.picture != null && item.mainPost.profile.picture.original.url : item.profile.picture != null ? item.profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `}
-                                                    srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `}
-                                                    alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
+                                                    src={`${item.profile.picture != null ? item.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `} 
+                                                    alt={item?.metadata?.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}
                                                 />

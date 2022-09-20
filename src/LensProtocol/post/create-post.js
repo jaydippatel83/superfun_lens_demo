@@ -28,8 +28,8 @@ export const createPost = async (postData) => {
         const ipfsData = JSON.stringify({
             version: '1.0.0',
             metadata_id: uuidv4(),
-            description: postData.title,
-            content:  postData.title, 
+            description: postData.tags,
+            content:  postData.title,  
             external_url: null,
             image:  null,
             imageMimeType: null,
@@ -52,7 +52,7 @@ export const createPost = async (postData) => {
             animation_url: null,
         });
       
-        const ipfsResult = await uploadIpfs(ipfsData); 
+        const ipfsResult = await uploadIpfs(ipfsData);  
         const createPostRequest = {
             profileId,
             contentURI: `https://superfun.infura-ipfs.io/ipfs/${ipfsResult.path}`,
@@ -91,7 +91,7 @@ export const createPost = async (postData) => {
     
         const indexedResult = await pollUntilIndexed(tx.hash); 
     
-        const logs = indexedResult.txReceipt.logs; 
+        const logs = indexedResult.txReceipt.logs;  
     
         const topicId = utils.id(
             'PostCreated(uint256,uint256,string,address,bytes,address,bytes,uint256)'
@@ -99,10 +99,8 @@ export const createPost = async (postData) => {
     
         const profileCreatedLog = logs.find((l) => l.topics[0] === topicId); 
     
-        let profileCreatedEventLog = profileCreatedLog.topics; 
-    
-        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0]; 
-    
+        let profileCreatedEventLog = profileCreatedLog.topics;  
+        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];      
         return result.data;
     } catch (error) {
         toast.error(error);

@@ -34,7 +34,7 @@ export const createProfileRequest = (createProfileRequest) => {
 }
 
 
-const createProfile = async (handleInput) => {
+const createProfile = async (handleInput) => { 
   try {
     if (!handleInput) {
       throw new Error("handleInput is undefined");

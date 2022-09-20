@@ -36,11 +36,13 @@ function MemeList() {
             // const res = await exploreProfile();
             // setStory(res.exploreProfiles.items);
 
-            const dd= await getPublicationByUser(); 
-            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{ 
+            const dd= await getPublicationByUser();  
+            dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{   
                 if(e.__typename == "Comment"){
-                    user.push(e.mainPost.profile);
-                }else{
+                    user.push(e.mainPost.profile);  
+                } else if(e.__typename == "Mirror"){
+                    user.push(e.mirrorOf.profile);  
+                }  else{
                     user.push(e.profile);
                 }
             })
@@ -51,13 +53,15 @@ function MemeList() {
     }, [update])
 
 
-
+console.log(story,"story");
+const aa= Array.from(new Set(story));
+console.log(aa,"sorted");
 
     return (
         <>
             <Header />
             <div className='footer-position' style={{ marginTop: '100px' }}>
-                <Search />
+                {/* <Search /> */}
                 <div className='container'>
                     <div className='row mt-5'>
                         {
@@ -66,9 +70,9 @@ function MemeList() {
                             </Box>
                         } 
                         {
-                            story && story.map((e) => {
+                            story && story.filter((x,i,a)=> a.indexOf(x)== i).map((e) =>  { 
                                 return (
-                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.handle}>
+                                    <div className='col-12 col-sm-6 col-md-4 col-lg-4' key={e.id}>
                                         <Box style={{ margin: '10px  ', background: 'rgba(255,255,255,0.1)', padding: '20px',borderRadius:'10px' }}>
                                             <div className='text-center' style={{cursor:'pointer'}}  onClick={() => handleNavigate(e)}>
                                                 <img src={e.picture != null ? e.picture.original.url : 'assets/bg.png'} width="100" height="100" style={{ borderRadius: '50%' }} alt={e.handle} />

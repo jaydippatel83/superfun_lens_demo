@@ -1,4 +1,4 @@
-import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, Input, InputBase, Typography } from '@mui/material';
+import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Chip, CircularProgress, Divider, IconButton, ImageList, ImageListItem, Input, InputBase, Typography, useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../../header/Header';
@@ -22,6 +22,7 @@ import CollectComponent from '../publications/CollectComponent';
 import { whoCollected } from '../../LensProtocol/post/collect/collect';
 import { addDoc, collection, doc, getDocs, query, runTransaction, setDoc, where, writeBatch, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from '../../firebase/firebase';
+import { useTheme } from '@mui/system';
 
 const tags = [
   "#tuesday ",
@@ -49,6 +50,12 @@ function TrendingDetails() {
   const { profile, userAdd, loginCreate, login } = lensAuthContext;
   const [postCollect, setPostCollect] = useState([]);
 
+  const theme = useTheme();
+  const greaterThanMid = useMediaQuery(theme.breakpoints.up("md"));
+  const smallToMid = useMediaQuery(theme.breakpoints.between("sm", "md"));
+  const lessThanSmall = useMediaQuery(theme.breakpoints.down("sm"));
+  const xsmall = useMediaQuery(theme.breakpoints.down("xs"));
+
   const param = useParams();
 
   async function get_posts() {
@@ -70,17 +77,17 @@ function TrendingDetails() {
       get_posts();
       getLikeUp();
     }, 1000);
-  }, [param.id, update, data, detail, likeUp, commUp])
+  }, [param.id, update, data, likeUp, commUp])
 
   const handleNavigate = (data) => {
-    navigate(`/trendingDetails/${data.id}`); 
+    navigate(`/trendingDetails/${data.id}`);
     // setDetail(data);
     // setLikeUp(!likeUp);
   }
 
   async function getLikeUp() {
     // const id = detail == undefined ? data.id && data.id : detail.id;
-    const cId = detail === undefined ? data?.id : detail.id; 
+    const cId = data !== undefined && data?.id;
     const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
     const querySnapshot = await getDocs(q);
     if (querySnapshot.empty) {
@@ -98,20 +105,20 @@ function TrendingDetails() {
 
 
 
-  async function getComm() { 
-     
-    let arr= [];
-    const cmt = await getComments( param.id);
+  async function getComm() {
+
+    let arr = [];
+    const cmt = await getComments(param.id);
     cmt && cmt.map((com) => {
       let obj = {
         typename: com?.__typename,
-        avtar:com?.profile?.picture?.original?.url,
+        avtar: com?.profile?.picture?.original?.url,
         name: com?.profile?.handle,
-        comment:com?.metadata?.content
+        comment: com?.metadata?.content
       }
       arr.push(obj);
     })
- 
+
     setDisplayCmt(arr);
   }
 
@@ -132,27 +139,28 @@ function TrendingDetails() {
       if (result) {
         let obj = {
           typename: "Comment",
-          avtar:profile?.picture?.original?.url,
+          avtar: profile?.picture?.original?.url,
           name: profile?.handle,
-          comment:comment
+          comment: comment
         }
-        arr[arr.length] = obj; 
+        arr[arr.length] = obj;
         setComments("");
         setDisplayCmt(arr)
         // setCommUp(!commUp);
         setLoading(false);
-       
+
       }
     } catch (error) {
       console.log(error, "errr-----")
     }
   }
- 
+
 
 
   const handleNav = (dd) => {
     navigate(`/profile/${dd}`)
   }
+
 
   const addReactions = async (data) => {
     const id = window.localStorage.getItem("profileId");
@@ -200,22 +208,26 @@ function TrendingDetails() {
       });
     }
   }
-
-
-
+ 
 
   return (
     <>
       <Header />
       <Box className='footer-position' sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
-        <Search />
+        {/* <Search /> */}
         <div className='container'>
           {/* <div className='row mt-5'> */}
           <div className='row mt-5'>
-            
+
             {
-            data &&
-              <div key={data.id} className='col-12 col-sm-8 col-md-8 col-lg-8' style={{ margin: '10px 0' }}>
+              data == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress />
+              </Box>
+            }
+
+            {
+              data &&
+              <div key={data.id} className='col-12 col-sm-7 col-md-6 col-lg-6' style={{ margin: '10px 0' }}>
                 <Card   >
 
                   <CardHeader
@@ -235,17 +247,18 @@ function TrendingDetails() {
                     component="img"
                     image={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url}
                     alt={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
-                    style={{ objectFit: 'fill' }}
+                    sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
+
                   />
-                  <CardContent className=' '>
-                    <Typography variant="body2" color="text.secondary">
-                      {data && data.__typename === "Comment" ? data.mainPost.metadata.description : data.metadata.description}
+                  <CardContent className='p-0 '>
+                    <Typography style={{ padding: '0 10px' }} variant="body2" color="text.secondary">
+                      {data && data.__typename === "Comment" ? data.mainPost.metadata.content : data.metadata.content}
                     </Typography>
                   </CardContent>
                   <CardActions disableSpacing>
                     <div
                       className="d-flex align-items-center"
-                      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      style={{ color: 'white', margin: '0 5px', cursor: 'pointer' }}
                       onClick={() => addReactions(data)}
                     >
                       <FavoriteBorderIcon /> {count}
@@ -255,11 +268,11 @@ function TrendingDetails() {
                     <div
                       onClick={handleShowComment}
                       className="d-flex align-items-center"
-                      style={{ color: 'white', padding: '5px', margin: '10px', cursor: 'pointer' }}
+                      style={{ color: 'white', margin: '0 5px', cursor: 'pointer' }}
                     >
                       < ModeCommentOutlinedIcon />  {data && data.stats.totalAmountOfComments}
 
-                      <span className="d-none-xss m-2">Comment</span>
+                      <span className="d-none-xss m-1">Comment</span>
                     </div>
                     <MirrorComponent data={data} update={update} setUpdate={setUpdate} />
                     <CollectComponent data={data} update={update} setUpdate={setUpdate} />
@@ -267,7 +280,7 @@ function TrendingDetails() {
 
                   <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
                   {showComment ? (
-                    <div className='m-2'>
+                    <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                       <div className="d-flex justify-content-around mt-2">
                         <div className="p-0">
                           <Avatar src={data ? data.img : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
@@ -298,7 +311,7 @@ function TrendingDetails() {
                                 <p className='mb-0 align-self-center ml-2'>{e.typename === "Comment" ? e.name : e.name}</p>
                               </div>
                               <p style={{
-                                padding: '10px',
+                                padding: '5px 10px',
                                 background: '#000',
                                 borderRadius: '14px',
                                 margin: '5px',
@@ -315,39 +328,60 @@ function TrendingDetails() {
                   )}
                 </Card>
                 {
-                  tags.map((e) => (
+                  data?.metadata?.description !== data?.metadata?.content ? data.metadata.description.map((e) => (
                     <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                  ))
+                  )) : <></>
                 }
               </div>
-            } 
-            {
-              posts && posts.map((e) => {
-                if (e.id !== param.id) {
-                  return (
-                    <div key={e.id} className='col-12 col-sm-4 col-md-4 col-lg-4'>
-                      <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
-                        <CardMedia
-                          component="img"
-                          height="240"
-                          image={e.__typename === "Comment" ? e.mainPost.metadata.media[0].original.url : e.metadata.media[0].original.url}
-                          alt={e.__typename === "Comment" ? e.mainPost.metadata.name : e.metadata.name}
-                          style={{ objectFit: 'fill' }}
-                        />
-                        <CardContent>
-                          <Typography variant="body2" color="text.secondary" className='mx-2'>
-                            {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
-                          </Typography>
-                        </CardContent> 
-                      </Card>
-                    </div>
-                  )
-                }
-                return (
-                  <></>
-                )
-              })
             }
+            <div className='col-12 col-sm-5 col-md-6 col-lg-6' style={{ overflow: 'scroll', maxHeight: "100vh" }}>
+              <div className='row'>
+                <ImageList variant="masonry" cols={greaterThanMid && 2 || smallToMid && 2 || lessThanSmall && 1 || xsmall && 1} gap={12}>
+                  {
+
+                    posts && posts.map((e) => {
+                      return (
+                        <ImageListItem
+                          key={e.id}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => handleNavigate(e)}
+                        >
+                          <Card sx={{ margin: '10px 0' }}  >
+                            <CardMedia
+                              component="img"
+                              image={e.__typename === "Comment" ? e.mainPost.metadata.media[0].original.url : e.metadata.media[0].original.url}
+                              alt={e.__typename === "Comment" ? e.mainPost.metadata.name : e.metadata.name}
+                              sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '230px' } }}
+                            />
+                            <CardContent>
+                              <Typography variant="body2" color="text.secondary" className='mx-2'>
+                                {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
+                              </Typography>
+                            </CardContent>
+                          </Card>
+                        </ImageListItem>
+                        // <div key={e.id} className='col-12 col-sm-12 col-md-6 col-lg-6'>
+                        //   <Card sx={{ margin: '10px 0' }} onClick={() => handleNavigate(e)} >
+                        //     <CardMedia
+                        //       component="img" 
+                        //       image={e.__typename === "Comment" ? e.mainPost.metadata.media[0].original.url : e.metadata.media[0].original.url}
+                        //       alt={e.__typename === "Comment" ? e.mainPost.metadata.name : e.metadata.name}
+                        //       sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '230px' } }}
+                        //     />
+                        //     <CardContent>
+                        //       <Typography variant="body2" color="text.secondary" className='mx-2'>
+                        //         {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
+                        //       </Typography>
+                        //     </CardContent>
+                        //   </Card>
+                        // </div>
+                      )
+                    })
+                  }
+                </ImageList>
+              </div>
+            </div>
+
           </div>
         </div>
       </Box>

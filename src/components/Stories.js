@@ -38,7 +38,7 @@ function Stories() {
     const handleNavigate = (id) => {
         navigate(`/trendingDetails/${id}`)
     }
- 
+
 
     return (
 
@@ -53,7 +53,7 @@ function Stories() {
 
 
                 {
-                    userPosts && userPosts.map((item, i) => { 
+                    userPosts && userPosts.map((item, i) => {
                         return (
                             <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
                                 <ImageListItem
@@ -102,8 +102,7 @@ function Stories() {
                                             position="top"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
-                                                    srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
+                                                    src={`${item.profile.picture != null ? item.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `}
                                                     alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px', objectFit: 'fill' }}
@@ -125,7 +124,7 @@ function Stories() {
                                                     <p className='mb-0' >{item.metadata.description}</p><span>{moment(item.createdAt).format('LLL')}</span></div>
                                             }
                                             actionPosition="left"
-                                        /> 
+                                        />
                                     }
                                 </ImageListItem>
                             </div>
