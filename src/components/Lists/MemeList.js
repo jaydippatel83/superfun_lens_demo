@@ -50,12 +50,7 @@ function MemeList() {
             setStory(user); 
         }
         getCreator()
-    }, [update])
-
-
-console.log(story,"story");
-const aa= Array.from(new Set(story));
-console.log(aa,"sorted");
+    }, [update]) 
 
     return (
         <>

@@ -26,6 +26,48 @@ import { getTimelineData } from '../LensProtocol/profile/update-profile/timeline
 import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
+import PostAddIcon from '@mui/icons-material/PostAdd';
+import PhoneMissedIcon from '@mui/icons-material/PhoneMissed';
+import SwapHorizSharpIcon from '@mui/icons-material/SwapHorizSharp';
+
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p:1 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
 function Profile() {
     const params = useParams();
     const [data, setData] = useState();
@@ -47,6 +89,12 @@ function Profile() {
     const [displayCmt, setDisplayCmt] = useState([]);
     const [count, setCount] = useState();
 
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     const handleClickOpen = (text) => {
         setTitle(text)
         setOpen(true);
@@ -59,14 +107,7 @@ function Profile() {
         setShowComment(!showComment);
     };
 
-    const tags = [
-        "#tuesday ",
-        "#happy tuesday",
-        "#doggies ",
-        " #happy tuesday morning",
-        " #happy tuesday good morning",
-        " #good tuesday morning"
-    ]
+
     useEffect(() => {
         const getUserData = async () => {
             const dd = await posts(params.id);
@@ -264,7 +305,7 @@ function Profile() {
             <Header />
 
             <Box className='footer-position' sx={{ marginTop: { sx: '20px', sm: '50px', md: '100px' } }}>
-                <Search />
+                {/* <Search /> */}
                 <div className='container'>
                     <div className='row mt-5'>
                         <div className='col-12 col-sm-12 col-md-5 col-lg-5'>
@@ -308,127 +349,148 @@ function Profile() {
                         </div>
 
                         <div className='col-12 col-sm-12 col-md-7 col-lg-7' style={{ overflow: 'scroll', maxHeight: "100vh" }}>
-                            {
-                                show && <div className='row'>
-                                    <div className='col-12 ' style={{ margin: '10px 0' }}>
-                                        {/* <p>{detail.description}</p> */}
 
-                                        <Card   >
-                                            <CardHeader
-                                                avatar={
-                                                    <Avatar
-                                                        src={detail.__typename === "Comment" ?
-                                                            detail.mainPost.profile.picture != null &&
-                                                            detail.mainPost.profile.picture.original.url :
-                                                            detail.profile.picture != null ? detail.profile.picture.original.url :
-                                                                'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
 
-                                                    </Avatar>
-                                                }
-                                                title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                                                subheader={moment(detail.createdAt).format('LLL')}
-
-                                            />
-                                            <CardMedia
-                                                component="img"
-                                                image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
-                                                alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
-                                                sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
-                                            />
-                                            <CardContent>
-                                                <Typography variant="body2" color="text.secondary" className='p-0'>
-                                                    {detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
-                                                </Typography>
-                                            </CardContent>
-                                            <CardActions disableSpacing>
-                                                <div
-                                                    className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
-                                                    onClick={() => addReactions(detail)}
-                                                >
-                                                    <FavoriteBorderIcon /> {count}
-                                                    <span className="d-none-xss m-2">Likes</span>
-                                                </div>
-
-                                                <div
-                                                    onClick={handleShowComment}
-                                                    className="d-flex align-items-center"
-                                                    style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
-                                                >
-                                                    < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
-                                                    <span className="d-none-xss m-2">Comment</span>
-                                                </div>
-                                                <MirrorComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
-                                                <CollectComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
-                                            </CardActions>
-                                            <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
-                                            {showComment ? (
-                                                <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
-                                                    <div className="d-flex justify-content-around mt-2">
-                                                        <div className="p-0">
-                                                            <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
-                                                        </div>
-                                                        <form className="col-10 header-search ms-3 d-flex align-items-center">
-                                                            <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
-                                                                <InputBase
-                                                                    onChange={(e) => setComments(e.target.value)}
-                                                                    sx={{ ml: 1, flex: 1, color: 'black' }}
-                                                                    placeholder="Write a comment.."
-                                                                    inputProps={{ 'aria-label': 'Search by memers' }}
-                                                                />
-                                                            </div>
-                                                            <IconButton onClick={() => handleComment(detail)} >
-                                                                {loadingc ? <CircularProgress /> : <Send />}
-                                                            </IconButton>
-                                                        </form>
-                                                    </div>
-                                                    {
-                                                        detail !== undefined && displayCmt && displayCmt.map((e) => {
-                                                            return (
-                                                                <div style={{ margin: '20px' }} key={e.id}>
-                                                                    <div className="p-0 d-flex " style={{ padding: '10px' }}>
-                                                                        <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
-                                                                        <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
-                                                                    </div>
-                                                                    <p style={{
-                                                                        padding: '10px',
-                                                                        background: '#000',
-                                                                        borderRadius: '14px',
-                                                                        margin: '5px',
-                                                                        width: 'fit-content'
-                                                                    }}>{e.__typename === "Comment" && e.metadata.content}</p>
-                                                                    <Divider />                        </div>
-                                                            )
-                                                        })
-                                                    }
-                                                </div>
-                                            ) : (
-                                                ""
-                                            )}
-                                        </Card>
-
-                                        <div className='col-12 ' style={{ margin: '10px 0' }}>
-                                            {
-                                                detail?.metadata?.description !== detail?.metadata?.content ? detail.metadata.description.map((e) => (
-                                                    <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
-                                                )) : <></>
-                                            }
-                                        </div>
-
-                                    </div>
-                                </div>
-                            }
-                            <div className='row'>
+                                    <Tab icon={<PostAddIcon />} iconPosition="start" label="Memes" {...a11yProps(0)} />
+                                    <Tab icon={< ModeCommentOutlinedIcon />} iconPosition="start" label="Comments" {...a11yProps(1)} />
+                                    <Tab icon={< SwapHorizSharpIcon />} iconPosition="start" label="Mirror" {...a11yProps(2)} />
+                                    <Tab icon={<img src='https://superfun.infura-ipfs.io/ipfs/QmWimuRCtxvPhruxxZRBpbWoTXK6HDvLZkrcEPvaqyqegy' alt='bg' width="20" />} iconPosition="start" label="Collects" {...a11yProps(3)} />
+                                </Tabs>
+                            </Box>
+                            <TabPanel value={value} index={0} style={{padding:'20px 0'}}>
                                 {
-                                    post.length !== 0 ? post.map((e) => {
-                                        return (
-                                            <div className='col-12 col-sm-6 col-md-6 col-lg-4'>
-                                                <MemeCard data={e} setDetail={setDetail} setShow={setShow} setLikeUp={setLikeUp} likeUp={likeUp} />
+                                    show && <div className='row' >
+                                        <div className='col-12 '  >
+                                            {/* <p>{detail.description}</p> */}
+
+                                            <Card   >
+                                                <CardHeader
+                                                    avatar={
+                                                        <Avatar
+                                                            src={detail.__typename === "Comment" ?
+                                                                detail.mainPost.profile.picture != null &&
+                                                                detail.mainPost.profile.picture.original.url :
+                                                                detail.profile.picture != null ? detail.profile.picture.original.url :
+                                                                    'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
+
+                                                        </Avatar>
+                                                    }
+                                                    title={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
+                                                    subheader={moment(detail.createdAt).format('LLL')}
+
+                                                />
+                                                <CardMedia
+                                                    component="img"
+                                                    image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
+                                                    alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
+                                                    sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
+                                                />
+                                                <CardContent>
+                                                    <Typography variant="body2" color="text.secondary" className='p-0'>
+                                                        {detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
+                                                    </Typography>
+                                                </CardContent>
+                                                <CardActions disableSpacing>
+                                                    <div
+                                                        className="d-flex align-items-center"
+                                                        style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
+                                                        onClick={() => addReactions(detail)}
+                                                    >
+                                                        <FavoriteBorderIcon /> {count}
+                                                        <span className="d-none-xss m-2">Likes</span>
+                                                    </div>
+
+                                                    <div
+                                                        onClick={handleShowComment}
+                                                        className="d-flex align-items-center"
+                                                        style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
+                                                    >
+                                                        < ModeCommentOutlinedIcon /> {detail !== undefined && detail?.stats?.totalAmountOfComments}
+                                                        <span className="d-none-xss m-2">Comment</span>
+                                                    </div>
+                                                    <MirrorComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
+                                                    <CollectComponent data={detail !== undefined && detail} update={update} setUpdate={setUpdate} />
+                                                </CardActions>
+                                                <Divider flexItem orientation="horizontal" style={{ border: '1px solid white' }} />
+                                                {showComment ? (
+                                                    <div className='m-2' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
+                                                        <div className="d-flex justify-content-around mt-2">
+                                                            <div className="p-0">
+                                                                <Avatar src={profile.picture != null ? profile.picture.original.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} />
+                                                            </div>
+                                                            <form className="col-10 header-search ms-3 d-flex align-items-center">
+                                                                <div className="input-group" style={{ background: 'white', borderRadius: '14px' }}>
+                                                                    <InputBase
+                                                                        onChange={(e) => setComments(e.target.value)}
+                                                                        sx={{ ml: 1, flex: 1, color: 'black' }}
+                                                                        placeholder="Write a comment.."
+                                                                        inputProps={{ 'aria-label': 'Search by memers' }}
+                                                                    />
+                                                                </div>
+                                                                <IconButton onClick={() => handleComment(detail)} >
+                                                                    {loadingc ? <CircularProgress /> : <Send />}
+                                                                </IconButton>
+                                                            </form>
+                                                        </div>
+                                                        {
+                                                            detail !== undefined && displayCmt && displayCmt.map((e) => {
+                                                                return (
+                                                                    <div style={{ margin: '20px' }} key={e.id}>
+                                                                        <div className="p-0 d-flex " style={{ padding: '10px' }}>
+                                                                            <Avatar src={e.__typename === "Comment" ? e.profile?.picture?.original?.url : 'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} />
+                                                                            <p className='mb-0 align-self-center ml-2'>{e.__typename === "Comment" ? e.profile.handle : e.profile.handle}</p>
+                                                                        </div>
+                                                                        <p style={{
+                                                                            padding: '10px',
+                                                                            background: '#000',
+                                                                            borderRadius: '14px',
+                                                                            margin: '5px',
+                                                                            width: 'fit-content'
+                                                                        }}>{e.__typename === "Comment" && e.metadata.content}</p>
+                                                                        <Divider />                        </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </Card>
+
+                                            <div className='col-12 '   style={{ margin: '10px 0'}}>
+                                                {
+                                                    detail?.metadata?.description !== detail?.metadata?.content ? detail.metadata.description.map((e) => (
+                                                        <Chip label={e} style={{ margin: '5px 0' }} variant="outlined" />
+                                                    )) : <></>
+                                                }
                                             </div>
-                                        )
-                                    }) : <h4>No publications is Available!</h4>
+
+                                        </div>
+                                    </div>
                                 }
-                            </div>
+                                <div className='row'>
+                                    {
+                                        post.length !== 0 ? post.map((e) => {
+                                            return (
+                                                <div className='col-12 col-sm-6 col-md-6 col-lg-4'>
+                                                    <MemeCard data={e} setDetail={setDetail} setShow={setShow} setLikeUp={setLikeUp} likeUp={likeUp} />
+                                                </div>
+                                            )
+                                        }) : <h4>No publications is Available!</h4>
+                                    }
+                                </div>
+                            </TabPanel>
+                            <TabPanel value={value} index={1}>
+                                Item Two
+                            </TabPanel>
+                            <TabPanel value={value} index={2}>
+                                Item Three
+                            </TabPanel>
+                            <TabPanel value={value} index={3}>
+                                Item Four
+                            </TabPanel>
                         </div>
                     </div>
                 </div>
