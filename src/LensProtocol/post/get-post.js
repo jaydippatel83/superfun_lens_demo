@@ -339,6 +339,7 @@ export const postsByComment = async (profileId) => {
   const result = await getPublicationsRequest(request);  
   return result;
 };
+ 
 
 export const postsByMirror = async (profileId) => { 
   const request = {

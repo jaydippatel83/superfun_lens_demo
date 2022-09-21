@@ -25,6 +25,8 @@ function TopCreators() {
             dd.data.explorePublications.items && dd.data.explorePublications.items.map((e)=>{ 
                 if(e.__typename == "Comment"){
                     user.push(e.mainPost.profile);
+                }else if (e.__typename == "Mirror"){
+                    user.push(e.mirrorOf.profile);
                 }else{
                     user.push(e.profile);
                 }

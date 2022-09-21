@@ -33,6 +33,9 @@ import SwapHorizSharpIcon from '@mui/icons-material/SwapHorizSharp';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import Profile_comment from './profile/Profile_comment';
+import Profile_Mirror from './profile/Profile_Mirror'; 
+import Profile_Likes from './profile/Profile_Likes';
 
 
 function TabPanel(props) {
@@ -86,8 +89,7 @@ function Profile() {
     const [title, setTitle] = useState("");
 
     const [open, setOpen] = React.useState(false);
-    const [displayCmt, setDisplayCmt] = useState([]);
-    const [count, setCount] = useState();
+    const [displayCmt, setDisplayCmt] = useState([]); 
 
     const [value, setValue] = React.useState(0);
 
@@ -112,10 +114,8 @@ function Profile() {
         const getUserData = async () => {
             const dd = await posts(params.id);
             setPosts(dd.data.publications.items);
-            const ids = detail != undefined && detail.id;
-            // console.log(detail,"ids");
-            const cmt = await getComments(ids);
-            // console.log(cmt,"cmt");
+            const ids = detail != undefined && detail.id; 
+            const cmt = await getComments(ids); 
             setDisplayCmt(cmt);
         }
         getUserData();
@@ -123,36 +123,16 @@ function Profile() {
 
 
     useEffect(() => {
-        getProfile();
-        getLikeUp();
+        getProfile(); 
     }, [loading, update, likeUp, params.id])
 
 
 
-    async function getLikeUp() {
-        // const id = detail == undefined ? data.id && data.id : detail.id;
-        const cId = detail !== undefined && detail.id;
-        const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setCount(0);
-        }
-        querySnapshot.forEach((data) => {
-            setCount(data.data().Likes);
-        })
-    }
+    
 
-
-    async function getProfile() {
-        const fId = window.localStorage.getItem("profileId");
-
+    async function getProfile() { 
         if (params.id !== null) {
-            const user = await profileById(params.id);
-            // const obj = {
-            //     id:user.id, 
-            //     login: login,
-            // }
-            // const usr = await getTimelineData(obj);
+            const user = await profileById(params.id); 
             setData(user);
         }
     };
@@ -199,107 +179,8 @@ function Profile() {
             setUpdate(!update);
         }
 
-    }
-
-    // const addReactions = async (data) => {
-    //    try {
-    //     const id = window.localStorage.getItem("profileId"); 
-    //     const dd = {
-    //         id: id,
-    //         address: userAdd,
-    //         login: loginCreate,
-    //         react: "UPVOTE",
-    //         pId: data.profile.id,
-    //         publishId: data && data.id,
-    //     }
-    //     const res = await addReaction(dd);
-    //     setUpdate(!update);
-    //    } catch (error) {
-    //     toast.error(error)
-    //    }
-    // }
-
-    async function getLikeUp() {
-        // const id = detail == undefined ? data.id && data.id : detail.id;
-        const cId = detail === undefined ? data?.id : detail !== undefined && detail.id;
-        const q = query(collection(db, "Reactions"), where("PublicationId", "==", cId));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            setCount(0);
-        }
-        querySnapshot.forEach((data) => {
-            setCount(data.data().Likes);
-        })
-    }
-
-    const addReactions = async (data) => {
-        const id = window.localStorage.getItem("profileId");
-        const q = query(collection(db, "Reactions"), where("PublicationId", "==", detail.id));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty === true) {
-            const docRef = await addDoc(collection(db, "Reactions"), {
-                Likes: 1,
-                LikesBy: arrayUnion(id),
-                PublicationId: data.id
-            });
-            setLikeUp(!likeUp);
-        } else {
-            querySnapshot.forEach(async (react) => {
-                const nycRef = doc(db, 'Reactions', react.id);
-                react.data().LikesBy.map(async (e) => {
-                    if (e === id) {
-                        await updateDoc(nycRef, {
-                            Likes: react.data().Likes - 1,
-                            LikesBy: arrayRemove(id),
-                        })
-                        setLikeUp(!likeUp);
-                    } else if (e !== id) {
-                        await updateDoc(nycRef, {
-                            Likes: react.data().Likes + 1,
-                            LikesBy: arrayUnion(id)
-                        })
-                        setLikeUp(!likeUp);
-                    } else {
-                        await updateDoc(nycRef, {
-                            Likes: react.data().Likes,
-                            LikesBy: react.data().LikesBy
-                        })
-                        setLikeUp(!likeUp);
-                    }
-                })
-
-                if (react.data().LikesBy.length === 0) {
-                    await updateDoc(nycRef, {
-                        Likes: react.data().Likes + 1,
-                        LikesBy: arrayUnion(id)
-                    })
-                    setLikeUp(!likeUp);
-                }
-            });
-        }
-    }
-
-
-    useEffect(() => {
-        var array = [];
-        async function getLisked() {
-            const id = window.localStorage.getItem("profileId");
-            const res = {
-                pid: detail != undefined && detail?.profile?.id,
-                pid2: id,
-            }
-
-            const like = await getLikes(res);
-            like?.publications?.items?.map((e) => {
-                if (e.reaction == "UPVOTE") {
-                    array.push(e.reaction);
-                }
-            })
-            // setCount(array)
-        }
-        getLisked();
-    }, [detail, update])
-
+    }  
+    
     return (
         < >
             <Header />
@@ -355,8 +236,7 @@ function Profile() {
 
                                     <Tab icon={<PostAddIcon />} iconPosition="start" label="Memes" {...a11yProps(0)} />
                                     <Tab icon={< ModeCommentOutlinedIcon />} iconPosition="start" label="Comments" {...a11yProps(1)} />
-                                    <Tab icon={< SwapHorizSharpIcon />} iconPosition="start" label="Mirror" {...a11yProps(2)} />
-                                    <Tab icon={<img src='https://superfun.infura-ipfs.io/ipfs/QmWimuRCtxvPhruxxZRBpbWoTXK6HDvLZkrcEPvaqyqegy' alt='bg' width="20" />} iconPosition="start" label="Collects" {...a11yProps(3)} />
+                                    <Tab icon={< SwapHorizSharpIcon />} iconPosition="start" label="Mirrors" {...a11yProps(2)} /> 
                                 </Tabs>
                             </Box>
                             <TabPanel value={value} index={0} style={{padding:'20px 0'}}>
@@ -392,15 +272,8 @@ function Profile() {
                                                         {detail.__typename === "Comment" ? detail.mainPost.metadata.description : detail.metadata.description}
                                                     </Typography>
                                                 </CardContent>
-                                                <CardActions disableSpacing>
-                                                    <div
-                                                        className="d-flex align-items-center"
-                                                        style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
-                                                        onClick={() => addReactions(detail)}
-                                                    >
-                                                        <FavoriteBorderIcon /> {count}
-                                                        <span className="d-none-xss m-2">Likes</span>
-                                                    </div>
+                                                <CardActions disableSpacing> 
+                                                    <Profile_Likes data={detail === undefined ? data : detail !== undefined && detail}/> 
 
                                                     <div
                                                         onClick={handleShowComment}
@@ -483,14 +356,11 @@ function Profile() {
                                 </div>
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                                Item Two
+                                 <Profile_comment user={data}/>
                             </TabPanel>
                             <TabPanel value={value} index={2}>
-                                Item Three
-                            </TabPanel>
-                            <TabPanel value={value} index={3}>
-                                Item Four
-                            </TabPanel>
+                                <Profile_Mirror user={data}/>
+                            </TabPanel> 
                         </div>
                     </div>
                 </div>
