@@ -43,24 +43,32 @@ While creating this app we understood how important 1) Compatibility and 2) Owne
 We aim to be a go to platform for Meme Artists to generate value for their creativity and brands to create meme contests to crowdsource memes from the best artists and spread a message for their product.
 
 ## Homepage
-<img width="1265" alt="Screenshot 2022-08-17 at 6 42 42 PM" src="https://user-images.githubusercontent.com/45895007/185174023-7d98227d-bd91-4fd8-93a0-2cd25977c0bf.png">
+ <img width="1280" alt="Screenshot 2022-09-24 at 3 09 03 PM" src="https://user-images.githubusercontent.com/45895007/192091335-8d02d4ca-f284-49e5-800f-42888453dbe7.png">
+
 
 ## Artists
-<img width="1274" alt="Screenshot 2022-08-17 at 6 43 00 PM" src="https://user-images.githubusercontent.com/45895007/185174067-9c480aea-18b3-4fbb-b7ae-9d81d42019a4.png">
+<img width="1280" alt="Screenshot 2022-09-24 at 3 12 39 PM" src="https://user-images.githubusercontent.com/45895007/192091367-338cebb4-b008-4c56-9ec8-0a00840781a6.png">
 
+
+ 
 ## Create Post
 <img width="1278" alt="Screenshot 2022-08-17 at 6 43 12 PM" src="https://user-images.githubusercontent.com/45895007/185174160-8b7829bc-8f04-4211-bea7-acf21136aee3.png">
-
-## Contests
-
-<img width="1278" alt="Screenshot 2022-08-17 at 6 43 23 PM" src="https://user-images.githubusercontent.com/45895007/185174276-d9d87245-4f71-407c-8f9a-8884080227db.png">
+ 
 
 ## Memes 
-<img width="1280" alt="Screenshot 2022-08-17 at 6 44 18 PM" src="https://user-images.githubusercontent.com/45895007/185174336-1e77be10-7290-408e-8114-2a86fd15632d.png">
+ <img width="1280" alt="Screenshot 2022-09-24 at 3 09 13 PM" src="https://user-images.githubusercontent.com/45895007/192091379-9aba49c1-44e3-4925-841b-0d82505d91a6.png">
 
 
 ## Meme Detail Page
- <img width="1276" alt="Screenshot 2022-08-17 at 6 44 42 PM" src="https://user-images.githubusercontent.com/45895007/185175288-9bb40b61-3be8-4434-b210-db51c4af5d3b.png">
+ <img width="1280" alt="Screenshot 2022-09-24 at 3 10 26 PM" src="https://user-images.githubusercontent.com/45895007/192091387-34263e9a-38e7-41e6-a352-28118bf82639.png">
+
+## Mobila App Screens
+![MicrosoftTeams-image (10)](https://user-images.githubusercontent.com/45895007/192091704-ddc70b35-15e0-4cf3-9831-0d68e1d5741d.png)
+![MicrosoftTeams-image (9)](https://user-images.githubusercontent.com/45895007/192091705-f38504f3-6068-4129-909a-9eab7f272315.png)
+![MicrosoftTeams-image (8)](https://user-images.githubusercontent.com/45895007/192091708-108c0cf1-73f8-4bc2-b972-9a2440a5e3b1.png)
+![MicrosoftTeams-image (7)](https://user-images.githubusercontent.com/45895007/192091710-32ae554e-993a-42dc-9b93-a101fcdb83e9.png)
+
+
 
 
 
