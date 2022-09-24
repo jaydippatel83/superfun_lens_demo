@@ -39,7 +39,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 const pages = [
     {
-        name: 'Memes',
+        name: 'Home',
         path: 'trending'
     },
     // {

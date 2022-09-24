@@ -41,8 +41,8 @@ function Profile_comment(props) {
                     </Box>
                 }
                  {
-                    data  == [] && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        No Comments Available!
+                     data?.length  == 0 && <Box sx={{ display: 'flex', justifyContent: 'start' }}>
+                         <h4>No Comments Available!</h4>
                     </Box>
                 }
                 {

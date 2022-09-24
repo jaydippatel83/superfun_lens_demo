@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -8,16 +8,18 @@ import IconButton from '@mui/material/IconButton';
 import LinkIcon from '@mui/icons-material/Link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { LensAuthContext } from '../context/LensContext';
 import moment from 'moment';
+import { Box } from '@mui/system';
 
 
 function Stories() {
     const [style, setStyle] = useState("");
     const lensAuthContext = React.useContext(LensAuthContext);
     const { userPosts } = lensAuthContext;
+    const [data, setData] = useState();
 
     const navigate = useNavigate();
     // const [storyItem, setStoryItem] = useState(storyData);
@@ -39,6 +41,21 @@ function Stories() {
         navigate(`/trendingDetails/${id}`)
     }
 
+    useEffect(() => {
+        var arry = [];
+        
+        userPosts && userPosts.map((e) => {
+            console.log(e, "eee");
+            // var rr= e.metadata?.media?.length != 0 && e.metadata?.media[0]?.original?.url;
+            // console.log(rr,"rrr");
+            // var res = rr.substring(0, 7);
+            if (e.metadata?.media?.length != 0) {
+                arry.push(e);
+            }
+        })
+        setData(arry);
+    }, [])
+
 
     return (
 
@@ -51,9 +68,21 @@ function Stories() {
                     </div>
                 </div>
 
+                {
+                    userPosts.length == 0 && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <CircularProgress />
+                    </Box>
+                }
+                {
+                    userPosts == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                        <h4>No data Available</h4>
+                    </Box>
+                }
+
 
                 {
-                    userPosts && userPosts.map((item, i) => {
+                    data && data.map((item, i) => {
+                        console.log(item,"item");
                         return (
                             <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
                                 <ImageListItem
@@ -67,9 +96,9 @@ function Stories() {
                                     onClick={() => handleNavigate(item.id)}
                                 >
                                     <img
-                                        src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
-                                        srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
-                                        alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
+                                        src={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        srcSet={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        alt={item.mainPost ? item?.mainPost?.metadata?.name : item?.metadata?.name}
                                         loading="lazy"
                                         width="100%" style={{ borderRadius: '10px', height: '300px', cursor: 'pointer', objectFit: 'fill' }}
                                     />
@@ -102,8 +131,8 @@ function Stories() {
                                             position="top"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.profile.picture != null ? item.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `}
-                                                    alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
+                                                    src={`${item?.profile?.picture != null ? item?.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `}
+                                                    alt={item?.mainPost ? item?.mainPost?.metadata?.name : item?.metadata?.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px', objectFit: 'fill' }}
                                                 />

@@ -13,6 +13,8 @@ import { toast } from 'react-toastify';
 
 export const createPost = async (postData) => { 
 
+    console.log(postData,"postData");
+
     try {
         const profileId = window.localStorage.getItem("profileId"); 
         // hard coded to make the code example clear
@@ -22,6 +24,8 @@ export const createPost = async (postData) => {
           }
     
         const address = await getAddress();
+
+        console.log(address,"address");
     
         await postData.login(address);
     
@@ -68,9 +72,11 @@ export const createPost = async (postData) => {
     
     
         const result = await createPostTypedData(createPostRequest);
+        console.log(result,"result");
         const typedData = result.data.createPostTypedData.typedData;
-    
+    console.log(typedData,"typedData");
         const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value);
+        console.log(signature,"signature");
         const { v, r, s } = splitSignature(signature);
     
         const tx = await lensHub.postWithSig({
@@ -88,11 +94,14 @@ export const createPost = async (postData) => {
             },
         }); 
     
+        console.log(tx,"tx");
     
         const indexedResult = await pollUntilIndexed(tx.hash); 
+
+        console.log(indexedResult,"indexedResult");
     
         const logs = indexedResult.txReceipt.logs;  
-    
+    console.log(logs,"logs");
         const topicId = utils.id(
             'PostCreated(uint256,uint256,string,address,bytes,address,bytes,uint256)'
         ); 
@@ -100,8 +109,11 @@ export const createPost = async (postData) => {
         const profileCreatedLog = logs.find((l) => l.topics[0] === topicId); 
     
         let profileCreatedEventLog = profileCreatedLog.topics;  
-        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];      
+        const publicationId = utils.defaultAbiCoder.decode(['uint256'], profileCreatedEventLog[2])[0];  
+        console.log(publicationId,"publicationId");
+        toast.success("Successfully post is created!")    
         return result.data;
+
     } catch (error) {
         toast.error(error);
     }

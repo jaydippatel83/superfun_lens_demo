@@ -21,11 +21,18 @@ export const LensAuthContextProvider = (props) => {
 
   const options = {};
 
-  const web3Modal = new Web3Modal({
-    network: "mumbai",
-    cacheProvider: true,
-    options,
-  });
+  // const web3Modal = new Web3Modal({
+  //   network: "mumbai",
+  //   cacheProvider: true,
+  //   options,
+  // });
+
+  // const web3Modal = new Web3Modal({
+  //   network: "mumbai",
+  //   cacheProvider: true,
+  //   options,
+  // });
+
 
   const [userAdd, setUserAdd] = useState("");
   const [profile, setProfile] = useState("");
@@ -165,7 +172,7 @@ export const LensAuthContextProvider = (props) => {
 
 
   function disconnectWallet() {
-    web3Modal.clearCachedProvider();
+    // web3Modal.clearCachedProvider();
     window.localStorage.removeItem("accessToken");
     window.localStorage.removeItem("refreshToken");
     window.localStorage.removeItem("profileId");
@@ -190,7 +197,7 @@ export const LensAuthContextProvider = (props) => {
     const profiles = await profileByAddress(address); 
     if(profiles === undefined){
       toast.error("Please create a Profile");
-      web3Modal.clearCachedProvider();
+      // web3Modal.clearCachedProvider();
       window.localStorage.removeItem("accessToken");
       window.localStorage.removeItem("refreshToken");
       window.localStorage.removeItem("profileId");

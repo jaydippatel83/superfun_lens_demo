@@ -1,50 +1,102 @@
-import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, CircularProgress, Typography } from '@mui/material'; 
+import { Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from '@mui/material';
+import { addDoc, arrayRemove, arrayUnion, collection, doc, getDocs, query, updateDoc, where } from 'firebase/firestore';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import { db } from '../../firebase/firebase';
 import { postsByMirror } from '../../LensProtocol/post/get-post';
 import CollectComponent from '../publications/CollectComponent';
-import MirrorComponent from '../publications/MirrorComponent';  
+import MirrorComponent from '../publications/MirrorComponent'; 
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
-import Profile_Likes from './Profile_Likes';
-import { Box } from '@mui/system';
 
-function Profile_Mirror(props) { 
+function Profile_Collect(props) { 
     const navigate = useNavigate();
     const [data, setData] = useState();
-    const [update, setUpdate] = useState(false); 
+    const [update, setUpdate] = useState(false);
     const [likeUp, setLikeUp] = useState(false);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
-        getComments(); 
+        getComments();
+        getLikeUp();
     }, [props.user])
 
     async function getComments() {
-        const data = await postsByMirror(props.user.id)  
+        const data = await postsByMirror(props.user.id) 
+        console.log(data,"data");
         setData(data.data.publications.items);
-    } 
+    }
+
+    async function getLikeUp(item) {
+        const q = query(collection(db, "Reactions"), where("PublicationId", "==", item?.mirrorOf?.id));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            setCount(0);
+        }
+        querySnapshot.forEach((data) => {
+            setCount(data.data().Likes);
+        })
+    }
+
+    const addReactions = async (data) => {
+        const id = window.localStorage.getItem("profileId");
+        const q = query(collection(db, "Reactions"), where("PublicationId", "==", data.id));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty === true) {
+            const docRef = await addDoc(collection(db, "Reactions"), {
+                Likes: 1,
+                LikesBy: arrayUnion(id),
+                PublicationId: data.id
+            });
+            setLikeUp(!likeUp);
+        } else {
+            querySnapshot.forEach(async (react) => {
+                const nycRef = doc(db, 'Reactions', react.id);
+                react.data().LikesBy.map(async (e) => {
+                    if (e === id) {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes - 1,
+                            LikesBy: arrayRemove(id),
+                        })
+                        setLikeUp(!likeUp);
+                    } else if (e !== id) {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes + 1,
+                            LikesBy: arrayUnion(id)
+                        })
+                        setLikeUp(!likeUp);
+                    } else {
+                        await updateDoc(nycRef, {
+                            Likes: react.data().Likes,
+                            LikesBy: react.data().LikesBy
+                        })
+                        setLikeUp(!likeUp);
+                    }
+                })
+
+                if (react.data().LikesBy.length === 0) {
+                    await updateDoc(nycRef, {
+                        Likes: react.data().Likes + 1,
+                        LikesBy: arrayUnion(id)
+                    })
+                    setLikeUp(!likeUp);
+                }
+            });
+        }
+    }
 
     const handleNavigate = (item) => {
         navigate(`/trendingDetails/${item.id}`)
-    } 
+    }
     return (
         <div className='row'>
             <div className='col'>
-            {
-                    data == undefined && <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                        <CircularProgress />
-                    </Box>
-                }
                 {
-                    data?.length  == 0 && <Box sx={{ display: 'flex', justifyContent: 'start' }}>
-                         <h4>No Mirrors Available!</h4>
-                    </Box>
-                }
-                {
-                    data && data.map((item) => { 
-                        console.log(item,"item");
+                    data && data.map((item) => {
+                        getLikeUp(item)
                         return (
-                            <Card key={item.id}  style={{margin:'10px 0'}} >
+                            <Card key={item.id}  >
                                 <CardHeader
                                     avatar={
                                         <Avatar
@@ -73,7 +125,14 @@ function Profile_Mirror(props) {
                                     </Typography>
                                 </CardContent>
                                 <CardActions disableSpacing>
-                                <Profile_Likes data={item}/> 
+                                    <div
+                                        className="d-flex align-items-center"
+                                        style={{ color: 'white', padding: '2px', margin: '0 5px', cursor: 'pointer' }}
+                                        onClick={() => addReactions(item)}
+                                    >
+                                        <FavoriteBorderIcon /> {count}
+                                        <span className="d-none-xss m-2">Likes</span>
+                                    </div>
 
                                     <div
                                         className="d-flex align-items-center"
@@ -94,4 +153,4 @@ function Profile_Mirror(props) {
     )
 }
 
-export default Profile_Mirror
+export default Profile_Collect

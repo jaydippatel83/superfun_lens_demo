@@ -90,9 +90,9 @@ export default function TrendingSlider() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
-                                        srcSet={`${item.mainPost ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url} `}
-                                        alt={item.mainPost ? item.mainPost.metadata.name : item.metadata.name}
+                                        src={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        srcSet={`${item.mainPost ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url} `}
+                                        alt="superfun"
                                         loading="lazy"
 
                                         width="100%" style={{ borderRadius: '20px', height: '200px', padding: '10px', cursor: 'pointer', objectFit: 'fill' }}
@@ -126,7 +126,7 @@ export default function TrendingSlider() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                    src={`${item.profile.picture != null ? item.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `} 
+                                                    src={`${item?.profile?.picture != null ? item?.profile?.picture?.original?.url : "https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF"} `} 
                                                     alt={item?.metadata?.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}

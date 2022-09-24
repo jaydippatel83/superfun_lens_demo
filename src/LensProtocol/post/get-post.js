@@ -354,7 +354,7 @@ export const postsByMirror = async (profileId) => {
 export const getComments = async (profileId) => { 
   const request = {
     commentsOf:profileId ? profileId : "0x09a3-0x04",
-    sources: ['superfun'], 
+    // sources: ['superfun'], 
   };  
   const result = await getPublicationsRequest(request);   
 

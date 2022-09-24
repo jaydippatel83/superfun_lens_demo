@@ -93,8 +93,7 @@ function TopCreators() {
         ]
     };
 
-  
-
+  console.log(story,"story"); 
 
 
     return (
@@ -102,7 +101,7 @@ function TopCreators() {
             <div className='row'>
                 <div className='col mt-5'>
                     <div className="d-flex justify-content-between mb-2">
-                        <h5>Top Memers</h5>
+                        <h5>Newly Joined</h5>
                         <Button component={RouterLink} to="/memers">View All</Button>
                     </div>
                     {
@@ -110,11 +109,16 @@ function TopCreators() {
                             <CircularProgress />
                         </Box>
                     }
+                    {
+                        story == undefined  && <Box sx={{ display: 'flex',justifyContent:'center' }}>
+                            <h4>No data Available</h4>
+                        </Box>
+                    }
                     <Slider {...settings}>
                         {
                            story && story.filter((x,i,a)=> a.indexOf(x)==i).map((e) => {  
                                 return (
-                                    <div key={e.handle}>
+                                    <div key={e.id}>
                                         <Link
                                             to={`/profile/${e.id}`}
                                             state={{ Profile: e }}
@@ -123,9 +127,9 @@ function TopCreators() {
                                             underline="hover"
                                             component={RouterLink}
                                         >
-                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.picture != null ? e.picture.original.url : 'assets/bg.png'})` }}>
+                                            <div className="story" style={{ backgroundImage: `linear-gradient(360deg, rgba(255,255,255,1) 50%, rgba(11,11,11,0) 50%), url(${e.picture != null ? e?.picture?.original?.url : 'assets/bg.png'})` }}>
 
-                                                <Avatar src={e.picture != null ? e.picture.original.url : 'assets/bg.png'} className="storyAvatar" />
+                                                <Avatar src={e.picture != null ? e?.picture?.original?.url : 'assets/bg.png'} className="storyAvatar" />
                                                 
                                                 <h4>{e.handle}</h4>
                                             </div>

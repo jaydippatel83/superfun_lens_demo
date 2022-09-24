@@ -78,7 +78,8 @@ export default function UploadModal() {
     };
 
     const handleUpload = async () => { 
-        setLoading(true);
+        try {
+            setLoading(true);
         const postData = {
             title: title,
             photo: file,
@@ -86,14 +87,23 @@ export default function UploadModal() {
             login: login,
             name: profile.handle
         } 
-        const res = await createPost(postData);  
-        setUpdate(!update);
-        setFile("");
-        setTags([]);
-        setTitle("");
-        setLoading(false); 
-        toast.success("Post is Successfully created!");
-        setOpen(false);
+        const res = await createPost(postData); 
+        console.log(res,"res"); 
+        if(res){
+            setUpdate(!update);
+            setFile("");
+            setTags([]);
+            setTitle("");
+            setLoading(false); 
+            toast.success("Post is Successfully created!");
+            setOpen(false);
+        } 
+        } catch (error) {
+            toast.error(error);
+            setLoading(false); 
+        }
+        
+       
 
     }
  

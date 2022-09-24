@@ -19,30 +19,30 @@ function App() {
   // }, [connectorId]);
 
   // asks the user for permission to change network to polygon mumbain testnet if other network is detected
-  useEffect(() => {
-    if (window.ethereum) {
-      (async () => {
-        await window.ethereum.request({
-          id: 1,
-          jsonrpc: "2.0",
-          method: "wallet_addEthereumChain",
-          params: [
-            {
-              chainId: "0x13881",
-              rpcUrls: ["https://rpc-mumbai.maticvigil.com"],
-              chainName: "Polygon Testnet Mumbai",
-              nativeCurrency: {
-                name: "MATIC",
-                symbol: "MATIC", // 2-6 characters long
-                decimals: 18,
-              },
-              blockExplorerUrls: ["https://mumbai.polygonscan.com/"],
-            },
-          ],
-        });
-      })();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     (async () => {
+  //       await window.ethereum.request({
+  //         id: 1,
+  //         jsonrpc: "2.0",
+  //         method: "wallet_addEthereumChain",
+  //         params: [
+  //           {
+  //             chainId: "0x89",
+  //             rpcUrls: ["https://rpc-mainnet.maticvigil.com"],
+  //             chainName: "Polygon Mainnet",
+  //             nativeCurrency: {
+  //               name: "MATIC",
+  //               symbol: "MATIC", // 2-6 characters long
+  //               decimals: 18,
+  //             },
+  //             blockExplorerUrls: ["https://polygonscan.com/"],
+  //           },
+  //         ],
+  //       });
+  //     })();
+  //   }
+  // }, []);
 
 
   return (
