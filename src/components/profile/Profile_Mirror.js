@@ -42,7 +42,6 @@ function Profile_Mirror(props) {
                 }
                 {
                     data && data.map((item) => { 
-                        console.log(item,"item");
                         return (
                             <Card key={item.id}  style={{margin:'10px 0'}} >
                                 <CardHeader

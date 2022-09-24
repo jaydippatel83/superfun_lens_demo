@@ -48,8 +48,8 @@ function StorieList() {
                                     }}
                                 >
                                     <img
-                                        src={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
-                                        srcSet={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                        src={`${item.__typename === "Comment"  ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url}?w=248&fit=crop&auto=format`}
+                                        srcSet={`${item.__typename === "Comment"  ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                         alt={item.metadata.name}
                                         loading="lazy"
                                           style={{ borderRadius: '20px', padding: '10px', cursor: 'pointer' }}
@@ -83,8 +83,8 @@ function StorieList() {
                                             position="bottom"
                                             actionIcon={
                                                 <img
-                                                src={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format`}
-                                                srcSet={`${item.__typename === "Comment"  ? item.mainPost.metadata.media[0].original.url : item.metadata.media[0].original.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                                src={`${item.__typename === "Comment"  ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url}?w=248&fit=crop&auto=format`}
+                                                srcSet={`${item.__typename === "Comment"  ? item?.mainPost?.metadata?.media[0]?.original?.url : item?.metadata?.media[0]?.original?.url}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                                     alt={item.metadata.name}
                                                     loading="lazy"
                                                     width="50" style={{ borderRadius: '20px', height: '50px', padding: '10px', margin: '15px' }}

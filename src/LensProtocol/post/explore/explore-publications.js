@@ -353,7 +353,7 @@ export const getPublicationByLatest= async()=>{
     const query =  {
         "sortCriteria": "LATEST", 
         "publicationTypes": ['POST'],  
-        // "sources": ["superfun"], 
+        "sources": ["superfun"], 
         "limit": 50,
      }
 
@@ -365,7 +365,7 @@ export const getPublicationByUser= async()=>{
   const query =  {
       "sortCriteria": "LATEST", 
       "publicationTypes": ['POST','COMMENT', 'MIRROR'],  
-      // "sources": ["superfun"], 
+      "sources": ["superfun"], 
       "limit": 50,
    }
 

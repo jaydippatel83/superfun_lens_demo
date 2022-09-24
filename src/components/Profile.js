@@ -250,9 +250,9 @@ function Profile() {
                                                     avatar={
                                                         <Avatar
                                                             src={detail.__typename === "Comment" ?
-                                                                detail.mainPost.profile.picture != null &&
-                                                                detail.mainPost.profile.picture.original.url :
-                                                                detail.profile.picture != null ? detail.profile.picture.original.url :
+                                                                detail.mainPost?.profile?.picture != null &&
+                                                                detail.mainPost?.profile?.picture?.original?.url :
+                                                                detail.profile?.picture != null ? detail.profile?.picture?.original?.url :
                                                                     'https://superfun.infura-ipfs.io/ipfs/QmRY4nWq3tr6SZPUbs1Q4c8jBnLB296zS249n9pRjfdobF'} aria-label="recipe">
 
                                                         </Avatar>
@@ -263,8 +263,8 @@ function Profile() {
                                                 />
                                                 <CardMedia
                                                     component="img"
-                                                    image={detail.__typename === "Comment" ? detail.mainPost.metadata.media[0].original.url : detail.metadata.media[0].original.url}
-                                                    alt={detail.__typename === "Comment" ? detail.mainPost.metadata.name : detail.metadata.name}
+                                                    image={detail.__typename === "Comment" ? detail.mainPost?.metadata?.media[0]?.original?.url : detail.metadata?.media[0]?.original?.url}
+                                                    alt={detail.__typename === "Comment" ? detail.mainPost?.metadata?.name : detail.metadata?.name}
                                                     sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
                                                 />
                                                 <CardContent>

@@ -44,18 +44,13 @@ function Stories() {
     useEffect(() => {
         var arry = [];
         
-        userPosts && userPosts.map((e) => {
-            console.log(e, "eee");
-            // var rr= e.metadata?.media?.length != 0 && e.metadata?.media[0]?.original?.url;
-            // console.log(rr,"rrr");
-            // var res = rr.substring(0, 7);
+        userPosts && userPosts.map((e) => { 
             if (e.metadata?.media?.length != 0) {
                 arry.push(e);
             }
         })
         setData(arry);
-    }, [])
-
+    }, [userPosts]) 
 
     return (
 
@@ -81,8 +76,7 @@ function Stories() {
 
 
                 {
-                    data && data.map((item, i) => {
-                        console.log(item,"item");
+                    data && data.map((item, i) => { 
                         return (
                             <div className='col-12 col-sm-6 col-md-3 col-lg-3 p-2' key={i}>
                                 <ImageListItem

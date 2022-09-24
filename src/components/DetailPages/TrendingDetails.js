@@ -245,8 +245,8 @@ function TrendingDetails() {
 
                   <CardMedia
                     component="img"
-                    image={data && data.__typename === "Comment" ? data.mainPost.metadata.media[0].original.url : data.metadata.media[0].original.url}
-                    alt={data && data.__typename === "Comment" ? data.mainPost.metadata.name : data.metadata.name}
+                    image={data && data.__typename === "Comment" ? data?.mainPost?.metadata?.media[0]?.original?.url : data?.metadata?.media[0]?.original?.url}
+                    alt={data && data.__typename === "Comment" ? data?.mainPost?.metadata?.name : data.metadata.name}
                     sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '200px' } }}
 
                   />
@@ -349,13 +349,13 @@ function TrendingDetails() {
                           <Card sx={{ margin: '10px 0' }}  >
                             <CardMedia
                               component="img"
-                              image={e.__typename === "Comment" ? e.mainPost.metadata.media[0].original.url : e.metadata.media[0].original.url}
-                              alt={e.__typename === "Comment" ? e.mainPost.metadata.name : e.metadata.name}
+                              image={e.__typename === "Comment" ? e?.mainPost?.metadata?.media[0]?.original?.url : e?.metadata?.media[0]?.original?.url}
+                              alt={e.__typename === "Comment" ? e?.mainPost?.metadata?.name : e?.metadata?.name}
                               sx={{ objectFit: 'fill', maxHeight: { lg: '350px', md: '300px', sm: '260px', xs: '230px' } }}
                             />
                             <CardContent>
                               <Typography variant="body2" color="text.secondary" className='mx-2'>
-                                {e.__typename === "Comment" ? e.mainPost.metadata.content : e.metadata.content}
+                                {e.__typename === "Comment" ? e?.mainPost?.metadata?.content : e.metadata.content}
                               </Typography>
                             </CardContent>
                           </Card>

@@ -3,8 +3,8 @@
 // @apollo/client/core!
 import { ApolloClient, InMemoryCache, HttpLink, ApolloLink } from '@apollo/client'
 
-// const APIURL = 'https://api-mumbai.lens.dev/'
-const APIURL = 'https://api.lens.dev';
+const APIURL = 'https://api-mumbai.lens.dev/'
+// const APIURL = 'https://api.lens.dev';
 
 const httpLink = new HttpLink({ uri: APIURL });
 

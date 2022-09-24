@@ -20,8 +20,8 @@ export default function MemeCard(props) {
             <CardMedia
                 component="img"
                 height="194"
-                image={props.data.__typename === "Comment" ?   props.data.mainPost.metadata.media[0].original.url : props.data.metadata.media[0].original.url }
-                alt={props.data.__typename === "Comment" ? props.data.mainPost.metadata.content : props.data.metadata.content }
+                image={props.data.__typename === "Comment" ?   props.data?.mainPost?.metadata?.media[0]?.original?.url : props.data?.metadata?.media[0]?.original?.url }
+                alt={props.data.__typename === "Comment" ? props.data?.mainPost?.metadata?.content : props.data?.metadata?.content }
                 style={{objectFit:'fill' }}
             />
             <CardContent className='p-0'>

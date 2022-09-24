@@ -92,8 +92,7 @@ function TopCreators() {
             }
         ]
     };
-
-  console.log(story,"story"); 
+ 
 
 
     return (
